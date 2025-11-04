@@ -107,7 +107,7 @@ lg:[&>*:nth-last-child(1):nth-child(3n+1)]:col-start-2
               logo="https://placehold.co/100x100/4F46E5/FFFFFF?text=ИЕ"
               text="Я недовольна!"
               name="Иванова Елизавета"
-              rating={1}
+              rating={4}
             />
             <Review
               logo="https://placehold.co/100x100/10B981/FFFFFF?text=ШМ"
