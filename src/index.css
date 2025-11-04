@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #fff;
@@ -10,4 +12,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark:root,
+:root.dark,
+.dark :root {
+  background-color: #0f172a; /* тёмно-синий как в Tailwind bg-slate-900 */
+  color: #f1f5f9; /* светло-серый текст */
+  transition: background-color 0.3s, color 0.3s;
 }

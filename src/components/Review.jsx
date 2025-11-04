@@ -1,14 +1,16 @@
 export function Review(props) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md testimonial-card">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md testimonial-card transition-colors duration-300">
       <div className="flex items-center mb-4">
         <img
-          src="https://placehold.co/100x100/4F46E5/FFFFFF?text=SJ"
+          src={props.logo}
           alt={props.name}
           className="w-12 h-12 rounded-full object-cover"
         />
         <div className="ml-4">
-          <h4 className="font-bold text-gray-900">{props.name}</h4>
+          <h4 className="font-bold text-gray-900 dark:text-white">
+            {props.name}
+          </h4>
 
           {/* динамические звезды */}
           <div className="flex text-yellow-400">
@@ -29,7 +31,7 @@ export function Review(props) {
         </div>
       </div>
 
-      <p className="text-gray-600 italic">{props.text}</p>
+      <p className="text-gray-600 dark:text-gray-300 italic">{props.text}</p>
     </div>
   );
 }
