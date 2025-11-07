@@ -1,3 +1,11 @@
+import {
+  faFacebook,
+  faInstagram,
+  faTwitter,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export function Footer() {
   return (
     <footer className="bg-gray-900 dark:bg-gray-800 text-white py-12 transition-colors duration-300">
@@ -102,7 +110,7 @@ export function Footer() {
         </div>
 
         {/* Нижняя линия и копирайт */}
-        <div className="pt-8 text-center border-t border-gray-700 dark:border-gray-600 mt-8">
+        <div className="pt-8 text-center">
           <p className="text-gray-400 dark:text-gray-400 text-sm">
             © 2025 KazWonder. Все права защищены.
           </p>
@@ -111,25 +119,25 @@ export function Footer() {
               href="#"
               className="text-gray-400 hover:text-white dark:hover:text-gray-100"
             >
-              <i data-feather="facebook" className="w-5 h-5"></i>
+              <FontAwesomeIcon icon={faFacebook} />
             </a>
             <a
               href="#"
               className="text-gray-400 hover:text-white dark:hover:text-gray-100"
             >
-              <i data-feather="instagram" className="w-5 h-5"></i>
+              <FontAwesomeIcon icon={faInstagram} />
             </a>
             <a
               href="#"
               className="text-gray-400 hover:text-white dark:hover:text-gray-100"
             >
-              <i data-feather="twitter" className="w-5 h-5"></i>
+              <FontAwesomeIcon icon={faTwitter} />
             </a>
             <a
               href="#"
               className="text-gray-400 hover:text-white dark:hover:text-gray-100"
             >
-              <i data-feather="youtube" className="w-5 h-5"></i>
+              <FontAwesomeIcon icon={faYoutube} />
             </a>
           </div>
         </div>

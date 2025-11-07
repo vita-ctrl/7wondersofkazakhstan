@@ -1,4 +1,10 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export function Card(props) {
+  const maximumRating = 5;
+
   return (
     <>
       <div
@@ -25,17 +31,16 @@ export function Card(props) {
 
           <div className="absolute left-5 bottom-5 flex items-center text-yellow-400 mb-4">
             {[...Array(props.stars)].map((_, i) => (
-              <svg
-                key={i}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4 text-yellow-400"
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
+              <FontAwesomeIcon
+                className="text-yellow-400 text-xs"
+                icon={faStar}
+              />
+            ))}
+            {[...Array(maximumRating - props.stars)].map((_, i) => (
+              <FontAwesomeIcon
+                className="text-yellow-400 text-xs"
+                icon={faStarRegular}
+              />
             ))}
             <span className="text-gray-600 dark:text-gray-400 ml-1">
               ({props.rating})
@@ -43,12 +48,13 @@ export function Card(props) {
           </div>
 
           <div className="absolute right-5 bottom-5 flex justify-end items-center">
-            <button
-              className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-md font-medium text-sm transition duration-300 cursor-pointer"
+            <a
+              href={props.url}
+              className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-md font-medium text-sm transition duration-300"
               id="open-alps"
             >
               Подробнее
-            </button>
+            </a>
           </div>
         </div>
       </div>
