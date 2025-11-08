@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faChevronLeft, faChevronRight, faExpand, faXmark } from "@fortawesome/free-solid-svg-icons";
 import allReviews from "../data/reviews.json";
 import BookingWidget from "../components/BookingWidget";
 import IncludedExcluded from "../components/IncludedExcluded";
@@ -18,7 +18,72 @@ export default function Tours() {
     "https://pkzsk.info/wp-content/uploads/2018/04/0_b5330_b1309cf0_orig.jpg",
   ];
 
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [direction, setDirection] = useState(0); // -1 left, 1 right, 0 none
+  const mainImageRef = useRef(null);
+  const thumbnailsRef = useRef(null);
+
+  const nextImage = () => {
+    setDirection(1);
+    setSelectedImage((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setDirection(-1);
+    setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleThumbnailClick = (index) => {
+    setDirection(index > selectedImage ? 1 : -1);
+    setSelectedImage(index);
+  };
+
+  // Обработчик клавиатуры
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isFullscreen) return;
+      
+      switch(e.key) {
+        case 'ArrowLeft':
+          prevImage();
+          break;
+        case 'ArrowRight':
+          nextImage();
+          break;
+        case 'Escape':
+          setIsFullscreen(false);
+          break;
+        default:
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isFullscreen]);
+
+  // Автопрокрутка превью
+  useEffect(() => {
+    if (thumbnailsRef.current) {
+      const thumbnailsContainer = thumbnailsRef.current;
+      const activeThumb = thumbnailsContainer.children[selectedImage];
+      
+      if (activeThumb) {
+        const containerScroll = thumbnailsContainer.scrollLeft;
+        const thumbOffset = activeThumb.offsetLeft;
+        const thumbWidth = activeThumb.offsetWidth;
+        const containerWidth = thumbnailsContainer.offsetWidth;
+        
+        if (thumbOffset < containerScroll || thumbOffset + thumbWidth > containerScroll + containerWidth) {
+          thumbnailsContainer.scrollTo({
+            left: thumbOffset - containerWidth / 2 + thumbWidth / 2,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+  }, [selectedImage]);
 
   return (
     <section className="pt-6 sm:pt-8 lg:pt-12 max-w-[1800px] mx-auto px-6 sm:px-8 lg:px-20">
@@ -28,29 +93,83 @@ export default function Tours() {
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Превью + главное фото */}
           <div className="flex flex-col lg:flex-row gap-4 justify-center">
-            <div className="flex lg:flex-col gap-3 order-2 lg:order-1 justify-center lg:justify-start">
+            {/* Миниатюры */}
+            <div 
+              ref={thumbnailsRef}
+              className="flex lg:flex-col gap-3 order-2 lg:order-1 justify-center lg:justify-start overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-hide"
+            >
               {images.map((img, i) => (
-                <img
+                <div
                   key={i}
-                  src={img}
-                  alt={`Фото ${i + 1}`}
-                  onClick={() => setSelectedImage(img)}
-                  className={`w-20 h-20 object-cover rounded-md cursor-pointer border-2 transition ${selectedImage === img ? "border-blue-500" : "border-transparent"
-                    }`}
-                />
+                  className={`relative flex-shrink-0 w-20 h-20 rounded-md cursor-pointer border-2 transition-all duration-300 transform hover:scale-105 ${
+                    selectedImage === i 
+                      ? "border-blue-500 scale-105 shadow-md" 
+                      : "border-transparent opacity-70 hover:opacity-100"
+                  }`}
+                  onClick={() => handleThumbnailClick(i)}
+                >
+                  <img
+                    src={img}
+                    alt={`Фото ${i + 1}`}
+                    className="w-full h-full object-cover rounded-md"
+                  />
+                  {selectedImage === i && (
+                    <div className="absolute inset-0 border-2 border-white rounded-md" />
+                  )}
+                </div>
               ))}
             </div>
 
-            <div className="flex-1 order-1 lg:order-2">
-              <img
-                src={selectedImage}
-                alt="Основное фото"
-                className="w-full h-[450px] object-cover rounded-lg shadow-md"
-              />
+            {/* Основное изображение */}
+            <div className="flex-1 order-1 lg:order-2 relative group">
+              <div 
+                ref={mainImageRef}
+                className="relative w-full h-[450px] rounded-lg shadow-md overflow-hidden"
+              >
+                <img
+                  src={images[selectedImage]}
+                  alt="Основное фото"
+                  className={`w-full h-full object-cover transition-transform duration-500 ${
+                    direction === 1 ? 'slide-in-right' : 
+                    direction === -1 ? 'slide-in-left' : ''
+                  }`}
+                />
+                
+                {/* Кнопки навигации */}
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+                  aria-label="Предыдущее фото"
+                >
+                  <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
+                </button>
+                
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+                  aria-label="Следующее фото"
+                >
+                  <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
+                </button>
+
+                {/* Кнопка полноэкранного режима */}
+                <button
+                  onClick={() => setIsFullscreen(true)}
+                  className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 backdrop-blur-sm"
+                  aria-label="Полноэкранный режим"
+                >
+                  <FontAwesomeIcon icon={faExpand} className="w-4 h-4" />
+                </button>
+
+                {/* Счетчик изображений */}
+                <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
+                  {selectedImage + 1} / {images.length}
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Средняя колонка — информация */}
+          {/* Остальной код без изменений */}
           <div className="flex flex-col items-center justify-start text-center">
             <h1 className="font-bold mb-2 text-[24px] text-gray-900 dark:text-gray-100">
               Тур: Байконур — сердце космоса
@@ -63,7 +182,7 @@ export default function Tours() {
               ))}
               <span className="text-gray-600 dark:text-gray-400 ml-2">5 • 32 отзывов</span>
             </div>
-
+            
             {/* Характеристики тура */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 text-[14px] text-gray-900 dark:text-gray-100 -mt-2">
               {/* Левая колонка */}
@@ -109,7 +228,19 @@ export default function Tours() {
         </aside>
       </div>
 
-      {/* Описание */}
+      {/* Полноэкранный режим */}
+      {isFullscreen && (
+        <FullscreenGallery
+          images={images}
+          currentIndex={selectedImage}
+          onClose={() => setIsFullscreen(false)}
+          onNext={nextImage}
+          onPrev={prevImage}
+          onSelect={setSelectedImage}
+        />
+      )}
+
+      {/* Остальной код компонента остается без изменений */}
       <div className="mt-5 max-w-[760px] text-[15px] text-gray-800 dark:text-gray-200 leading-relaxed">
         <ExpandableBlock>
           <p className="mb-3 font-medium">
@@ -150,15 +281,159 @@ export default function Tours() {
       </div>
 
       <ReviewsInfinite />
-
     </section>
   );
-
 }
 
+/* =========================
+     Полноэкранная галерея
+========================= */
+function FullscreenGallery({ images, currentIndex, onClose, onNext, onPrev, onSelect }) {
+  const [direction, setDirection] = useState(0);
+
+  const handleNext = () => {
+    setDirection(1);
+    onNext();
+  };
+
+  const handlePrev = () => {
+    setDirection(-1);
+    onPrev();
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+      {/* Кнопка закрытия */}
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 z-10 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+        aria-label="Закрыть"
+      >
+        <FontAwesomeIcon icon={faXmark} className="w-6 h-6" />
+      </button>
+
+      {/* Основное изображение */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        <img
+          src={images[currentIndex]}
+          alt={`Фото ${currentIndex + 1}`}
+          className={`max-w-full max-h-full object-contain transition-transform duration-500 ${
+            direction === 1 ? 'slide-in-right' : 
+            direction === -1 ? 'slide-in-left' : ''
+          }`}
+        />
+        
+        {/* Кнопки навигации */}
+        <button
+          onClick={handlePrev}
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+          aria-label="Предыдущее фото"
+        >
+          <FontAwesomeIcon icon={faChevronLeft} className="w-6 h-6" />
+        </button>
+        
+        <button
+          onClick={handleNext}
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+          aria-label="Следующее фото"
+        >
+          <FontAwesomeIcon icon={faChevronRight} className="w-6 h-6" />
+        </button>
+
+        {/* Счетчик */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/10 text-white px-4 py-2 rounded-full text-lg backdrop-blur-sm">
+          {currentIndex + 1} / {images.length}
+        </div>
+      </div>
+
+      {/* Миниатюры внизу */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 max-w-full overflow-x-auto px-4 py-2 scrollbar-hide">
+        {images.map((img, i) => (
+          <div
+            key={i}
+            className={`flex-shrink-0 w-16 h-16 rounded-md cursor-pointer border-2 transition-all duration-300 ${
+              currentIndex === i 
+                ? "border-white scale-110" 
+                : "border-transparent opacity-60 hover:opacity-100"
+            }`}
+            onClick={() => {
+              setDirection(i > currentIndex ? 1 : -1);
+              onSelect(i);
+            }}
+          >
+            <img
+              src={img}
+              alt={`Фото ${i + 1}`}
+              className="w-full h-full object-cover rounded-md"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Добавляем CSS анимации
+const GalleryStyles = () => (
+  <style jsx global>{`
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .slide-in-right {
+      animation: slideInRight 0.5s ease-out;
+    }
+    
+    .slide-in-left {
+      animation: slideInLeft 0.5s ease-out;
+    }
+    
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Плавный скролл для миниатюр */
+    .thumbnails-container {
+      scroll-behavior: smooth;
+    }
+  `}</style>
+);
+
+// Добавляем компонент стилей в основной компонент
+Tours.GalleryStyles = GalleryStyles;
 
 /* ========================= 
-   Вспомогательные компоненты
+   Остальные компоненты без изменений
 ========================= */
 function ExpandableBlock({ children }) {
   return (
@@ -168,11 +443,6 @@ function ExpandableBlock({ children }) {
   );
 }
 
-
-
-/* =========================
-     Вкладка "Отзывы"
-========================= */
 function ProductTabs() {
   const [activeTab, setActiveTab] = useState("reviews");
   return (
@@ -193,7 +463,7 @@ function ProductTabs() {
   );
 }
 
-/* =========================
+/*=======================
      Отзывы + рейтинг
 ========================= */
 function ReviewsInfinite() {
