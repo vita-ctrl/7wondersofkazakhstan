@@ -1,24 +1,9 @@
 /* eslint-disable */
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 
-export default function IncludedExcluded() {
-  const included = [
-    "Трансфер до космодрома Байконур и обратно (из Кызылорды или ж/д станции Торетам)",
-    "Проживание в гостинице «Южная» с выбранным типом размещения",
-    "Трёхразовое питание в гостинице, чистая питьевая вода",
-    "Сопровождение профессиональным гидом",
-    "Получение пропусков на космодром",
-    "Экскурсия музейного комплекса",
-    "Экскурсии по объектам Байконура",
-    "Наблюдение за стартом ракеты со смотровой площадки",
-  ];
-
-  const excluded = [
-    "Перелёт до г. Кызылорда или ж/д поезд до станции Торетам",
-    "Опциональный обед на третий день в придорожном кафе (если есть время)",
-    "Страховка (на ваше усмотрение, оформляется самостоятельно)",
-    "Личные расходы в дороге или на объектах",
-  ];
+export default function IncludedExcluded(props) {
+  const included = props.included;
+  const excluded = props.excluded;
 
   const [showAll, setShowAll] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -48,13 +33,21 @@ export default function IncludedExcluded() {
   };
 
   const CheckIcon = () => (
-    <svg className="w-[18px] h-[18px] flex-none" viewBox="0 0 24 24" fill="none">
+    <svg
+      className="w-[18px] h-[18px] flex-none"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path d="M20 7L9 18l-5-5" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
 
   const CrossIcon = () => (
-    <svg className="w-[18px] h-[18px] flex-none" viewBox="0 0 24 24" fill="none">
+    <svg
+      className="w-[18px] h-[18px] flex-none"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
       <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" />
     </svg>
   );
@@ -74,7 +67,7 @@ export default function IncludedExcluded() {
       <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-5">
         <p className="text-[14px] font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
           <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-          Включено в ваш космический тур
+          Включено в ваш тур
         </p>
 
         <div>
@@ -149,7 +142,7 @@ export default function IncludedExcluded() {
         <button
           onClick={handleToggle}
           disabled={isAnimating}
-          className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[15px] font-semibold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95 overflow-hidden rounded-xl"
+          className="cursor-pointer group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[15px] font-semibold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95 overflow-hidden rounded-xl"
           style={{
             background: showAll
               ? "linear-gradient(135deg, #8B5CF6 0%, #4F46E5 50%, #3730a3 100%)"
@@ -160,7 +153,8 @@ export default function IncludedExcluded() {
             <div
               className="absolute inset-0"
               style={{
-                background: "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
+                background:
+                  "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
                 transform: "translateX(-100%)",
                 animation: "shimmer 3s infinite",
               }}
@@ -194,35 +188,59 @@ export default function IncludedExcluded() {
 
       <style jsx>{`
         @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
         }
-        
+
         @keyframes gradient-border {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
-        
+
         @keyframes particle-in {
-          0% { transform: translate(0, 0) scale(0); opacity: 0; }
-          50% { opacity: 1; }
-          100% { transform: translate(var(--x), var(--y)) scale(var(--scale)); opacity: 0; }
+          0% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: translate(var(--x), var(--y)) scale(var(--scale));
+            opacity: 0;
+          }
         }
-        
+
         @keyframes particle-out {
-          0% { transform: translate(var(--x), var(--y)) scale(var(--scale)); opacity: 1; }
-          100% { transform: translate(0, 0) scale(0); opacity: 0; }
+          0% {
+            transform: translate(var(--x), var(--y)) scale(var(--scale));
+            opacity: 1;
+          }
+          100% {
+            transform: translate(0, 0) scale(0);
+            opacity: 0;
+          }
         }
-        
+
         .animate-gradient-border {
           animation: gradient-border 3s ease infinite;
         }
-        
+
         .animate-particle-in {
           animation: particle-in 0.8s ease-out forwards;
         }
-        
+
         .animate-particle-out {
           animation: particle-out 0.6s ease-in forwards;
         }

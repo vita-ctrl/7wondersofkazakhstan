@@ -43,7 +43,7 @@ lg:[&>*:nth-last-child(1):nth-child(3n+1)]:col-start-2
 "
         >
           <Card
-            url="/tours"
+            url="/tours/baikonur"
             rating={32}
             stars={5}
             image="https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg"
@@ -105,9 +105,9 @@ lg:[&>*:nth-last-child(1):nth-child(3n+1)]:col-start-2
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Review
               logo="https://placehold.co/100x100/4F46E5/FFFFFF?text=ИЕ"
-              text="Я недовольна!"
+              text="Все устраивает."
               name="Иванова Елизавета"
-              rating={3}
+              rating={4}
             />
             <Review
               logo="https://placehold.co/100x100/10B981/FFFFFF?text=ШМ"
@@ -117,9 +117,9 @@ lg:[&>*:nth-last-child(1):nth-child(3n+1)]:col-start-2
             />
             <Review
               logo="https://placehold.co/100x100/F59E0B/FFFFFF?text=РВ"
-              text="Поездка крутая! Но теперь Казахстан угрожает нам бомбардировкой :("
+              text="Поездка крутая!"
               name="Руденко Виталий"
-              rating={4}
+              rating={5}
             />
             <Review
               logo="https://placehold.co/100x100/3B82F6/FFFFFF?text=ШМ"
