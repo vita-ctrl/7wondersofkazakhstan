@@ -91,7 +91,7 @@ export function ReviewsInfinite(props) {
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-semibold text-[15px] text-gray-900 dark:text-gray-100">
-                    Пользователь
+                    {r.name}
                   </h3>
                   <p className="text-sm text-gray-500">{r.date}</p>
                 </div>
@@ -134,7 +134,7 @@ export function ReviewsInfinite(props) {
             <button
               onClick={handleLoadMore}
               disabled={isLoading}
-              className={`px-4 py-1.5 text-sm font-medium rounded-md border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 ${
+              className={`cursor-pointer px-4 py-1.5 text-sm font-medium rounded-md border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 ${
                 isLoading ? "opacity-70 cursor-wait" : ""
               }`}
             >

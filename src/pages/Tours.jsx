@@ -135,35 +135,9 @@ function ToursDetail(props) {
         {/* Левая часть — галерея и описание */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Превью + главное фото */}
-          <div className="flex flex-col lg:flex-row gap-4 justify-center">
-            {/* Миниатюры */}
-            <div
-              ref={thumbnailsRef}
-              className="flex lg:flex-col gap-3 order-2 lg:order-1 justify-center lg:justify-start overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-hide"
-            >
-              {images.map((img, i) => (
-                <div
-                  key={i}
-                  className={`relative shrink-0 w-20 h-20 rounded-md cursor-pointer border-2 transition-all duration-300 transform hover:scale-105 ${selectedImage === i
-                      ? "border-blue-500 scale-105 shadow-md"
-                      : "border-transparent opacity-70 hover:opacity-100"
-                    }`}
-                  onClick={() => handleThumbnailClick(i)}
-                >
-                  <img
-                    src={img}
-                    alt={`Фото ${i + 1}`}
-                    className="w-full h-full object-cover rounded-md"
-                  />
-                  {selectedImage === i && (
-                    <div className="absolute inset-0 border-2 border-white rounded-md" />
-                  )}
-                </div>
-              ))}
-            </div>
-
+          <div className="flex flex-col gap-4 justify-center">
             {/* Основное изображение */}
-            <div className="flex-1 order-1 lg:order-2 relative group">
+            <div className="flex-1 relative group">
               <div
                 ref={mainImageRef}
                 className="relative w-full h-[450px] rounded-lg shadow-md overflow-hidden"
@@ -210,6 +184,32 @@ function ToursDetail(props) {
                   {selectedImage + 1} / {images.length}
                 </div>
               </div>
+            </div>
+
+            {/* Миниатюры */}
+            <div
+              ref={thumbnailsRef}
+              className="flex lg:flex-row gap-3 justify-center overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-hide"
+            >
+              {images.map((img, i) => (
+                <div
+                  key={i}
+                  className={`relative shrink-0 w-27 h-27 rounded-md cursor-pointer border-2 transition-all duration-300 transform hover:scale-105 ${selectedImage === i
+                      ? "border-blue-500 scale-105 shadow-md"
+                      : "border-transparent opacity-70 hover:opacity-100"
+                    }`}
+                  onClick={() => handleThumbnailClick(i)}
+                >
+                  <img
+                    src={img}
+                    alt={`Фото ${i + 1}`}
+                    className="w-full h-full object-cover rounded-md"
+                  />
+                  {selectedImage === i && (
+                    <div className="absolute inset-0 border-2 border-white rounded-md" />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
 

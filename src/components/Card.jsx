@@ -25,7 +25,7 @@ export function Card(props) {
             </h3>
           </div>
 
-          <p className="text-gray-600 dark:text-gray-300 mb-10">
+          <p className="text-[#424e2b] dark:text-gray-300 mb-10">
             {props.description}
           </p>
 
@@ -50,7 +50,7 @@ export function Card(props) {
           <div className="absolute right-5 bottom-5 flex justify-end items-center">
             <a
               href={props.url}
-              className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-md font-medium text-sm transition duration-300"
+              className="bg-[#424e2b] text-white dark:bg-blue-500 dark:hover:bg-blue-600 px-4 py-2 rounded-md font-medium text-sm transition duration-300"
               id="open-alps"
             >
               Подробнее

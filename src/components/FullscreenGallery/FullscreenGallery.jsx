@@ -107,5 +107,4 @@ function FullscreenGallery({
     </div>
   );
 }
-
 export default FullscreenGallery;
