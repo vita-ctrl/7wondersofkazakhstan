@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useState, useRef } from "react";
 
 export default function IncludedExcluded(props) {
@@ -54,17 +53,17 @@ export default function IncludedExcluded(props) {
 
   return (
     <section className="mt-10">
-      <h2 className="text-[26px] font-bold text-gray-900 dark:text-gray-100 mb-2">
+      <h2 className="text-[26px] font-bold text-[#424E2B] dark:text-gray-100 mb-2">
         Включено в стоимость
       </h2>
 
       <div className="flex items-center gap-3 mb-6">
-        <div className="h-px flex-1 bg-linear-to-r from-transparent via-[#4F46E5] to-transparent" />
-        <div className="h-px flex-1 bg-linear-to-r from-transparent via-[#4F46E5] to-transparent" />
+        <div className="h-px flex-1 bg-linear-to-r from-transparent via-[#424E2B] dark:via-[#4F46E5] to-transparent" />
+        <div className="h-px flex-1 bg-linear-to-r from-transparent via-[#424E2B] dark:via-[#4F46E5] to-transparent" />
       </div>
 
       {/* Включено */}
-      <div className="mt-6 border-t border-gray-200 dark:border-gray-700 pt-5">
+      <div className="mt-6">
         <p className="text-[14px] font-semibold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
           <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
           Включено в ваш тур
@@ -80,7 +79,7 @@ export default function IncludedExcluded(props) {
                 <span className="shrink-0 mt-1 text-emerald-600 dark:text-emerald-400 transition-transform duration-300 group-hover:scale-125">
                   <CheckIcon />
                 </span>
-                <span className="text-gray-900 dark:text-gray-100 transition-all duration-300 group-hover:text-[#4F46E5] dark:group-hover:text-[#8B5CF6] group-hover:translate-x-1">
+                <span className="text-gray-900 dark:text-gray-100 transition-all duration-300 group-hover:text-[#424E2B] dark:group-hover:text-[#8B5CF6] group-hover:translate-x-1">
                   {item}
                 </span>
               </li>
@@ -93,7 +92,7 @@ export default function IncludedExcluded(props) {
       <div
         className={`overflow-hidden transition-all duration-500 ease-out ${
           showAll
-            ? "max-h-[500px] opacity-100 mt-8 border-t border-gray-200 dark:border-gray-700 pt-6"
+            ? "max-h-[500px] opacity-100 mt-8 border-t border-[#e7e1d5] dark:border-gray-700 pt-6"
             : "max-h-0 opacity-0 mt-0"
         }`}
       >
@@ -141,52 +140,28 @@ export default function IncludedExcluded(props) {
 
         <button
           onClick={handleToggle}
-          disabled={isAnimating}
           className="cursor-pointer group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-[15px] font-semibold text-white transition-all duration-500 ease-out hover:scale-105 active:scale-95 overflow-hidden rounded-xl"
-          style={{
-            background: showAll
-              ? "linear-gradient(135deg, #8B5CF6 0%, #4F46E5 50%, #3730a3 100%)"
-              : "linear-gradient(135deg, #4F46E5 0%, #6366F1 50%, #8B5CF6 100%)",
-          }}
         >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)",
-                transform: "translateX(-100%)",
-                animation: "shimmer 3s infinite",
-              }}
-            />
-          </div>
-
           <div className="relative z-10">
             <span className="relative">
               {showAll ? "Свернуть детали" : "Раскрыть все условия"}
-              <span
-                className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-300 ${
-                  showAll ? "w-full" : "w-0 group-hover:w-full"
-                }`}
-              />
             </span>
           </div>
-
           <div
-            className="absolute inset-0 rounded-xl border-2 border-transparent bg-linear-to-r from-[#4F46E5] via-[#8B5CF6] to-[#4F46E5] bg-size-[200%_100%] animate-gradient-border"
+            className="absolute inset-0 rounded-xl border-2 border-transparent bg-linear-to-r from-[#424E2B] via-[#5a6b3d] to-[#424E2B] dark:from-[#4F46E5] dark:via-[#8B5CF6] dark:to-[#4F46E5] bg-size-[200%_100%] animate-gradient-border"
             style={{ margin: "-2px" }}
           />
         </button>
 
         <div
-          className={`absolute inset-0 rounded-xl bg-linear-to-r from-[#4F46E5] to-[#8B5CF6] opacity-20 blur-xl transition-all duration-500 ${
+          className={`absolute inset-0 rounded-xl bg-linear-to-r from-[#424E2B] to-[#424E2B] dark:from-[#4F46E5] dark:to-[#8B5CF6] opacity-20 blur-xl transition-all duration-500 ${
             showAll ? "scale-110 opacity-30" : "scale-100 opacity-20"
           }`}
           style={{ zIndex: -1 }}
         />
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0% {
             transform: translateX(-100%);

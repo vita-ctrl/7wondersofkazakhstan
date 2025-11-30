@@ -32,7 +32,7 @@ export default function ScrollToTopButton() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 left-8 bg-[#274E13] hover:bg-[#6c9225] text-white px-5 py-3 cursor-pointer rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50"
+          className="fixed bottom-8 left-8 bg-[#274E13] dark:bg-blue-500 hover:bg-[#6c9225] dark:hover:bg-blue-400 text-white px-5 py-3 cursor-pointer rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-50"
           aria-label="Прокрутить наверх"
         >
           <FontAwesomeIcon icon={faArrowUp} />

@@ -23,7 +23,7 @@ export default function ReviewCard({ logo, name, rating, text }) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-900 dark:text-[#E5D9C6] text-lg truncate">{name}</p>
+          <p className="font-bold text-[#424E2B] dark:text-[#E5D9C6] text-lg truncate">{name}</p>
           <div className="flex">
             {[...Array(rating)].map((_, i) => (
               <FontAwesomeIcon

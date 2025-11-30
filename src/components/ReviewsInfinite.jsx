@@ -86,11 +86,11 @@ export function ReviewsInfinite(props) {
           {allReviews.slice(0, visibleCount).map((r) => (
             <div
               key={r.id}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-sm relative opacity-0 animate-fadeInUp"
+              className="bg-[#e7e1d5] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-lg relative opacity-0 animate-fadeInUp"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="font-semibold text-[15px] text-gray-900 dark:text-gray-100">
+                  <h3 className="font-semibold text-[15px] text-[#424E2B] dark:text-gray-100">
                     {r.name}
                   </h3>
                   <p className="text-sm text-gray-500">{r.date}</p>

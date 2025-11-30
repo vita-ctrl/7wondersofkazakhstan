@@ -14,9 +14,7 @@ export default function BookingWidget(props) {
         <span className="text-[22px] font-extrabold text-gray-900 dark:text-gray-100">
           от {props.cost}
         </span>
-        <p className="text-sm text-gray-500 mt-1">
-          {props.costPerDay}
-        </p>
+        <p className="text-sm text-gray-500 mt-1">{props.costPerDay}</p>
       </div>
 
       {/* Выбор даты */}
@@ -82,10 +80,10 @@ export default function BookingWidget(props) {
       </div>
 
       {/* Кол-во участников */}
-      <ParticipantsCounter />
+      <ParticipantsCounter {...props} />
 
       {/* Кнопка */}
-      <button className="w-full bg-[#8DC21F] hover:bg-[#7EB31A] text-white font-semibold py-2.5 rounded-lg transition-colors">
+      <button className="cursor-pointer w-full bg-[#424E2B] hover:bg-[#6c9225] text-white font-semibold py-2.5 rounded-lg transition-colors">
         Перейти к оплате
       </button>
 

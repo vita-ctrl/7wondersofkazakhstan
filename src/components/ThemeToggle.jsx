@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -42,12 +45,13 @@ export default function ThemeToggle() {
       className={`
     relative flex items-center justify-center 
     w-11 h-11 
+    group
     rounded-xl 
-    bg-[#424E2B] 
-    hover:bg-[#E5D9C6] 
+    bg-[#424E2B] dark:bg-blue-400
+    hover:bg-[#E5D9C6] dark:hover:bg-white
     text-white 
     border-2 border-transparent 
-    hover:border-[#424E2B]
+    hover:border-[#424E2B] dark:hover:border-blue-400
     transition-all duration-300 
     transform hover:scale-105 
     shadow-md hover:shadow-lg
@@ -60,20 +64,18 @@ export default function ThemeToggle() {
 
       {/* Иконка с улучшенной анимацией */}
       <span className={`
-        text-xl transition-all duration-400 relative z-10
+        text-xl transition-all duration-400 relative z-10 text-white
         ${isAnimating ? 'scale-75 opacity-0' : 'scale-100 opacity-100'}
-        ${isDark ? 'text-yellow-300' : 'text-white'}
       `}>
-        {isDark ? "☀️" : "🌙"}
+        <FontAwesomeIcon icon={isDark ? faSun : faMoon} className="group-hover:text-[#424E2B] dark:group-hover:text-blue-400" />
       </span>
 
       {/* Альтернативная иконка во время анимации */}
       <span className={`
-        absolute text-xl transition-all duration-400
+        absolute text-xl transition-all duration-400 text-white
         ${isAnimating ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-        ${isDark ? 'text-yellow-300' : 'text-white'}
       `}>
-        {isDark ? "🌙" : "☀️"}
+        <FontAwesomeIcon icon={isDark ? faSun : faMoon} className="group-hover:text-[#424E2B] dark:group-hover:text-blue-400" />
       </span>
     </button>
   );

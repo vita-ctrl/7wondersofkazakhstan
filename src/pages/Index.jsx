@@ -3,12 +3,53 @@ import {
   faAward,
   faMapLocationDot,
   faUsers,
-  faStar
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
-import { faClock, faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Carousel from "../components/TourCarousel";
 import ReviewCard from "../components/ReviewCard";
 
+const items = [
+  {
+    title: "Байконур",
+    image:
+      "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+    url: "/tours/baikonur",
+  },
+  {
+    title: "Мавзолей Ясави",
+    image: "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+    url: "/tours/mavsoley",
+  },
+  {
+    title: "Чарынский каньон",
+    image:
+      "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+    url: "/tours/kanyon",
+  },
+  {
+    title: "Озеро Каинды",
+    image: "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+    url: "/tours/ozero",
+  },
+  {
+    title: "Тамгалы",
+    image:
+      "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+    url: "/tours/tamgaly",
+  },
+  {
+    title: "Пик Победы",
+    image: "https://cs17.pikabu.ru/s/2025/08/30/16/ejhflvbn_lg.jpg",
+    url: "/tours/pik",
+  },
+  {
+    title: "Поющие барханы",
+    image:
+      "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+    url: "/tours/barhany",
+  },
+];
 
 export default function Index() {
   return (
@@ -24,8 +65,9 @@ export default function Index() {
         <div className="absolute inset-0 bg-black/50"></div>
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight max-w-5xl">
-            Авторские туры — новый формат насыщенных путешествий<br />
+          <h1 className="text-4xl md:text-6xl font-bold text-[#E5D9C6] leading-tight max-w-5xl">
+            Казахстан - страна семи чудес
+            <br />
           </h1>
         </div>
       </div>
@@ -34,7 +76,6 @@ export default function Index() {
       <section className="mt-16 mb-6 bg-[#E5D9C6] dark:bg-slate-900">
         <div className="w-full px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 text-center">
-
             {/* 1 */}
             <div>
               <FontAwesomeIcon
@@ -45,7 +86,7 @@ export default function Index() {
                 Безопасная оплата
               </h3>
               <p className="text-sm text-[#424E2B] dark:text-[#E5D9C6]">
-                Бронируйте туры через нашу надежную платежную систему
+                Оплачивайте туры через нашу надежную и защищенную систему.
               </p>
             </div>
 
@@ -59,7 +100,7 @@ export default function Index() {
                 Продуманная спонтанность
               </h3>
               <p className="text-sm text-[#424E2B] dark:text-[#E5D9C6]">
-                Маршруты могут адаптироваться под пожелания группы
+                Маршруты легко подстраиваются под пожелания вашей группы.
               </p>
             </div>
 
@@ -73,7 +114,7 @@ export default function Index() {
                 Проверенные тревел-эксперты
               </h3>
               <p className="text-sm text-[#424E2B] dark:text-[#E5D9C6]">
-                В нашей базе 3 гида, прошедших тщательный отбор
+                В нашей команде только проверенные гиды, прошедшие строгий отбор.
               </p>
             </div>
 
@@ -87,7 +128,7 @@ export default function Index() {
                 Гарантированные туры
               </h3>
               <p className="text-sm text-[#424E2B] dark:text-[#E5D9C6]">
-                7 туров с гарантированным отправлением
+                7 туров с подтвержденными датами отправления.
               </p>
             </div>
 
@@ -101,10 +142,9 @@ export default function Index() {
                 Небольшие группы
               </h3>
               <p className="text-sm text-[#424E2B] dark:text-[#E5D9C6]">
-                Атмосфера в компании единомышленников
+                Теплая атмосфера в компании единомышленников.
               </p>
             </div>
-
           </div>
         </div>
       </section>
@@ -112,14 +152,12 @@ export default function Index() {
       {/* Популярные туры */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="tours">
         <div className="text-center pt-15">
-          <h2
-            className="text-3xl font-bold mb-4 text-[#424E2B] dark:text-[#E5D9C6]"
-          >
+          <h2 className="text-3xl font-bold mb-4 text-[#424E2B] dark:text-[#E5D9C6]">
             Популярные туры
           </h2>
         </div>
       </div>
-      <Carousel />
+      <Carousel items={items} />
 
       {/* Блок отзывов */}
       <div className="max-w-7xl mb-12 mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,7 +175,7 @@ export default function Index() {
           <ReviewCard
             logo="https://placehold.co/100x100/4F46E5/FFFFFF?text=ИЕ"
             name="Иванова Елизавета"
-            rating={4}
+            rating={5}
             text="Поездка оставила только приятные впечатления. Всё организовано аккуратно и с заботой, чувствуется профессионализм команды."
           />
 
@@ -171,19 +209,16 @@ export default function Index() {
 
           <ReviewCard
             logo="https://placehold.co/100x100/8B5CF6/FFFFFF?text=ДА"
-            name="Дуйсенбек Альфарабиулы"
+            name="Алмас Альфарабиулы"
             rating={5}
             text="Гиды внимательные и профессиональные. Природа просто великолепная. Поездка превзошла ожидания — рекомендую от души."
           />
         </div>
       </div>
 
-
-
       <div className="w-full py-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-
             {/* GOOGLE REVIEWS */}
             <div className="bg-[#e7e1d5] dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
               <div className="flex items-start justify-between mb-6">
@@ -195,19 +230,20 @@ export default function Index() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#424E2B] dark:text-[#E5D9C6]">Google Reviews</h4>
+                    <h4 className="font-semibold text-[#424E2B] dark:text-[#E5D9C6]">
+                      Google Reviews
+                    </h4>
                     <p className="text-sm text-gray-500">Бизнес профиль</p>
                   </div>
                 </div>
-
               </div>
-
-
 
               {/* Рейтинг */}
               <div className="flex items-center space-x-4 mb-4">
                 <div className="flex flex-col">
-                  <span className="text-4xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">4.9</span>
+                  <span className="text-4xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">
+                    4.9
+                  </span>
                   <span className="text-sm text-gray-500">из 5 звёзд</span>
                 </div>
 
@@ -215,39 +251,45 @@ export default function Index() {
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <div className="flex text-[#FFB400] text-lg">
-                      {"★".repeat(5)}
+                      {[...Array(5)].map((_, index) => (
+                        <FontAwesomeIcon className="text-base" key={index} icon={faStar} />
+                      ))}
                     </div>
-                    <span className="text-sm font-medium text-gray-700">4.9</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      4.9
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-[#FFB400] h-2 rounded-full"
-                      style={{ width: '98%' }}
+                      style={{ width: "98%" }}
                     ></div>
                   </div>
-                  <span className="text-xs text-gray-500 mt-1">На основе 243 отзывов</span>
+                  <span className="text-xs text-gray-500 mt-1">
+                    На основе 243 отзывов
+                  </span>
                 </div>
               </div>
 
               {/* Последние отзывы */}
               <div className="space-y-3 mt-6">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-[#E5D9C6]">Отлично</span>
-                  <span className="font-medium text-[#424E2B] dark:text-[#E5D9C6]">238 отзывов</span>
+                  <span className="text-gray-600 dark:text-[#E5D9C6]">
+                    Отлично
+                  </span>
+                  <span className="font-medium text-[#424E2B] dark:text-[#E5D9C6]">
+                    238 отзывов
+                  </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600 dark:text-[#E5D9C6]">Хорошо</span>
-                  <span className="font-medium text-[#424E2B] dark:text-[#E5D9C6]">5 отзывов</span>
+                  <span className="text-gray-600 dark:text-[#E5D9C6]">
+                    Хорошо
+                  </span>
+                  <span className="font-medium text-[#424E2B] dark:text-[#E5D9C6]">
+                    5 отзывов
+                  </span>
                 </div>
               </div>
-
-              {/* CTA кнопка */}
-              <button className="w-full mt-6 bg-[#e5d9c6] dark:bg-gray-700 dark:text-[#e5d9c6] dark:hover:text-gray-700 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-3 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2">
-                <span>Оставить отзыв</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </button>
             </div>
 
             {/* YANDEX REVIEWS */}
@@ -259,7 +301,9 @@ export default function Index() {
                     <span className="text-white text-xl font-bold">Я</span>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#424E2B] dark:text-[#E5D9C6]">Яндекс Карты</h4>
+                    <h4 className="font-semibold text-[#424E2B] dark:text-[#E5D9C6]">
+                      Яндекс Карты
+                    </h4>
                     <p className="text-sm text-gray-500">Бизнес профиль</p>
                   </div>
                 </div>
@@ -268,25 +312,35 @@ export default function Index() {
               {/* Рейтинг */}
               <div className="flex items-center space-x-4 mb-4">
                 <div className="flex flex-col">
-                  <span className="text-4xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">5.0</span>
-                  <span className="text-sm text-gray-500">идеальный рейтинг</span>
+                  <span className="text-4xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">
+                    5.0
+                  </span>
+                  <span className="text-sm text-gray-500">
+                    идеальный рейтинг
+                  </span>
                 </div>
 
                 {/* Звёзды с прогрессом */}
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <div className="flex text-[#FFB400] text-lg">
-                      {"★".repeat(5)}
+                      {[...Array(5)].map((_, index) => (
+                        <FontAwesomeIcon className="text-base" key={index} icon={faStar} />
+                      ))}
                     </div>
-                    <span className="text-sm font-medium text-[#424E2B] dark:text-[#E5D9C6]">5.0</span>
+                    <span className="text-sm font-medium text-[#424E2B] dark:text-[#E5D9C6]">
+                      5.0
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
                       className="bg-[#FFB400] h-2 rounded-full"
-                      style={{ width: '100%' }}
+                      style={{ width: "100%" }}
                     ></div>
                   </div>
-                  <span className="text-xs text-gray-500 mt-1">На основе 189 отзывов</span>
+                  <span className="text-xs text-gray-500 mt-1">
+                    На основе 189 отзывов
+                  </span>
                 </div>
               </div>
 
@@ -297,43 +351,15 @@ export default function Index() {
                     <span className="text-yellow-600 text-sm">🏆</span>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-yellow-800 dark:text-yellow-50 text-sm">Топ-10 в Казахстане</h5>
-                    <p className="text-yellow-600 dark:text-yellow-100 text-xs">Среди туристических компаний</p>
+                    <h5 className="font-semibold text-yellow-800 dark:text-yellow-50 text-sm">
+                      Топ-10 в Казахстане
+                    </h5>
+                    <p className="text-yellow-600 dark:text-yellow-100 text-xs">
+                      Среди туристических компаний
+                    </p>
                   </div>
                 </div>
               </div>
-
-              {/* Статистика */}
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="text-center p-3 bg-[#e5d9c6] dark:bg-gray-700 rounded-lg">
-                  <div className="text-2xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">94%</div>
-                  <div className="text-xs text-gray-500">Рекомендуют</div>
-                </div>
-                <div className="text-center p-3 bg-[#e5d9c6] dark:bg-gray-700 rounded-lg">
-                  <div className="text-2xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">12 мес</div>
-                  <div className="text-xs text-gray-500">Лидер рейтинга</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Дополнительная статистика */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">500+</div>
-              <div className="text-[#424E2B] dark:text-[#E5D9C6] text-sm">Довольных клиентов</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">98%</div>
-              <div className="text-[#424E2B] dark:text-[#E5D9C6] text-sm">Положительных отзывов</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">4.9</div>
-              <div className="text-[#424E2B] dark:text-[#E5D9C6] text-sm">Средний рейтинг</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-[#424E2B] dark:text-[#E5D9C6]">24/7</div>
-              <div className="text-[#424E2B] dark:text-[#E5D9C6] text-sm">Поддержка</div>
             </div>
           </div>
         </div>
@@ -341,7 +367,6 @@ export default function Index() {
 
       <section id="about" className="py-16 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
-
           {/* ЛЕВАЯ СТОРОНА — ТЕКСТ */}
           <div>
             <span className="text-lg font-semibold text-[#6c9225] dark:text-[#d4af37] uppercase tracking-wide">
@@ -356,8 +381,11 @@ export default function Index() {
             </h2>
 
             <p className="mt-6 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-              <strong className="text-[#424E2B] dark:text-[#E5D9C6]">KazWonder</strong> — результат многолетних экспедиций,
-              изучения природы и культурного наследия Казахстана.
+              <strong className="text-[#424E2B] dark:text-[#E5D9C6]">
+                KazWonder
+              </strong>{" "}
+              — результат многолетних экспедиций, изучения природы и культурного
+              наследия Казахстана.
             </p>
 
             <p className="mt-4 text-base text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -367,7 +395,8 @@ export default function Index() {
 
             <div className="mt-6 border-l-4 border-[#6c9225] dark:border-[#d4af37] pl-4">
               <p className="italic text-gray-600 dark:text-gray-400 text-sm">
-                "Мы создаём путешествия, которые меняют восприятие и оставляют след."
+                "Мы создаём путешествия, которые меняют восприятие и оставляют
+                след."
               </p>
             </div>
           </div>
@@ -385,13 +414,8 @@ export default function Index() {
               <p className="text-xs opacity-80">С 2008 года</p>
             </div>
           </div>
-
         </div>
       </section>
-      
-      
-
-
     </>
   );
 }

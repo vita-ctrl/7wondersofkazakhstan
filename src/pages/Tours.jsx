@@ -214,7 +214,7 @@ function ToursDetail(props) {
           </div>
 
           <div className="flex flex-col items-center justify-start text-left">
-            <h1 className="font-bold mb-2 text-[24px] text-gray-900 dark:text-gray-100">
+            <h1 className="font-bold mb-2 text-[24px] text-[#424E2B] dark:text-gray-100">
               {props.title}
             </h1>
 
@@ -317,9 +317,9 @@ function ToursDetail(props) {
 
       <div className="mt-10">
         <div className="border-b border-gray-300 dark:border-gray-700 flex space-x-6 text-[20px] font-medium">
-          <p className="relative pb-2 transition-colors duration-300">
+          <p className="relative pb-2 transition-colors duration-300 text-[#424E2B]">
             Отзывы
-            <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#005BFF]" />
+            <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#424E2B]" />
           </p>
         </div>
       </div>
@@ -334,13 +334,13 @@ function TourGuide(props) {
   const maximumRating = 5;
 
   return (
-    <div className="w-full max-w-[805px] lg:ml-0 lg:mr-auto bg-[#F6F7FA] dark:bg-gray-800 rounded-2xl p-6 mt-12 shadow-sm border border-gray-100 dark:border-gray-700">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+    <div className="w-full max-w-[805px] lg:ml-0 lg:mr-auto bg-[#e7e1d5] dark:bg-gray-800 rounded-2xl p-6 mt-12 shadow-sm dark:border dark:border-gray-700">
+      <h2 className="text-2xl font-bold text-[#424E2B] dark:text-gray-100 mb-6">
         Организатор туров
       </h2>
 
       {/* Карточка */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-5 flex justify-between items-center shadow-sm">
+      <div className="bg-[#f0e9db] shadow-xl dark:bg-gray-900 dark:border dark:border-gray-700 rounded-xl p-5 flex justify-between items-center">
         {/* Левая часть */}
         <div className="flex items-center gap-4">
           <img
@@ -349,7 +349,7 @@ function TourGuide(props) {
             className="w-16 h-16 rounded-full object-cover border border-gray-200 dark:border-gray-700"
           />
           <div>
-            <h3 className="text-[16px] font-semibold text-[#5B2EFF]">
+            <h3 className="text-[16px] font-semibold text-[#353d27]">
               {props.name}
             </h3>
 
@@ -382,7 +382,7 @@ function TourGuide(props) {
       </div>
 
       {/* Текстовое описание */}
-      <div className="mt-4 text-[14px] text-gray-800 dark:text-gray-200 leading-relaxed">
+      <div className="mt-4 text-[14px] text-[#353d27] dark:text-gray-200 leading-relaxed">
         {props.thirdDescription.map((text, index) => (
           <p className="font-medium" key={index}>
             {text}
@@ -401,7 +401,7 @@ function TourGuide(props) {
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-3 text-[#4F46E5] font-medium hover:underline flex items-center gap-1"
+          className="mt-3 text-[#424E2B] font-bold hover:underline text-base flex items-center gap-1"
         >
           {expanded ? "Свернуть описание ▲" : "Развернуть описание ▼"}
         </button>

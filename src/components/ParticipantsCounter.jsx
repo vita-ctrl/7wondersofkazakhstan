@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export default function ParticipantsCounter() {
-  const maximumCount = 10;
+export default function ParticipantsCounter(props) {
+  const maximumCount = props.maxSeats;
   const [count, setCount] = useState(1);
 
   const handleDecrease = () => {

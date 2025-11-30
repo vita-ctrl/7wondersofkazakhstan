@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export function Recommended(props) {
   const cards = props.recommendedCards;
@@ -23,7 +21,7 @@ export function Recommended(props) {
 
   return (
     <div className="mt-16">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-left">
+      <h2 className="text-2xl font-bold text-[#424E2B] dark:text-gray-100 mb-8 text-left">
         Рекомендуем также
       </h2>
 
@@ -31,7 +29,7 @@ export function Recommended(props) {
         {cards.map((c, i) => (
           <div
             key={i}
-            className="flex flex-col justify-between bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 shadow hover:shadow-lg transition duration-300 animate-fadeInUp"
+            className="flex flex-col justify-between bg-[#e7e1d5] dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:-translate-y-2 p-3 shadow-xl backdrop-blur-lg hover:shadow-2xl transition duration-300 animate-fadeInUp"
           >
             <a href={c.url}>
               <img
@@ -42,7 +40,7 @@ export function Recommended(props) {
               />
 
               <div className="flex flex-col grow">
-                <div className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 min-h-[40px]">
+                <div className="text-[15px] font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 min-h-10">
                   {c.title}
                 </div>
 
@@ -50,20 +48,6 @@ export function Recommended(props) {
                   <div className="flex items-baseline gap-2 mb-1">
                     <span className="text-[#FF9900] text-[15px] font-bold">
                       {c.price}
-                    </span>
-                    <span className="line-through text-gray-400 text-[13px]">
-                      {c.oldPrice}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center text-[13px] text-gray-600 dark:text-gray-300">
-                    <FontAwesomeIcon
-                      icon={faStar}
-                      className="text-yellow-400 mr-1"
-                    />
-                    <span>{c.rating.toFixed(1)}</span>
-                    <span className="ml-1">
-                      ({c.reviews.toLocaleString()} отзывов)
                     </span>
                   </div>
                 </div>
