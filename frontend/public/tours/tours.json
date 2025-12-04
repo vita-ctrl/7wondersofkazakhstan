@@ -1,0 +1,909 @@
+[
+  {
+    "id": "baikonur",
+    "images": [
+      "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+      "https://i.pinimg.com/1200x/09/6a/1a/096a1af8b5403d9c6316133acc05669e.jpg",
+      "https://the-steppe.com/wp-content/uploads/2018/11/3e4ede7defe1538ada11a425f8ac20ae.jpg",
+      "https://www.advantour.com/img/kazakhstan/baikonur/baikonur-cosmodrome1.jpg",
+      "https://pkzsk.info/wp-content/uploads/2018/04/0_b5330_b1309cf0_orig.jpg"
+    ],
+    "title": "Байконур — сердце космоса",
+    "rating": 5,
+    "ratingText": "32 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 4,
+    "maxAge": 90,
+    "language": "Русский",
+    "booking": {
+      "cost": 600000,
+      "currency": "₸",
+      "days": 3,
+      "prepayment": 100000,
+      "maxSeats": 10,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 600000,
+          "seats": 10,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 600000,
+          "seats": 0,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 600000,
+          "seats": 10,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Тур на старт ракеты и путешествие на космодром Байконур",
+      "Станьте участником тура на Байконур и увидите все самые яркие и интересные места и события легендарного космодрома своими глазами!",
+      "Как и все наши туры, этот тур также имеет свои изюминки."
+    ],
+    "map": {
+      "popup": "Байконур",
+      "lat": 45.630025847816704,
+      "long": 63.315990068315465
+    },
+    "organizer": {
+      "name": "Екатерина",
+      "rating": 5.0,
+      "photo": "https://img.freepik.com/premium-photo/confident-smiling-woman-is-looking-camera-with-arms-crossed_182527-6335.jpg?w=1060"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/baikonur/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 32,
+        "average": 4.8,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 32
+          },
+          {
+            "stars": 0,
+            "count": 0
+          },
+          {
+            "stars": 0,
+            "count": 0
+          },
+          {
+            "stars": 0,
+            "count": 0
+          },
+          {
+            "stars": 0,
+            "count": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "mavsoley",
+    "images": [
+      "https://www.advantour.com/img/kazakhstan/tours/turkestan-tour-3-days/turkestan1.jpg",
+      "https://www.advantour.com/img/kazakhstan/tours/turkestan-tour-3-days/khoja-ahmed-yasawi-mausoleum.jpg",
+      "https://www.advantour.com/img/kazakhstan/tours/turkestan-tour-3-days/turkestan5.jpg",
+      "https://www.advantour.com/img/kazakhstan/tours/turkestan-tour-3-days/otrar3.jpg",
+      "https://www.advantour.com/img/kazakhstan/tours/turkestan-tour-3-days/otrar.jpg"
+    ],
+    "title": "Мавзолей Ходжи Ахмеда Ясави",
+    "rating": 5,
+    "ratingText": "54 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 4,
+    "maxAge": 90,
+    "language": "Русский",
+    "booking": {
+      "cost": 200000,
+      "currency": "₸",
+      "days": 2,
+      "prepayment": 25000,
+      "maxSeats": 8,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 150000,
+          "seats": 8,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 200000,
+          "seats": 8,
+          "active": true
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 200000,
+          "seats": 8,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Трехдневный тур в Туркестан – один из самых древних городов Казахстана и всей Центральной Азии – познакомит вас с архитектурой и богатой историей этого края. Жемчужина Туркестана – мавзолей Ходжи Ахмеда Яссави, включенный в список всемирного наследия ЮНЕСКО.",
+      "Недалеко от Туркестана расположено средневековое городище Отрар, которое существовало в X-XII веках. Также вы побываете в мавзолее среднеазиатского святого Арыстан-Баба, мавзолее дочери Яссави – Гаухар Ана, увидите древнее поселение Культобе и мавзолей сподвижника пророка Мухаммада – Укаша-ата."
+    ],
+    "map": {
+      "popup": "Мавзолей Ходжи Ахмеда Ясави",
+      "lat": 43.29786156545615,
+      "long": 68.27113216762139
+    },
+    "organizer": {
+      "name": "Евгений",
+      "rating": 5.0,
+      "photo": "https://img.freepik.com/premium-photo/studio-smile-portrait-man-with-arms-crossed-confidence-satisfaction-pride-happy-male-person-positive-with-headphones-audio-streaming-sound-music-white-background_590464-446328.jpg?w=740"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/mavsoley/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 54,
+        "average": 5,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 54
+          },
+          {
+            "stars": 4,
+            "count": 0
+          },
+          {
+            "stars": 3,
+            "count": 0
+          },
+          {
+            "stars": 2,
+            "count": 0
+          },
+          {
+            "stars": 1,
+            "count": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "kanyon",
+    "images": [
+      "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+      "https://static.tildacdn.com/tild3362-3566-4965-b430-333866306163/z_Landscape.jpg",
+      "https://grandevoyage.kz/wp-content/uploads/2022/04/20200705_115125-scaled-1.jpg",
+      "http://aboutkazakhstan.com/blog/wp-content/uploads/2010/11/charyn-canyon-kazakhstan-wallpaper-2.jpg",
+      "https://www.almaty-travel.kz/cms/uploads/file_1556523123_252407873.jpg"
+    ],
+    "title": "Чарынский каньон",
+    "rating": 5,
+    "ratingText": "32 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 4,
+    "maxAge": 85,
+    "language": "Русский",
+    "booking": {
+      "cost": 450000,
+      "currency": "₸",
+      "days": 1,
+      "prepayment": 35000,
+      "maxSeats": 6,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 450000,
+          "seats": 6,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 450000,
+          "seats": 0,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 450000,
+          "seats": 6,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Чарынский каньон - одно из самых атмосферных мест Казахстана. Здесь за миллионы лет ветер и время создали природный «город» из башен, колонн и фантастических скал.",
+      "Самая впечатляющая часть маршрута - Долина замков, где каждый поворот открывает новую панораму.",
+      "Это идеальное место для прогулки и ощущения масштаба природы."
+    ],
+    "map": {
+      "popup": "Чарынский каньон",
+      "lat": 43.354305,
+      "long": 79.057569
+    },
+    "organizer": {
+      "name": "Константин",
+      "rating": 5.0,
+      "photo": "/img/organizer_konstantin.jpg"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/kanyon/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 32,
+        "average": 4.9,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 29
+          },
+          {
+            "stars": 4,
+            "count": 3
+          },
+          {
+            "stars": 3,
+            "count": 0
+          },
+          {
+            "stars": 2,
+            "count": 0
+          },
+          {
+            "stars": 1,
+            "count": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "ozero",
+    "images": [
+      "https://surl.li/oeuykl",
+      "https://surl.li/gyuqqw",
+      "https://surl.li/afakek",
+      "https://surl.li/rbmfwu",
+      "https://surl.li/zyazcx"
+    ],
+    "title": "Озеро Каинды",
+    "rating": 5,
+    "ratingText": "48 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 4,
+    "maxAge": 85,
+    "language": "Русский",
+    "booking": {
+      "cost": 400000,
+      "currency": "₸",
+      "days": 2,
+      "prepayment": 50000,
+      "maxSeats": 6,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 400000,
+          "seats": 6,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 400000,
+          "seats": 0,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 400000,
+          "seats": 6,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Тур к загадочному озеру Каинды — путешествие в сердце гор Тянь-Шаня",
+      "Станьте участником тура к озеру Каинды и увидите своими глазами невероятный подводный лес, бирюзовые воды и атмосферу природной магии!",
+      "Как и все наши туры, этот тур также имеет свои изюминки."
+    ],
+    "map": {
+      "popup": "Озеро Каинды",
+      "lat": 42.984601,
+      "long": 78.464848
+    },
+    "organizer": {
+      "name": "Константин",
+      "rating": 5.0,
+      "photo": "/img/organizer_konstantin.jpg"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/baikonur/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 5554,
+        "average": 4.8,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 4731
+          },
+          {
+            "stars": 4,
+            "count": 539
+          },
+          {
+            "stars": 3,
+            "count": 136
+          },
+          {
+            "stars": 2,
+            "count": 66
+          },
+          {
+            "stars": 1,
+            "count": 82
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "tamgaly",
+    "images": [
+      "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/49b84fce-51cd-4865-ae95-97ff0ea8a321/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/1900x/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/2880x/-/resize/x1367/",
+      "https://7d9e88a8-f178-4098-bea5-48d960920605.selcdn.net/92b5676d-4b8c-4de4-b0cf-9a40ed06ff25/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/1900x/-/format/webp/-/quality/smart_retina/-/stretch/off/-/resize/2880x/-/resize/x1367/",
+      "https://www.advantour.com/img/kazakhstan/images/tamgaly-tas.jpg",
+      "https://www.orexca.com/img/kazakhstan/tours/tamgaly-petroglyphs/tamgaly-petroglyphs2.jpg",
+      "https://flomaster.top/uploads/posts/2023-01/1673971086_flomaster-club-p-naskalnie-risunki-tamgali-vkontakte-2.jpg"
+    ],
+    "title": "Наскальные изображения в урочище Тамгалы",
+    "rating": 5,
+    "ratingText": "78 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 4,
+    "maxAge": 90,
+    "language": "Английский, Русский",
+    "booking": {
+      "cost": 250000,
+      "currency": "₸",
+      "days": 2,
+      "prepayment": 400000,
+      "maxSeats": 6,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 610000,
+          "seats": 18,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 620000,
+          "seats": 0,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 590000,
+          "seats": 19,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Тур к древним наскальным рисункам в урочище Тамгалы",
+      "Станьте участником путешествия в Тамгалы и увидите уникальные петроглифы, которым тысячи лет, прикоснувшись к наследию древних цивилизаций!",
+      "Как и все наши туры, этот тур также имеет свои изюминки."
+    ],
+    "map": {
+      "popup": "Наскальные изображения в урочище Тамгалы",
+      "lat": 44.06163914896642,
+      "long": 76.9965022269728
+    },
+    "organizer": {
+      "name": "Константин",
+      "rating": 5.0,
+      "photo": "/img/organizer_konstantin.jpg"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/baikonur/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 5554,
+        "average": 4.8,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 4731
+          },
+          {
+            "stars": 4,
+            "count": 539
+          },
+          {
+            "stars": 3,
+            "count": 136
+          },
+          {
+            "stars": 2,
+            "count": 66
+          },
+          {
+            "stars": 1,
+            "count": 82
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "pik",
+    "images": [
+      "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+      "https://adrenalinicsilence.kz/wp-content/uploads/2017/01/talgar1.jpg",
+      "https://alatau.guide/wp-content/uploads/2023/07/Talgar-South-face.jpg",
+      "https://morena.kz/foto/allfoto/large/talgar2.jpg",
+      "https://morena.kz/foto/allfoto/large/talgar.jpg"
+    ],
+    "title": "Пик Талгар",
+    "rating": 5,
+    "ratingText": "13 отзывов",
+    "activity": "Умеренная",
+    "comfort": "Средний",
+    "minAge": 18,
+    "maxAge": 80,
+    "language": "Английский, Русский",
+    "booking": {
+      "cost": 1500,
+      "currency": "$",
+      "days": 20,
+      "prepayment": 500,
+      "maxSeats": 10,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 1500,
+          "seats": 10,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 1500,
+          "seats": 0,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 1500,
+          "seats": 10,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Пик Талгар — горная вершина Тянь-Шаня на отроге Заилийского Алатау, в Казахстане, на территории Алматинского заповедника. Его высота 4979 метров. Это высшая точка Заилийского Алатау. Трёхглавый пик хорошо виден из городов Талгар и Алма-Ата.",
+      "Восхождение на Пик Талгар — это возможность испытать себя, увидеть уникальные виды Алматы с высоты почти 5000 метров и получить мощный заряд вдохновения и гордости за собственный результат."
+    ],
+    "map": {
+      "popup": "Пик Талгар",
+      "lat": 43.118802223096964,
+      "long": 77.34061867679588
+    },
+    "organizer": {
+      "name": "Константин",
+      "rating": 5.0,
+      "photo": "/img/organizer_konstantin.jpg"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/barhany",
+        "title": "Поющие барханы",
+        "img": "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg",
+        "price": "300 000 ₸"
+      },
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/pik/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 13,
+        "average": 5,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 13
+          },
+          {
+            "stars": 4,
+            "count": 0
+          },
+          {
+            "stars": 3,
+            "count": 0
+          },
+          {
+            "stars": 2,
+            "count": 0
+          },
+          {
+            "stars": 1,
+            "count": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "barhany",
+    "images": [
+      "https://abrakadabra.fun/uploads/posts/2022-09/1663890726_3-abrakadabra-fun-p-barkhani-4.jpg",
+      "https://images.pexels.com/photos/28448930/pexels-photo-28448930.jpeg",
+      "https://www.glavtema.ru/image/article/7/6/4/2764.jpeg",
+      "https://blog.ostrovok.ru/wp-content/uploads/2024/02/2%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F-14.jpg",
+      "https://1zoom.club/uploads/posts/2023-03/1678128765_1zoom-club-p-barkhan-79.jpg"
+    ],
+    "title": "Поющие барханы",
+    "rating": 5,
+    "ratingText": "237 отзывов",
+    "activity": "Для всех",
+    "comfort": "Средний",
+    "minAge": 5,
+    "maxAge": 85,
+    "language": "Английский, Русский",
+    "booking": {
+      "cost": 300000,
+      "currency": "₸",
+      "days": 3,
+      "prepayment": 60000,
+      "maxSeats": 6,
+      "dates": [
+        {
+          "id": 1,
+          "range": "26–28 нояб 2025",
+          "price": 300000,
+          "seats": 6,
+          "active": true
+        },
+        {
+          "id": 2,
+          "range": "26–28 нояб 2025",
+          "price": 300000,
+          "seats": 6,
+          "active": false
+        },
+        {
+          "id": 3,
+          "range": "18–20 дек 2025",
+          "price": 300000,
+          "seats": 6,
+          "active": true
+        }
+      ]
+    },
+    "description": [
+      "Стоимость указана за салон вместимостью до 6 человек. Приглашаем вас в однодневный тур на комфортном внедорожнике по ключевым местам Алматинской области. Вам предоставляется возможность своими глазами увидеть национальный парк Алтын Эмель и одну из его главных достопримечательностей — Поющий Бархан.",
+      "У вас будет возможность совершить восхождение по песку на Бархан, насладиться потрясающим пейзажем, который открывается с его вершины, и спуститься с Бархана."
+    ],
+    "map": {
+      "popup": "Поющие барханы",
+      "lat": 43.876935806729946,
+      "long": 78.56166413067902
+    },
+    "organizer": {
+      "name": "Константин",
+      "rating": 5.0,
+      "photo": "https://img.freepik.com/free-photo/expressive-redhead-bearded-man_176420-32277.jpg?semt=ais_hybrid&w=740&q=80"
+    },
+    "recommendedCards": [
+      {
+        "url": "/tours/mavsoley",
+        "title": "Мавзолей Ходжи Ахмеда Ясави",
+        "img": "https://fs.tonkosti.ru/cl/0u/cl0uikkvo3s40844kocogsckk.jpg",
+        "price": "200 000 ₸"
+      },
+      {
+        "url": "/tours/kanyon",
+        "title": "Чарынский каньон",
+        "img": "https://sputnik.kz/img/252/01/2520108_0:0:1200:754_1920x0_80_0_0_2f1a758190a93bf393a6da720eed4169.jpg",
+        "price": "450 000 ₸"
+      },
+      {
+        "url": "/tours/ozero",
+        "title": "Озеро Каинды",
+        "img": "https://img.tourister.ru/files/1/9/4/1/9/6/0/8/original.jpg",
+        "price": "400 000 ₸"
+      },
+      {
+        "url": "/tours/tamgaly",
+        "title": "Наскальные изображения Тамгалы",
+        "img": "https://pictures.pibig.info/uploads/posts/2023-04/1680701922_pictures-pibig-info-p-naskalnie-risunki-tamgali-instagram-3.jpg",
+        "price": "250 000 ₸"
+      },
+      {
+        "url": "/tours/pik",
+        "title": "Пик Талгар",
+        "img": "https://gorny-club.kz/wp-content/uploads/2020/04/0_1_DSC01125-Talgar-min.jpg",
+        "price": "1500 $"
+      },
+      {
+        "url": "/tours/baikonur",
+        "title": "Байконур",
+        "img": "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
+        "price": "600 000 ₸"
+      }
+    ],
+    "reviews": {
+      "url": "/tours/baikonur/reviews.json",
+      "ratingSummary": {
+        "totalReviews": 237,
+        "average": 4.9,
+        "ratings": [
+          {
+            "stars": 5,
+            "count": 219
+          },
+          {
+            "stars": 4,
+            "count": 15
+          },
+          {
+            "stars": 3,
+            "count": 1
+          },
+          {
+            "stars": 2,
+            "count": 1
+          },
+          {
+            "stars": 1,
+            "count": 1
+          }
+        ]
+      }
+    }
+  }
+]
