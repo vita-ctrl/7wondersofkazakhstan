@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// я 6 заданий по омт сделал, делаю седь
+// круто я пока ебусь с этим сайтом
+// я уже заебался 
+// доделаешь ОМТ помоги с сайтом а я пойду делать омт ок
 import {
   faStar,
   faMapMarkerAlt,
@@ -244,7 +248,7 @@ function ToursDetail(props) {
               </h2>
 
               <div className="rounded-2xl overflow-hidden w-full h-[400px]">
-                <MapComponent zoom={5} height="400px" {...props.map} />
+                <MapComponent zoom={10} height="400px" {...props.map} />
               </div>
             </div>
 
@@ -270,21 +274,21 @@ function ToursDetail(props) {
 
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <div className="w-2 h-2 bg-sage-green rounded-full mt-2 mr-3"></div>
+                    <div className="w-2 h-2 bg-sage-green dark:bg-blue-400 rounded-full mt-2 mr-3"></div>
                     <span className="text-gray-700 dark:text-gray-300">
                       Бесплатная отмена за 24 часа
                     </span>
                   </li>
 
                   <li className="flex items-start">
-                    <div className="w-2 h-2 bg-sage-green rounded-full mt-2 mr-3"></div>
+                    <div className="w-2 h-2 bg-sage-green dark:bg-blue-400 rounded-full mt-2 mr-3"></div>
                     <span className="text-gray-700 dark:text-gray-300">
                       Мгновенное подтверждение
                     </span>
                   </li>
 
                   <li className="flex items-start">
-                    <div className="w-2 h-2 bg-sage-green rounded-full mt-2 mr-3"></div>
+                    <div className="w-2 h-2 bg-sage-green dark:bg-blue-400 rounded-full mt-2 mr-3"></div>
                     <span className="text-gray-700 dark:text-gray-300">
                       Поддержка 24/7
                     </span>

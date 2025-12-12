@@ -48,11 +48,11 @@ export default function ThemeToggle() {
     w-11 h-11 
     group
     rounded-xl 
-    bg-forest-dark dark:bg-blue-400
+    bg-olive-dark dark:bg-blue-400
     hover:bg-beige dark:hover:bg-gray-900
     text-white 
     border-2 border-transparent 
-    hover:border-forest-dark dark:hover:border-blue-400
+    hover:border-olive-dark dark:hover:border-blue-400
     transition-all duration-300 
     transform hover:scale-105 
     shadow-md hover:shadow-lg

@@ -40,7 +40,7 @@ const items = [
   },
   {
     title: "Пик Талгар",
-    image: "https://cs17.pikabu.ru/s/2025/08/30/16/ejhflvbn_lg.jpg",
+    image: "https://cs14.pikabu.ru/post_img/big/2022/02/04/6/164396278016862049.jpg",
     url: "/tours/pik",
   },
   {
@@ -101,7 +101,6 @@ export default function Index() {
         </div>
       </div>
 
-      {/* Преимущества — фон #E5D9C6 , текст #424E2B */}
       <section className="mt-16 mb-6 bg-beige dark:bg-slate-900">
         <div className="w-full px-4 sm:px-6 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 text-center">

@@ -5,7 +5,7 @@ export default function MapComponent(props) {
   return (
     <>
       <MapContainer
-        style={{ height: "400px", width: "100%", zIndex: 0 }}
+        style={{ height: props.height, width: "100%", zIndex: 0 }}
         center={[props.lat, props.long]}
         zoom={props.zoom}
         scrollWheelZoom={true}

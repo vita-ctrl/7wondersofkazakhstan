@@ -27,7 +27,7 @@
           "id": 1,
           "range": "26–28 нояб 2025",
           "price": 600000,
-          "seats": 10,
+          "seats": 6,
           "active": true
         },
         {
@@ -40,7 +40,7 @@
         {
           "id": 3,
           "range": "18–20 дек 2025",
-          "price": 600000,
+          "price": 590000,
           "seats": 10,
           "active": true
         }

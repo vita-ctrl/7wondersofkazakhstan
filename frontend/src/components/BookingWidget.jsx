@@ -12,8 +12,8 @@ export default function BookingWidget(props) {
 
   const [cost, setCost] = useState(props.cost);
 
-  const maximumCount = props.maxSeats;
-  const [count, setCount] = useState(1);
+  const [maxSeats, setMaxSeats] = useState(props.maxSeats);
+  const [participants, setParticipants] = useState(1);
 
   const pluralRules = new Intl.PluralRules("ru");
 
@@ -31,13 +31,13 @@ export default function BookingWidget(props) {
   };
 
   const handleDecrease = () => {
-    if (count > 1) {
-      setCount(count - 1);
+    if (participants > 1) {
+      setParticipants(participants - 1);
     }
   };
 
   const handleIncrease = () => {
-    setCount(count + 1);
+    setParticipants(participants + 1);
   };
 
   return (
@@ -45,11 +45,12 @@ export default function BookingWidget(props) {
       {/* Цена */}
       <div className="mb-4">
         <span className="text-[22px] font-extrabold text-gray-900 dark:text-gray-100">
-          {props.currency} {new Intl.NumberFormat("ru-RU").format(cost * count)}
+          {props.currency}{" "}
+          {new Intl.NumberFormat("ru-RU").format(cost * participants)}
         </span>
         <p className="text-sm text-gray-500 mt-1">
           {new Intl.NumberFormat("ru-RU").format(
-            Math.round((cost / props.days) * count)
+            Math.round((cost / props.days) * participants)
           )}{" "}
           {props.currency} / день •{" "}
           {pluralize(props.days, ["день", "дня", "дней"])}
@@ -91,6 +92,8 @@ export default function BookingWidget(props) {
                   if (d.active) {
                     setSelectedDate(d.range);
                     setDateId(d.id);
+                    setMaxSeats(d.seats);
+                    setParticipants(1);
                     setIsOpen(false);
                     setCost(d.price);
                   }
@@ -131,15 +134,15 @@ export default function BookingWidget(props) {
         <div className="flex items-center gap-2">
           <button
             onClick={handleDecrease}
-            disabled={count <= 1}
+            disabled={participants <= 1}
             className="px-2 py-1 cursor-pointer shadow-xl bg-[#f7f7f7] dark:bg-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             –
           </button>
-          <span className="px-2 text-sm font-semibold">{count}</span>
+          <span className="px-2 text-sm font-semibold">{participants}</span>
           <button
             onClick={handleIncrease}
-            disabled={count == maximumCount}
+            disabled={participants == maxSeats}
             className="px-2 py-1 cursor-pointer shadow-xl bg-[#f7f7f7] dark:bg-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             +
@@ -149,12 +152,13 @@ export default function BookingWidget(props) {
 
       {/* Кнопка перехода */}
       <button
+        disabled={!dateId}
         onClick={() =>
           navigate(`/booking/${props.tourId}`, {
-            state: { dateId: dateId },
+            state: { dateId: dateId, participants: participants },
           })
         }
-        className="w-full cursor-pointer bg-sage-green dark:bg-blue-400 hover:bg-cream hover:text-sage-green dark:hover:bg-gray-800 dark:hover:text-blue-400 border-2 border-sage-green dark:border-blue-400 dark:hover:border-blue-400 text-white font-semibold py-2.5 rounded-lg transition"
+        className="w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed bg-sage-green dark:bg-blue-400 not-disabled:hover:bg-cream not-disabled:hover:text-sage-green not-disabled:dark:hover:bg-gray-800 not-disabled:dark:hover:text-blue-400 border-2 border-sage-green dark:border-blue-400 dark:hover:border-blue-400 text-white font-semibold py-2.5 rounded-lg transition"
       >
         Перейти к оплате
       </button>
@@ -163,7 +167,9 @@ export default function BookingWidget(props) {
       <div className="mt-4 text-center text-[13px] text-gray-700 dark:text-gray-300">
         <p className="font-medium mb-1">
           Предоплата —{" "}
-          {new Intl.NumberFormat("ru-RU").format(props.prepayment * count)}{" "}
+          {new Intl.NumberFormat("ru-RU").format(
+            props.prepayment * participants
+          )}{" "}
           {props.currency}
         </p>
       </div>
