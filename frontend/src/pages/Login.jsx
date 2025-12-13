@@ -63,11 +63,10 @@ const InputField = memo(
         autofill:bg-transparent
         peer w-full bg-transparent border-b-2 
         pt-6 pb-2 px-2 outline-none transition-all
-        ${
-          error
-            ? "border-red-500 text-red-500"
-            : "border-[#424E2B] dark:border-blue-400 text-[#424E2B] dark:text-white"
-        }
+        ${error
+              ? "border-red-500 text-red-500"
+              : "border-[#424E2B] dark:border-blue-400 text-[#424E2B] dark:text-white"
+            }
       `}
           placeholder=" "
         />
@@ -114,7 +113,7 @@ const InputField = memo(
         </p>
       )}
     </div>
-  )
+  ),
 );
 
 InputField.displayName = "InputField";
@@ -144,13 +143,12 @@ const PasswordStrengthIndicator = memo(({ password }) => {
           Сложность пароля:
         </span>
         <span
-          className={`font-medium ${
-            strength < 40
+          className={`font-medium ${strength < 40
               ? "text-red-500"
               : strength < 70
-              ? "text-yellow-500"
-              : "text-green-500"
-          }`}
+                ? "text-yellow-500"
+                : "text-green-500"
+            }`}
         >
           {getText()}
         </span>
@@ -197,7 +195,7 @@ export default function Login() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const verifyToken = params.get("verify_token");
-    
+
     if (verifyToken && !requested.current) {
       setIsVerifyingToken(true);
       handleTokenVerification(verifyToken);
@@ -208,7 +206,7 @@ export default function Login() {
         navigate("/");
       }
     }
-    return () => requested.current = true;
+    return () => (requested.current = true);
   }, [navigate]);
 
   const handleTokenVerification = async (token) => {
@@ -219,14 +217,13 @@ export default function Login() {
           Accept: "application/json",
         },
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.detail || "Токен недействителен");
       }
 
-      window.history.replaceState({}, "", `${window.location.pathname}`);
-      setSuccessMessage("Аккаунт успешно подтвержден!")
+      setSuccessMessage("Аккаунт успешно подтвержден!");
     } catch (error) {
       setErrors({
         general:
@@ -234,7 +231,8 @@ export default function Login() {
           "Неверный или уже использованный токен подтверждения.",
       });
     } finally {
-      setIsVerifyingToken(false);      
+      setIsVerifyingToken(false);
+      window.history.replaceState({}, "", `${window.location.pathname}`);
     }
   };
 
@@ -306,7 +304,7 @@ export default function Login() {
         }));
       }
     },
-    [errors]
+    [errors],
   );
 
   // --------------------------------------------------------
@@ -373,7 +371,7 @@ export default function Login() {
               "user",
               JSON.stringify({
                 email: formData.loginEmail,
-              })
+              }),
             );
           }
 
@@ -385,6 +383,7 @@ export default function Login() {
             navigate("/");
           }, 1000);
         }
+        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setErrors({
           loginEmail: "Ошибка соединения",
@@ -394,7 +393,7 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, navigate]
+    [formData, navigate],
   );
 
   // --------------------------------------------------------
@@ -450,7 +449,7 @@ export default function Login() {
 
         // После успешной регистрации
         setSuccessMessage(
-          `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`
+          `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`,
         );
 
         // Очистка формы
@@ -468,6 +467,7 @@ export default function Login() {
           setActive(false);
           setSuccessMessage("");
         }, 5000);
+        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setErrors((prev) => ({
           ...prev,
@@ -477,7 +477,7 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, validateForm]
+    [formData, validateForm],
   );
 
   // --------------------------------------------------------
@@ -487,8 +487,7 @@ export default function Login() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-[#E5D9C6] to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#424E2B] dark:border-blue-400 mx-auto mb-4">
-          </div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#424E2B] dark:border-blue-400 mx-auto mb-4"></div>
           <h2 className="text-2xl font-bold text-[#424E2B] dark:text-white mb-2">
             Подтверждение email
           </h2>
@@ -549,21 +548,19 @@ export default function Login() {
           </div>
 
           <div
-            className={`shape2 absolute inset-0 transition-all duration-1000 ${
-              active ? "opacity-100" : "opacity-0"
-            }`}
+            className={`shape2 absolute inset-0 transition-all duration-1000 ${active ? "opacity-100" : "opacity-0"
+              }`}
           />
 
           <div className="relative flex">
             {/* Левый блок — Вход */}
             <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
-                active ? "opacity-0 -translate-x-full" : "opacity-100"
-              }`}
+              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${active ? "opacity-0 -translate-x-full" : "opacity-100"
+                }`}
             >
-              <div className="max-w-md mx-auto">
+              <div className="max-w-md mx-auto mt-15">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-[#424E2B] dark:text-white mb-3">
+                  <h2 className="text-3xl font-bold text-olive-dark dark:text-white mb-3">
                     Добро пожаловать
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300">
@@ -616,11 +613,10 @@ export default function Login() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full py-3 px-4 rounded-lg font-semibold transition-opacity shadow-lg ${
-                      isLoading
+                    className={`w-full py-3 px-4 rounded-lg font-semibold transition-opacity shadow-lg ${isLoading
                         ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
                         : "bg-linear-to-r from-[#424E2B] to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                    } text-white`}
+                      } text-white`}
                   >
                     {isLoading ? (
                       <span className="flex items-center justify-center gap-2">
@@ -651,9 +647,8 @@ export default function Login() {
 
             {/* Правый блок — Регистрация */}
             <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
-                active ? "opacity-100" : "opacity-0 translate-x-full"
-              }`}
+              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${active ? "opacity-100" : "opacity-0 translate-x-full"
+                }`}
             >
               <div className="max-w-md mx-auto">
                 <div className="text-center mb-8">
@@ -774,11 +769,10 @@ export default function Login() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className={`w-full py-3 px-4 mt-6 rounded-lg font-semibold transition-all shadow-lg ${
-                          isLoading
+                        className={`w-full py-3 px-4 mt-6 rounded-lg font-semibold transition-all shadow-lg ${isLoading
                             ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
                             : "bg-linear-to-r from-[#424E2B] to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                        } text-white`}
+                          } text-white`}
                       >
                         {isLoading ? (
                           <span className="flex items-center justify-center gap-2">
