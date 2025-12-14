@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faSignOutAlt, faCog } from "@fortawesome/free-solid-svg-icons";
+import { HashLink } from "react-router-hash-link";
 
 export function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -72,15 +73,16 @@ export function Header() {
             {/* Главное меню */}
             <div className="md:flex items-center space-x-8">
               {/* Главная */}
-              <Link
-                to="/"
+              <HashLink
+                smooth
+                to="/#top"
                 className="relative text-olive-dark dark:text-beige hover:text-olive-dark dark:hover:text-blue-400 font-medium transition-all duration-300 group"
               >
                 <span className="relative text-xl">
                   Главная
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-olive-dark dark:bg-blue-400 group-hover:w-full transition-all duration-300 rounded-full"></span>
                 </span>
-              </Link>
+              </HashLink>
 
               {/* Контакты */}
               <Link
@@ -94,15 +96,16 @@ export function Header() {
               </Link>
 
               {/* Туры */}
-              <a
-                href="/#tours"
+              <HashLink
+                smooth
+                to="/#tours"
                 className="relative text-olive-dark dark:text-beige hover:text-olive-dark dark:hover:text-blue-400 font-medium transition-all duration-300 group"
               >
                 <span className="relative text-xl">
                   Туры
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-olive-dark dark:bg-blue-400 group-hover:w-full transition-all duration-300 rounded-full"></span>
                 </span>
-              </a>
+              </HashLink>
             </div>
           </div>
 
@@ -118,7 +121,7 @@ export function Header() {
                   className="
                     flex items-center space-x-2
                     relative 
-                    bg-[#424E2B]
+                    bg-olive-dark
                     text-white 
                     px-4 py-2 
                     rounded-xl 
@@ -201,7 +204,7 @@ export function Header() {
                 to="/login"
                 className="
                   relative 
-                  bg-[#424E2B]
+                  bg-olive-dark
                   text-white 
                   px-6 py-2 
                   rounded-xl 
@@ -225,7 +228,7 @@ export function Header() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;

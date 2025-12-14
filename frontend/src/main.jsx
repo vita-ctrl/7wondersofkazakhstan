@@ -8,7 +8,7 @@ import Login from "./pages/Login.jsx";
 import Booking from "./pages/Booking.jsx";
 import Profile from "./pages/Profile.jsx"; // Импорт профиля
 import Layout from "./components/Layout.jsx";
-import Contacts from "./components/Contacts.jsx";
+import Contacts from "./pages/Contacts.jsx";
 import NotFoundPage from "./components/NotFound.jsx";
 import { getToken } from "./utils/auth"; // Импорт функции проверки токена
 
@@ -39,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
           <Route path="contacts" element={<Contacts />} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Login />} />
 
           {/* Добавьте этот маршрут */}
           <Route
@@ -54,5 +55,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

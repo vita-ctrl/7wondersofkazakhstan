@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { HashLink } from 'react-router-hash-link';
 
 
 export default function NotFoundPage() {
@@ -29,8 +30,9 @@ export default function NotFoundPage() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full"></div>
         </div>
 
-        <a
-          href="/#tours"
+        <HashLink
+        smooth
+          to="/#tours"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={`
@@ -63,7 +65,7 @@ export default function NotFoundPage() {
           </span>
 
           <div className="absolute inset-0 rounded-full bg-white opacity-0 group-active:opacity-20 group-active:animate-ping"></div>
-        </a>
+        </HashLink>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4 dark:text-gray-400 text-olive-dark">
           <a href='/contacts' className="hover:text-sage-green dark:hover:text-cyan-400 transition-colors duration-200 border border-olive-dark dark:border-gray-600 hover:border-sage-green dark:hover:border-cyan-400 px-4 py-2 rounded-lg">

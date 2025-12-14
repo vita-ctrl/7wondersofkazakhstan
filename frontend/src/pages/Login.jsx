@@ -1,5 +1,5 @@
 import { useState, useCallback, memo, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { replace, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -63,10 +63,11 @@ const InputField = memo(
         autofill:bg-transparent
         peer w-full bg-transparent border-b-2 
         pt-6 pb-2 px-2 outline-none transition-all
-        ${error
-              ? "border-red-500 text-red-500"
-              : "border-[#424E2B] dark:border-blue-400 text-[#424E2B] dark:text-white"
-            }
+        ${
+          error
+            ? "border-red-500 text-red-500"
+            : "border-olive-dark dark:border-blue-400 text-olive-dark dark:text-white"
+        }
       `}
           placeholder=" "
         />
@@ -91,7 +92,7 @@ const InputField = memo(
           icon={icon}
           className={`
         absolute right-2 top-6 transition-colors
-        ${error ? "text-red-500" : "text-[#424E2B] dark:text-blue-400"}
+        ${error ? "text-red-500" : "text-olive-dark dark:text-blue-400"}
       `}
         />
 
@@ -99,7 +100,7 @@ const InputField = memo(
           <button
             type="button"
             onClick={onToggle}
-            className="absolute right-10 top-6 text-gray-500 hover:text-[#424E2B] dark:hover:text-blue-400 transition-colors"
+            className="absolute right-10 top-6 text-gray-500 hover:text-olive-dark dark:hover:text-blue-400 transition-colors"
           >
             <FontAwesomeIcon icon={showPasswordIcon} />
           </button>
@@ -113,7 +114,7 @@ const InputField = memo(
         </p>
       )}
     </div>
-  ),
+  )
 );
 
 InputField.displayName = "InputField";
@@ -143,12 +144,13 @@ const PasswordStrengthIndicator = memo(({ password }) => {
           Сложность пароля:
         </span>
         <span
-          className={`font-medium ${strength < 40
+          className={`font-medium ${
+            strength < 40
               ? "text-red-500"
               : strength < 70
-                ? "text-yellow-500"
-                : "text-green-500"
-            }`}
+              ? "text-yellow-500"
+              : "text-green-500"
+          }`}
         >
           {getText()}
         </span>
@@ -166,7 +168,20 @@ const PasswordStrengthIndicator = memo(({ password }) => {
 PasswordStrengthIndicator.displayName = "PasswordStrengthIndicator";
 
 export default function Login() {
-  const [active, setActive] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isRegisterPath = location.pathname === "/register";
+  const [active, setActive] = useState(isRegisterPath);
+
+  useEffect(() => {
+    if (location.pathname === "/register") {
+      setActive(true);
+    } else if (location.pathname === "/login") {
+      setActive(false);
+    }
+  }, [location.pathname]);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -183,16 +198,15 @@ export default function Login() {
   const [isVerifyingToken, setIsVerifyingToken] = useState(false);
   const requested = useRef(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const redirectUrl = location.state?.redirectUrl;
 
   // --------------------------------------------------------
   // ОБРАБОТКА ТОКЕНА ПОДТВЕРЖДЕНИЯ
   // --------------------------------------------------------
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const params = new URLSearchParams(window.location.search);
     const verifyToken = params.get("verify_token");
 
@@ -202,7 +216,7 @@ export default function Login() {
     } else {
       // Проверяем, если пользователь уже авторизован
       const existingToken = localStorage.getItem("token");
-      if (existingToken) {
+      if (existingToken && !redirectUrl) {
         navigate("/");
       }
     }
@@ -304,8 +318,11 @@ export default function Login() {
         }));
       }
     },
-    [errors],
+    [errors]
   );
+
+  const dateId = location.state?.dateId || null;
+  const participants = location.state?.participants || 1;
 
   // --------------------------------------------------------
   // ВХОД
@@ -371,7 +388,7 @@ export default function Login() {
               "user",
               JSON.stringify({
                 email: formData.loginEmail,
-              }),
+              })
             );
           }
 
@@ -380,7 +397,12 @@ export default function Login() {
 
           setSuccessMessage("✅ Вход выполнен успешно!");
           setTimeout(() => {
-            navigate("/");
+            if (redirectUrl)
+              navigate(redirectUrl, {
+                replace: true,
+                state: { dateId: dateId, participants: participants },
+              });
+            else navigate("/", { replace: true });
           }, 1000);
         }
         // eslint-disable-next-line no-unused-vars
@@ -393,7 +415,7 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, navigate],
+    [formData, navigate]
   );
 
   // --------------------------------------------------------
@@ -449,7 +471,7 @@ export default function Login() {
 
         // После успешной регистрации
         setSuccessMessage(
-          `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`,
+          `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`
         );
 
         // Очистка формы
@@ -477,7 +499,7 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, validateForm],
+    [formData, validateForm]
   );
 
   // --------------------------------------------------------
@@ -485,10 +507,10 @@ export default function Login() {
   // --------------------------------------------------------
   if (isVerifyingToken) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-[#E5D9C6] to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#424E2B] dark:border-blue-400 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-[#424E2B] dark:text-white mb-2">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-olive-dark dark:border-blue-400 mx-auto mb-4"></div>
+          <h2 className="text-2xl font-bold text-olive-dark dark:text-white mb-2">
             Подтверждение email
           </h2>
           <p className="text-gray-600 dark:text-gray-300">Проверяем токен...</p>
@@ -498,7 +520,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#E5D9C6] to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 relative overflow-hidden">
       {/* Уведомления */}
       {successMessage && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
@@ -537,8 +559,11 @@ export default function Login() {
         >
           <div className="absolute top-6 left-6 z-20">
             <button
-              onClick={() => setActive(!active)}
-              className="flex items-center gap-2 text-[#424E2B] dark:text-gray-300 hover:text-[#2a351c] dark:hover:text-white transition-colors"
+              onClick={() => {
+                const newPath = active ? "/login" : "/register";
+                navigate(newPath, { replace: true, state: location.state });
+              }}
+              className="flex items-center gap-2 text-olive-dark dark:text-gray-300 hover:text-[#2a351c] dark:hover:text-white transition-colors"
             >
               <FontAwesomeIcon icon={faArrowLeft} />
               <span className="hidden sm:inline">
@@ -548,15 +573,17 @@ export default function Login() {
           </div>
 
           <div
-            className={`shape2 absolute inset-0 transition-all duration-1000 ${active ? "opacity-100" : "opacity-0"
-              }`}
+            className={`shape2 absolute inset-0 transition-all duration-1000 ${
+              active ? "opacity-100" : "opacity-0"
+            }`}
           />
 
           <div className="relative flex">
             {/* Левый блок — Вход */}
             <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${active ? "opacity-0 -translate-x-full" : "opacity-100"
-                }`}
+              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
+                active ? "opacity-0 -translate-x-full" : "opacity-100"
+              }`}
             >
               <div className="max-w-md mx-auto mt-15">
                 <div className="text-center mb-8">
@@ -592,19 +619,19 @@ export default function Login() {
                     showPasswordIcon={showLoginPassword ? faEyeSlash : faEye}
                   />
 
-                  <div className="flex items-center justify-between text-sm">
-                    <label className="flex items-center gap-2 cursor-pointer">
+                  <div className="flex items-center justify-end text-sm">
+                    {/* <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300 text-[#424E2B] focus:ring-[#424E2B]"
+                        className="rounded border-gray-300 text-olive-dark focus:ring-olive-dark"
                       />
                       <span className="text-gray-600 dark:text-gray-300">
                         Запомнить меня
                       </span>
-                    </label>
+                    </label> */}
                     <button
                       type="button"
-                      className="text-[#424E2B] dark:text-blue-400 hover:underline"
+                      className="text-olive-dark dark:text-blue-400 hover:underline"
                     >
                       Забыли пароль?
                     </button>
@@ -613,10 +640,11 @@ export default function Login() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full py-3 px-4 rounded-lg font-semibold transition-opacity shadow-lg ${isLoading
+                    className={`w-full py-3 px-4 rounded-lg font-semibold transition-opacity shadow-lg ${
+                      isLoading
                         ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
-                        : "bg-linear-to-r from-[#424E2B] to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                      } text-white`}
+                        : "bg-linear-to-r from-olive-dark to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
+                    } text-white`}
                   >
                     {isLoading ? (
                       <span className="flex items-center justify-center gap-2">
@@ -635,8 +663,13 @@ export default function Login() {
                     Нет аккаунта?{" "}
                     <button
                       type="button"
-                      onClick={() => setActive(true)}
-                      className="font-semibold text-[#424E2B] dark:text-blue-400 hover:underline"
+                      onClick={() =>
+                        navigate("/register", {
+                          replace: true,
+                          state: location.state,
+                        })
+                      }
+                      className="font-semibold text-olive-dark dark:text-blue-400 hover:underline"
                     >
                       Зарегистрироваться
                     </button>
@@ -647,12 +680,13 @@ export default function Login() {
 
             {/* Правый блок — Регистрация */}
             <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${active ? "opacity-100" : "opacity-0 translate-x-full"
-                }`}
+              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
+                active ? "opacity-100" : "opacity-0 translate-x-full"
+              }`}
             >
               <div className="max-w-md mx-auto">
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-[#424E2B] dark:text-white mb-3">
+                  <h2 className="text-3xl font-bold text-olive-dark dark:text-white mb-3">
                     Создать аккаунт
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300">
@@ -743,7 +777,7 @@ export default function Login() {
                           type="checkbox"
                           id="terms"
                           required
-                          className="mt-1 rounded border-gray-300 text-[#424E2B] focus:ring-[#424E2B]"
+                          className="mt-1 rounded border-gray-300 text-olive-dark focus:ring-olive-dark"
                         />
                         <label
                           htmlFor="terms"
@@ -752,14 +786,14 @@ export default function Login() {
                           Я соглашаюсь с{" "}
                           <button
                             type="button"
-                            className="text-[#424E2B] dark:text-blue-400 hover:underline"
+                            className="text-olive-dark dark:text-blue-400 hover:underline"
                           >
                             условиями использования
                           </button>{" "}
                           и{" "}
                           <button
                             type="button"
-                            className="text-[#424E2B] dark:text-blue-400 hover:underline"
+                            className="text-olive-dark dark:text-blue-400 hover:underline"
                           >
                             политикой конфиденциальности
                           </button>
@@ -769,10 +803,11 @@ export default function Login() {
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className={`w-full py-3 px-4 mt-6 rounded-lg font-semibold transition-all shadow-lg ${isLoading
+                        className={`w-full py-3 px-4 mt-6 rounded-lg font-semibold transition-all shadow-lg ${
+                          isLoading
                             ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
-                            : "bg-linear-to-r from-[#424E2B] to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                          } text-white`}
+                            : "bg-linear-to-r from-olive-dark to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
+                        } text-white`}
                       >
                         {isLoading ? (
                           <span className="flex items-center justify-center gap-2">
@@ -791,8 +826,13 @@ export default function Login() {
                         Уже есть аккаунт?{" "}
                         <button
                           type="button"
-                          onClick={() => setActive(false)}
-                          className="font-semibold text-[#424E2B] dark:text-blue-400 hover:underline"
+                          onClick={() =>
+                            navigate("/login", {
+                              replace: true,
+                              state: location.state,
+                            })
+                          }
+                          className="font-semibold text-olive-dark dark:text-blue-400 hover:underline"
                         >
                           Войти
                         </button>

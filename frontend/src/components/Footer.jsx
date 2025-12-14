@@ -16,9 +16,10 @@ import {
   faXTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Logo from "../logo.svg";
 import LogoDark from "../logo_dark.svg";
+import { HashLink } from "react-router-hash-link";
 
 export function Footer() {
   const [formData, setFormData] = useState({
@@ -38,6 +39,20 @@ export function Footer() {
 
   const lastSubmitRef = useRef(0);
   const SUBMIT_COOLDOWN = 5000; // 5 секунд между запросами
+
+  // Подключаем шрифты динамически
+  useEffect(() => {
+    const fontLink = document.createElement("link");
+    fontLink.rel = "stylesheet";
+    fontLink.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap";
+    document.head.appendChild(fontLink);
+
+    return () => {
+      if (fontLink.parentNode) {
+        document.head.removeChild(fontLink);
+      }
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -163,7 +178,7 @@ export function Footer() {
   };
 
   const navigationLinks = [
-    { href: "/", label: "Главная" },
+    { href: "/#top", label: "Главная" },
     { href: "/#tours", label: "Туры" },
     { href: "/#about", label: "О нас" },
     { href: "/#reviews", label: "Отзывы" },
@@ -200,7 +215,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="py-16 relative overflow-hidden text-forest-dark dark:text-taupe bg-taupe dark:bg-[#0E1624]">
+    <footer className="py-16 relative overflow-hidden text-forest-dark dark:text-taupe bg-taupe dark:bg-[#0E1624] font-['Inter']">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* ЛОГО */}
@@ -208,13 +223,15 @@ export function Footer() {
             <img
               src={Logo}
               alt="KazWonder"
-              className="w-40 mb-4 block dark:hidden"
+              className="w-40 mb-4 block dark:hidden select-none"
+              draggable={false}
             />
 
             <img
               src={LogoDark}
               alt="KazWonder"
-              className="w-40 mb-4 hidden dark:block"
+              className="w-40 mb-4 hidden dark:block select-none"
+              draggable={false}
             />
 
             <p className="leading-relaxed text-sm mb-6 max-w-md text-gray-600 dark:text-taupe">
@@ -241,7 +258,7 @@ export function Footer() {
 
           {/* ПРЕИМУЩЕСТВА */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe">
+            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe font-['Playfair_Display']">
               Почему выбирают нас
             </h3>
             <ul className="space-y-4">
@@ -268,18 +285,19 @@ export function Footer() {
 
           {/* НАВИГАЦИЯ */}
           <div className="lg:col-span-2">
-            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe">
+            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe font-['Playfair_Display']">
               Навигация
             </h3>
             <ul className="space-y-3">
               {navigationLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
+                  <HashLink
+                    smooth
+                    to={link.href}
                     className="hover:text-forest-darker dark:hover:text-sand transition-all block py-1 text-forest-dark dark:text-taupe"
                   >
                     {link.label}
-                  </a>
+                  </HashLink>
                 </li>
               ))}
             </ul>
@@ -287,7 +305,7 @@ export function Footer() {
 
           {/* ФОРМА */}
           <div className="lg:col-span-3">
-            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe">
+            <h3 className="font-semibold text-lg mb-6 text-forest-dark dark:text-taupe font-['Playfair_Display']">
               Эксклюзивные подборки туров
             </h3>
 
@@ -413,7 +431,7 @@ export function Footer() {
           {/* Модальное окно */}
           <div
             className="relative bg-beige dark:bg-[#1a2435] rounded-2xl p-8 max-w-md w-full mx-4 
-                         shadow-2xl transform transition-all animate-scaleIn"
+                         shadow-2xl transform transition-all animate-scaleIn font-['Inter']"
           >
             {/* Иконка */}
             <div
@@ -429,7 +447,7 @@ export function Footer() {
 
             {/* Заголовок */}
             <h2
-              className={`text-2xl font-bold text-center mb-3 ${
+              className={`text-2xl font-bold text-center mb-3 font-['Playfair_Display'] ${
                 modalData.isError
                   ? "text-red-600 dark:text-red-400"
                   : "text-green-600 dark:text-green-400"

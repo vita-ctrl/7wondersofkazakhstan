@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// я 6 заданий по омт сделал, делаю седь
-// круто я пока ебусь с этим сайтом
-// я уже заебался 
-// доделаешь ОМТ помоги с сайтом а я пойду делать омт ок
 import {
   faStar,
   faMapMarkerAlt,
@@ -51,14 +47,24 @@ export default function Tours() {
 // -----------------------------------------------------------
 //               КОМПОНЕНТ СТРАНИЦЫ ТУРА
 // -----------------------------------------------------------
-// -----------------------------------------------------------
-//               КОМПОНЕНТ СТРАНИЦЫ ТУРА
-// -----------------------------------------------------------
 function ToursDetail(props) {
   const images = props.images || [];
-
   const [selectedImage, setSelectedImage] = useState(0);
   const [isLightbox, setIsLightbox] = useState(false);
+
+  // Подключаем шрифты динамически
+  useEffect(() => {
+    const fontLink = document.createElement("link");
+    fontLink.rel = "stylesheet";
+    fontLink.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap";
+    document.head.appendChild(fontLink);
+
+    return () => {
+      if (fontLink.parentNode) {
+        document.head.removeChild(fontLink);
+      }
+    };
+  }, []);
 
   // смена изображений
   const nextImage = () => {
@@ -105,7 +111,7 @@ function ToursDetail(props) {
   const handleLightboxBackdropClick = () => setIsLightbox(false);
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
+    <div className="min-h-screen dark:bg-gray-900 font-['Inter']">
       <section className="pt-16 pb-12 max-w-[1650px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -124,7 +130,7 @@ function ToursDetail(props) {
                 />
 
                 {/* Счётчик */}
-                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+                <div className="absolute bottom-4 left-4 bg-black/70 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm font-['Inter']">
                   {selectedImage + 1} / {images.length}
                 </div>
               </div>
@@ -149,12 +155,12 @@ function ToursDetail(props) {
 
             {/* ОПИСАНИЕ ТУРА */}
             <div className="bg-cream dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-['Playfair_Display']">
                 {props.title}
               </h1>
 
               {/* Рейтинг */}
-              <div className="flex items-center mb-6">
+              <div className="flex items-center mb-6 font-['Inter']">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <FontAwesomeIcon
@@ -179,7 +185,7 @@ function ToursDetail(props) {
 
               {/* Детали */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+                <div className="flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl font-['Inter']">
                   <FontAwesomeIcon
                     icon={faMapMarkerAlt}
                     className="text-blue-600 dark:text-blue-400 text-xl mr-3"
@@ -194,7 +200,7 @@ function ToursDetail(props) {
                   </div>
                 </div>
 
-                <div className="flex items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
+                <div className="flex items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl font-['Inter']">
                   <FontAwesomeIcon
                     icon={faClock}
                     className="text-green-600 dark:text-green-400 text-xl mr-3"
@@ -209,7 +215,7 @@ function ToursDetail(props) {
                   </div>
                 </div>
 
-                <div className="flex items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl">
+                <div className="flex items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl font-['Inter']">
                   <FontAwesomeIcon
                     icon={faUsers}
                     className="text-purple-600 dark:text-purple-400 text-xl mr-3"
@@ -226,10 +232,10 @@ function ToursDetail(props) {
               </div>
 
               {/* Текст описания */}
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-['Playfair_Display']">
                 Описание тура
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-4 font-['Inter']">
                 {props.description.map((text, index) => (
                   <p
                     key={index}
@@ -243,7 +249,7 @@ function ToursDetail(props) {
 
             {/* КАРТА */}
             <div className="bg-cream dark:bg-gray-800 rounded-2xl shadow-lg p-6 mt-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-['Playfair_Display']">
                 Где находится
               </h2>
 
@@ -254,7 +260,7 @@ function ToursDetail(props) {
 
             {/* ОТЗЫВЫ */}
             <div className="bg-cream dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white font-['Playfair_Display']">
                 Отзывы
               </h2>
               <ReviewsInfinite {...props.reviews} />
@@ -268,11 +274,11 @@ function ToursDetail(props) {
 
               {/* Важная информация */}
               <div className="bg-cream dark:bg-gray-800 rounded-2xl shadow-lg p-6 mt-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 font-['Playfair_Display']">
                   Важная информация
                 </h3>
 
-                <ul className="space-y-3">
+                <ul className="space-y-3 font-['Inter']">
                   <li className="flex items-start">
                     <div className="w-2 h-2 bg-sage-green dark:bg-blue-400 rounded-full mt-2 mr-3"></div>
                     <span className="text-gray-700 dark:text-gray-300">
@@ -325,7 +331,7 @@ function ToursDetail(props) {
             <button
               onClick={prevImage}
               className="absolute left-0 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full 
-              bg-white/20 hover:bg-white/40 text-white text-4xl flex items-center justify-center"
+              bg-white/20 hover:bg-white/40 text-white text-4xl flex items-center justify-center font-['Inter']"
             >
               <FontAwesomeIcon className="text-2xl" icon={faArrowLeft} />
             </button>
@@ -334,13 +340,13 @@ function ToursDetail(props) {
             <button
               onClick={nextImage}
               className="absolute right-0 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full 
-              bg-white/20 hover:bg-white/40 text-white text-4xl flex items-center justify-center"
+              bg-white/20 hover:bg-white/40 text-white text-4xl flex items-center justify-center font-['Inter']"
             >
               <FontAwesomeIcon className="text-2xl" icon={faArrowRight} />
             </button>
 
             {/* Счётчик */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm px-4 py-2 rounded-full">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm px-4 py-2 rounded-full font-['Inter']">
               {selectedImage + 1} / {images.length}
             </div>
           </div>

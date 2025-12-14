@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Carousel(props) {
   const trackRef = useRef(null);
@@ -106,13 +107,14 @@ export default function Carousel(props) {
                 </span>
 
                 {/* Кнопка справа */}
-                <a
-                  href={item.url}
+                <Link
+                  to={item.url}
                   onClick={(e) => e.stopPropagation()}
                   className="ml-auto px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-olive-dark text-beige dark:bg-blue-500 dark:text-white"
+                  draggable={false}
                 >
                   Подробнее
-                </a>
+                </Link>
               </div>
             </div>
           ))}

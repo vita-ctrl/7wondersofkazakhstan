@@ -84,7 +84,7 @@ export default function Index() {
   return (
     <>
       {/* HERO */}
-      <div className="relative w-full h-[600px] overflow-hidden">
+      <div id="top" className="relative w-full h-[600px] overflow-hidden">
         <img
           src="hero.jpg"
           alt="Kazakhstan"

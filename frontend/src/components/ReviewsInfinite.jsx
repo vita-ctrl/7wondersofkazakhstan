@@ -63,7 +63,7 @@ export function ReviewsInfinite(props) {
   // Показываем загрузку при первоначальной загрузке
   if (isInitialLoading) {
     return (
-      <div className="my-16 flex flex-col items-center justify-center py-20">
+      <div className="my-8 flex flex-col items-center justify-center py-20">
         <div className="w-12 h-12 border-4 border-gray-200 dark:border-gray-700 border-t-blue-500 dark:border-t-blue-400 rounded-full animate-spin mb-4"></div>
         <p className="text-gray-600 dark:text-gray-400">Загружаем отзывы...</p>
       </div>
@@ -73,14 +73,14 @@ export function ReviewsInfinite(props) {
   // Показываем ошибку
   if (error) {
     return (
-      <div className="my-16 flex flex-col items-center justify-center py-20">
+      <div className="my-8 flex flex-col items-center justify-center py-20">
         <p className="text-red-600 dark:text-red-400">Ошибка: {error}</p>
       </div>
     );
   }
 
   return (
-    <div className="my-16 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 items-start">
+    <div className="my-8 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-10 items-start">
       <div className="relative">
         <div className="w-full max-w-[900px] space-y-6 relative overflow-hidden">
           {allReviews.slice(0, visibleCount).map((r) => (

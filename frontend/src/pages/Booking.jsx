@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NotFoundPage from "../components/NotFound";
 import LoadingPage from "../components/LoadingPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -84,6 +84,66 @@ function BookingDetail(props) {
   const [travelers, setTravelers] = useState([]);
   const [openTraveler, setOpenTraveler] = useState(null);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const checkAuth = () => {
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("user");
+
+    if (token && userData) {
+      setIsAuthenticated(true);
+      setUser(JSON.parse(userData));
+    } else {
+      setIsAuthenticated(false);
+      setUser(null);
+    }
+
+    setAuthChecked(true); // проверка завершена
+  };
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    checkAuth();
+
+    // Слушаем события авторизации/выхода
+    window.addEventListener("authChange", checkAuth);
+
+    return () => window.removeEventListener("authChange", checkAuth);
+  }, []);
+
+  useEffect(() => {
+    if (authChecked && !isAuthenticated) {
+      navigate("/login", {
+        replace: true,
+        state: {
+          redirectUrl: location.pathname + location.search,
+          dateId: currentDate.id,
+          participants,
+        },
+      });
+    }
+
+    if (user) {
+      setPrimary({
+        firstName: user.first_name || "",
+        lastName: user.last_name || "",
+        email: user.email || "",
+        phone: user.phone || "",
+      });
+    }
+  }, [
+    authChecked,
+    isAuthenticated,
+    navigate,
+    location,
+    currentDate.id,
+    participants,
+  ]);
+
   useEffect(() => {
     const newTravelers = [];
 
@@ -108,8 +168,11 @@ function BookingDetail(props) {
     phone: "",
   });
   const [dob, setDob] = useState("");
-
   const [gender, setGender] = useState("male");
+
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
 
   const isValidDate = (str) => {
     const [dd, mm, yyyy] = str.split(".").map(Number);
@@ -136,9 +199,11 @@ function BookingDetail(props) {
     return true;
   };
   const [errors, setErrors] = useState({});
+
   const validatePrimary = () => {
     const newErrors = {};
 
+    // Проверка основного путешественника
     if (!primary.firstName.trim()) newErrors.firstName = "Введите имя";
     if (!primary.lastName.trim()) newErrors.lastName = "Введите фамилию";
 
@@ -148,7 +213,12 @@ function BookingDetail(props) {
       newErrors.email = "Некорректный email";
     }
 
-    if (!primary.phone.trim() || primary.phone.includes("_")) {
+    // Проверка телефона с маской +7 (7__) ___-__-__
+    if (
+      !primary.phone.trim() ||
+      primary.phone.includes("_") ||
+      primary.phone.length !== 18
+    ) {
       newErrors.phone = "Введите телефон полностью";
     }
 
@@ -156,17 +226,60 @@ function BookingDetail(props) {
       newErrors.dob = "Введите корректную дату рождения";
     }
 
+    // Проверка данных карты
+    if (!cardNumber || cardNumber.replace(/\s/g, "").length !== 16) {
+      newErrors.cardNumber = "Введите корректный номер карты";
+    }
+
+    if (!cardExpiry || !/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+      newErrors.cardExpiry = "Введите срок действия в формате ММ/ГГ";
+    }
+
+    if (!cardCVC || cardCVC.length !== 3) {
+      newErrors.cardCVC = "Введите CVC код";
+    }
+
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0; // true если ошибок нет
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const returnIdtoScroll = () => {
+    // Проверка основного путешественника
+    const primaryInvalid =
+      !primary.firstName.trim() ||
+      !primary.lastName.trim() ||
+      !primary.email.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(primary.email) ||
+      !primary.phone.trim() ||
+      primary.phone.includes("_") ||
+      primary.phone.length !== 18 ||
+      !dob ||
+      dob.length !== 10 ||
+      !isValidBirthDate(dob, 18);
+
+    if (primaryInvalid) return "top";
+
+    // Проверка данных карты
+    const cardInvalid =
+      !cardNumber ||
+      cardNumber.replace(/\s/g, "").length !== 16 ||
+      !cardExpiry ||
+      !/^\d{2}\/\d{2}$/.test(cardExpiry) ||
+      !cardCVC ||
+      cardCVC.length !== 3;
+
+    if (cardInvalid) return "card";
+
+    return null;
   };
 
   return (
-    <div className="min-h-screen pt-20 pb-10 px-5">
+    <div id="top" className="min-h-screen pt-20 pb-10 px-5">
       <div className="grid grid-cols-12 gap-20 max-w-7xl mx-auto ">
         <div className="col-span-8">
-          <div className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-6 dark:border dark:border-gray-700 mb-6">
-            <p className="font-semibold text-lg text-olive-dark dark:text-gray-100 mb-2">
+          <div className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-8 dark:border dark:border-gray-700 mb-6">
+            <p className="font-semibold text-xl text-olive-dark dark:text-gray-100 mb-4">
               Даты
             </p>
             <div className="flex gap-4 flex-col md:flex-row">
@@ -260,9 +373,9 @@ function BookingDetail(props) {
               </div>
             </div>
           </div>
-          <div className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-6 dark:border dark:border-gray-700 mb-6">
+          <div className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-8 dark:border dark:border-gray-700 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <p className="font-semibold text-lg text-olive-dark dark:text-gray-100">
+              <p className="font-semibold text-xl text-olive-dark dark:text-gray-100">
                 Участники
               </p>
               <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
@@ -286,7 +399,7 @@ function BookingDetail(props) {
               </div>
             </div>
 
-            <p className="text-olive-dark dark:text-gray-100">
+            <p className="text-olive-dark text-lg dark:text-gray-100">
               Основной путешественник
               <span className="select-none text-red-600">*</span>
             </p>
@@ -299,7 +412,7 @@ function BookingDetail(props) {
                     setPrimary({ ...primary, firstName: e.target.value })
                   }
                   placeholder="Имя"
-                  className="p-3 w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -318,7 +431,7 @@ function BookingDetail(props) {
                     setPrimary({ ...primary, lastName: e.target.value })
                   }
                   placeholder="Фамилия"
-                  className="p-3 w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -337,7 +450,7 @@ function BookingDetail(props) {
                     setPrimary({ ...primary, email: e.target.value })
                   }
                   placeholder="Email"
-                  className="p-3 w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -358,7 +471,7 @@ function BookingDetail(props) {
                     setPrimary({ ...primary, phone: e.target.value })
                   }
                   placeholder="Телефон"
-                  className="p-3 w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -390,21 +503,19 @@ function BookingDetail(props) {
                     }
                   }}
                   placeholder="Дата рождения"
-                  className="p-3 w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
              text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
              placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
              border border-transparent focus:border-forest-dark dark:focus:border-blue-400
              focus:outline-none transition-all disabled:opacity-50"
                 />
                 {errors.dob && (
-                  <p className="mt-1 text-red-500 text-xs ml-2">
-                    {errors.dob}
-                  </p>
+                  <p className="mt-1 text-red-500 text-xs ml-2">{errors.dob}</p>
                 )}
               </div>
 
               <div className="flex items-center justify-center bg-cream dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 text-forest-dark dark:text-taupe py-3 px-4 w-fit h-fit">
-                <label className="flex items-center gap-2 pr-6 border-r border-gray-300 dark:border-gray-600">
+                <label className="flex items-center gap-2 pr-6 border-r border-gray-300 dark:border-gray-600 text-base">
                   <input
                     type="radio"
                     name="gender"
@@ -421,7 +532,7 @@ function BookingDetail(props) {
                   Мужской
                 </label>
 
-                <label className="flex items-center gap-2 pl-6">
+                <label className="flex items-center gap-2 pl-6 text-base">
                   <input
                     type="radio"
                     name="gender"
@@ -444,7 +555,7 @@ function BookingDetail(props) {
                 return (
                   <div
                     key={t.id}
-                    className="col-span-full w-full mt-6 bg-cream dark:bg-gray-800 rounded-xl shadow-xl dark:border dark:border-gray-700 p-6"
+                    className="col-span-full w-full mt-6 bg-cream dark:bg-gray-800 rounded-xl shadow-xl dark:border dark:border-gray-700 p-8"
                   >
                     <div
                       className="cursor-pointer"
@@ -452,7 +563,7 @@ function BookingDetail(props) {
                     >
                       {/* Заголовок */}
                       <div className="flex items-center justify-between">
-                        <p className="text-olive-dark dark:text-gray-100">
+                        <p className="text-olive-dark text-base dark:text-gray-100">
                           {t.id}-й путешественник
                         </p>
                         <div className="flex items-center">
@@ -486,7 +597,7 @@ function BookingDetail(props) {
                             setTravelers(updated);
                           }}
                           placeholder="Имя"
-                          className="p-3 rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                          className="p-3 text-base rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -501,7 +612,7 @@ function BookingDetail(props) {
                             setTravelers(updated);
                           }}
                           placeholder="Фамилия"
-                          className="p-3 rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                          className="p-3 text-base rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -530,7 +641,7 @@ function BookingDetail(props) {
                             setTravelers(updated);
                           }}
                           placeholder="Дата рождения"
-                          className="p-3 rounded-xl bg-vanilla dark:bg-[#1a2435] 
+                          className="p-3 text-base rounded-xl bg-vanilla dark:bg-[#1a2435] 
                            text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
                            placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
                            border border-transparent focus:border-forest-dark dark:focus:border-blue-400
@@ -539,7 +650,7 @@ function BookingDetail(props) {
 
                         {/* Пол */}
                         <div className="flex items-center justify-center bg-cream dark:bg-gray-800 rounded-xl border border-gray-300 dark:border-gray-600 text-forest-dark dark:text-taupe py-3 px-4 w-fit h-fit">
-                          <label className="flex items-center gap-2 pr-6 border-r border-gray-300 dark:border-gray-600">
+                          <label className="flex items-center gap-2 pr-6 border-r border-gray-300 dark:border-gray-600 text-base">
                             <input
                               type="radio"
                               checked={t.gender === "male"}
@@ -558,7 +669,7 @@ function BookingDetail(props) {
                             Мужской
                           </label>
 
-                          <label className="flex items-center gap-2 pl-6">
+                          <label className="flex items-center gap-2 pl-6 text-base">
                             <input
                               type="radio"
                               checked={t.gender === "female"}
@@ -584,7 +695,77 @@ function BookingDetail(props) {
               })}
             </div>
           </div>
-          <div className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-6 dark:border dark:border-gray-700"></div>
+          <div
+            id="card"
+            className="bg-cream dark:bg-gray-800 rounded-xl shadow-xl p-8 dark:border dark:border-gray-700"
+          >
+            <p class="font-semibold text-xl text-olive-dark dark:text-gray-100 mb-4">
+              Оплата<span class="select-none text-red-600">*</span>
+            </p>
+            {/* Блок данных карты */}
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <InputMask
+                  mask="0000 0000 0000 0000"
+                  replacement={{ 0: /\d/ }}
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value)}
+                  placeholder="Номер карты"
+                  className="p-3 text-base w-full rounded-xl bg-vanilla dark:bg-[#1a2435] 
+      text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
+      placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
+      border border-transparent focus:border-forest-dark dark:focus:border-blue-400
+      focus:outline-none transition-all"
+                />
+                {errors.cardNumber && (
+                  <p className="mt-1 text-red-500 text-xs ml-2">
+                    {errors.cardNumber}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex gap-4">
+                <div className="w-full">
+                  <InputMask
+                    mask="00/00"
+                    replacement={{ 0: /\d/ }}
+                    value={cardExpiry}
+                    onChange={(e) => setCardExpiry(e.target.value)}
+                    placeholder="ММ/ГГ"
+                    className="p-3 w-full text-base rounded-xl bg-vanilla dark:bg-[#1a2435] 
+        text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
+        placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
+        border border-transparent focus:border-forest-dark dark:focus:border-blue-400
+        focus:outline-none transition-all"
+                  />
+                  {errors.cardExpiry && (
+                    <p className="mt-1 text-red-500 text-xs ml-2">
+                      {errors.cardExpiry}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full">
+                  <InputMask
+                    mask="000"
+                    replacement={{ 0: /\d/ }}
+                    value={cardCVC}
+                    onChange={(e) => setCardCVC(e.target.value)}
+                    placeholder="CVC"
+                    className="p-3 w-full text-base rounded-xl bg-vanilla dark:bg-[#1a2435] 
+        text-forest-dark dark:text-taupe shadow-xs focus:shadow-xl
+        placeholder:text-forest-dark/60 dark:placeholder:text-taupe/60
+        border border-transparent focus:border-forest-dark dark:focus:border-blue-400
+        focus:outline-none transition-all"
+                  />
+                  {errors.cardCVC && (
+                    <p className="mt-1 text-red-500 text-xs ml-2">
+                      {errors.cardCVC}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="col-span-4">
           <div className="sticky top-18">
@@ -665,10 +846,18 @@ function BookingDetail(props) {
                 <button
                   onClick={() => {
                     if (!validatePrimary()) {
-                      // Скроллим к форме
-
+                      const formElement = document.getElementById(
+                        returnIdtoScroll()
+                      );
+                      if (formElement) {
+                        formElement.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
+                      }
                       return;
                     }
+                    // переход к оплате
                   }}
                   className="w-full cursor-pointer py-2.5 rounded-xl bg-sage-green border-2 border-sage-green dark:border-blue-400 hover:bg-cream dark:hover:bg-gray-800 dark:bg-blue-400 hover:text-sage-green dark:hover:text-blue-400 text-white font-semibold transition duration-300"
                 >
