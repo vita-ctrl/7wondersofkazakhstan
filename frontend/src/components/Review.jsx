@@ -6,7 +6,7 @@ export function Review(props) {
   const maximumRating = 5;
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md testimonial-card transition-colors duration-300">
+    <div className="font-['Inter'] bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md testimonial-card transition-colors duration-300">
       <div className="flex items-center mb-4">
         <img
           src={props.logo}
@@ -18,16 +18,17 @@ export function Review(props) {
             {props.name}
           </h4>
 
-          {/* динамические звезды */}
           <div className="flex text-yellow-400">
             {[...Array(props.rating)].map((_, i) => (
               <FontAwesomeIcon
+                key={`full-${i}`}
                 className="text-yellow-400 text-xs"
                 icon={faStar}
               />
             ))}
             {[...Array(maximumRating - props.rating)].map((_, i) => (
               <FontAwesomeIcon
+                key={`empty-${i}`}
                 className="text-yellow-400 text-xs"
                 icon={faStarRegular}
               />

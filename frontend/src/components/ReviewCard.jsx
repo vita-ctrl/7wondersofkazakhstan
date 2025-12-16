@@ -7,7 +7,7 @@ import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 export default function ReviewCard({ logo, name, rating, text }) {
   return (
-    <div className="bg-cream dark:bg-gray-800 backdrop-blur-lg shadow-xl rounded-3xl p-5 border border-white/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group relative overflow-hidden">
+    <div className="font-['Inter'] bg-white dark:bg-[#1a2435] rounded-3xl p-5 border border-black/5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-300 group relative overflow-hidden">
       <div className="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-blue-500/10 to-purple-500/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-110 transition-transform duration-300"></div>
 
       <div className="flex items-center gap-3 mb-4 relative z-10">
@@ -23,18 +23,20 @@ export default function ReviewCard({ logo, name, rating, text }) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="font-bold text-gray-800 dark:text-beige text-lg truncate">{name}</p>
+          <p className="font-bold text-gray-800 dark:text-beige text-lg truncate">
+            {name}
+          </p>
           <div className="flex">
             {[...Array(rating)].map((_, i) => (
               <FontAwesomeIcon
-                key={i}
+                key={`full-${i}`}
                 icon={faStar}
                 className="text-yellow-400"
               />
             ))}
             {[...Array(5 - rating)].map((_, i) => (
               <FontAwesomeIcon
-                key={i}
+                key={`empty-${i}`}
                 icon={faStarRegular}
                 className="text-gray-400"
               />

@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 
 export default function MapComponent(props) {
   return (
-    <>
+    <div className="font-['Inter']">
       <MapContainer
         style={{ height: props.height, width: "100%", zIndex: 0 }}
         center={[props.lat, props.long]}
@@ -18,6 +18,6 @@ export default function MapComponent(props) {
           <Popup>{props.popup}</Popup>
         </Marker>
       </MapContainer>
-    </>
+    </div>
   );
 }

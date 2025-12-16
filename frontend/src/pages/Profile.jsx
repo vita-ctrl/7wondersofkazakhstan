@@ -28,8 +28,6 @@ const Profile = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     // Проверяем авторизацию
     const token = getToken();
     if (!token) {

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Carousel(props) {
@@ -13,7 +13,6 @@ export default function Carousel(props) {
   const scrollStart = useRef(0);
 
   const pauseTimeout = useRef(null);
-
   const speed = 0.8;
 
   const pauseAutoScroll = () => {
@@ -42,7 +41,6 @@ export default function Carousel(props) {
     if (finalPos < 0) finalPos += totalWidth;
 
     track.style.transform = `translateX(${-finalPos}px)`;
-
     animationRef.current = requestAnimationFrame(animate);
   };
 
@@ -67,7 +65,7 @@ export default function Carousel(props) {
   };
 
   return (
-    <div className="w-full overflow-hidden py-4 select-none -mx-4">
+    <div className="font-['Inter'] w-full overflow-hidden py-4 select-none -mx-4">
       <div
         className="w-full cursor-grab active:cursor-grabbing"
         onMouseDown={(e) => onDown(e.clientX)}
@@ -99,14 +97,11 @@ export default function Carousel(props) {
                 draggable={false}
               />
 
-              {/* 🔥 Размытая нижняя область 20% */}
-              <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-black/25 backdrop-blur-md flex items-end p-4">
-                {/* Название — чуть темнее, хорошо читаемое */}
+              <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-black/25 backdrop-blur-md flex items-end p-4 gap-3">
                 <span className="text-[#D9CBB3] text-lg font-semibold drop-shadow-md">
                   {item.title}
                 </span>
 
-                {/* Кнопка справа */}
                 <Link
                   to={item.url}
                   onClick={(e) => e.stopPropagation()}

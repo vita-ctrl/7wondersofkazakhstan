@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.email_service import get_user_by_email, send_verification_email
@@ -41,7 +41,7 @@ async def register_user(data: RegisterRequest, db: Session = Depends(get_db)):
 
     return user
 
-@router.get("/verify_token")
+@router.get("/verify_token", response_model=TokenResponse)
 async def verify_token(token: str, db: Session = Depends(get_db)):
     email_token = (
         db.query(EmailToken)
@@ -64,7 +64,10 @@ async def verify_token(token: str, db: Session = Depends(get_db)):
     email_token.used = True  # pyright: ignore[reportAttributeAccessIssue]
     db.commit()
 
-    return Response(status_code=200)  
+    # Создаём access_token для автоматического входа
+    access_token = create_access_token({"sub": str(user.id)})
+    
+    return TokenResponse(access_token=access_token)
 
 
 @router.post("/login", response_model=TokenResponse)

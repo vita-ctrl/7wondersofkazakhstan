@@ -81,44 +81,180 @@ async def send_verification_email(user: User):
 
     verify_url = f"{settings.FRONTEND_URL}login?verify_token={token}"
     html = build_html_verification(str(user.first_name) or "", verify_url)
-    await send_email_async(str(user.email), "Подтверждение email KazWonder", html)
+    await send_email_async(str(user.email), "Подтверждение регистрации KazWonder", html)
 
 
 def build_html_for_admin(name: str, email: str) -> str:
+    """Email для администратора о новой подписке - минималистичный стиль"""
     return f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 20px; }}
-            .container {{ max-width: 600px; margin: 0 auto; background: #f8f9fa; border-radius: 10px; padding: 30px; }}
-            .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }}
-            .content {{ background: white; padding: 25px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }}
-            .field {{ margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }}
-            .label {{ font-weight: 600; color: #555; display: inline-block; width: 80px; }}
-            .value {{ color: #222; }}
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            body {{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+                background: linear-gradient(135deg, #0a0e1a 0%, #1a2332 100%);
+                padding: 40px 20px;
+                line-height: 1.6;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }}
+            .header {{
+                background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+                padding: 40px 30px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }}
+            .header::before {{
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                animation: pulse 4s ease-in-out infinite;
+            }}
+            @keyframes pulse {{
+                0%, 100% {{ transform: scale(1); opacity: 0.5; }}
+                50% {{ transform: scale(1.1); opacity: 0.8; }}
+            }}
+            .header-content {{
+                position: relative;
+                z-index: 1;
+            }}
+            .header h1 {{
+                color: #ffffff;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }}
+            .header .emoji {{
+                font-size: 48px;
+                display: block;
+                margin-bottom: 15px;
+                animation: bounce 2s ease-in-out infinite;
+            }}
+            @keyframes bounce {{
+                0%, 100% {{ transform: translateY(0); }}
+                50% {{ transform: translateY(-10px); }}
+            }}
+            .header .timestamp {{
+                color: rgba(255,255,255,0.9);
+                font-size: 14px;
+                font-weight: 500;
+            }}
+            .content {{
+                padding: 40px 30px;
+                background: #ffffff;
+            }}
+            .info-card {{
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                border-radius: 16px;
+                padding: 25px;
+                margin-bottom: 20px;
+                border: 2px solid #e2e8f0;
+            }}
+            .info-row {{
+                display: flex;
+                align-items: flex-start;
+                padding: 12px 0;
+                border-bottom: 1px solid #e2e8f0;
+            }}
+            .info-row:last-child {{
+                border-bottom: none;
+            }}
+            .info-label {{
+                font-weight: 700;
+                color: #475569;
+                min-width: 100px;
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }}
+            .info-value {{
+                color: #0f172a;
+                font-size: 16px;
+                font-weight: 600;
+                flex: 1;
+            }}
+            .highlight {{
+                background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-weight: 700;
+            }}
+            .footer {{
+                padding: 30px;
+                text-align: center;
+                background: #f8fafc;
+                border-top: 2px solid #e2e8f0;
+            }}
+            .footer p {{
+                color: #64748b;
+                font-size: 13px;
+                line-height: 1.6;
+            }}
+            .badge {{
+                display: inline-block;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 6px 16px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-top: 10px;
+            }}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h1>🎉 Новая подписка на KazWonder</h1>
-                <p>{datetime.now().strftime("%d.%m.%Y %H:%M")}</p>
+                <div class="header-content">
+                    <span class="emoji">🎯</span>
+                    <h1>Новая подписка!</h1>
+                    <p class="timestamp">{datetime.now().strftime("%d.%m.%Y в %H:%M")}</p>
+                </div>
             </div>
+            
             <div class="content">
-                <div class="field">
-                    <span class="label">Имя:</span>
-                    <span class="value">{name}</span>
+                <div class="info-card">
+                    <div class="info-row">
+                        <span class="info-label">Имя</span>
+                        <span class="info-value highlight">{name}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">{email}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Время</span>
+                        <span class="info-value">{datetime.now().strftime("%d.%m.%Y %H:%M:%S")}</span>
+                    </div>
                 </div>
-                <div class="field">
-                    <span class="label">Email:</span>
-                    <span class="value">{email}</span>
+                
+                <div style="text-align: center;">
+                    <span class="badge">✓ Новый подписчик</span>
                 </div>
-                <div class="field">
-                    <span class="label">Дата:</span>
-                    <span class="value">{datetime.now().strftime("%d.%m.%Y %H:%M:%S")}</span>
-                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Автоматическое уведомление от <strong>KazWonder</strong></p>
+                <p style="margin-top: 5px; color: #94a3b8;">Платформа авторских туров по Казахстану</p>
             </div>
         </div>
     </body>
@@ -127,42 +263,269 @@ def build_html_for_admin(name: str, email: str) -> str:
 
 
 def build_html_for_user(name: str) -> str:
+    """Email для пользователя - премиальный дизайн с горами"""
     return f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 20px; }}
-            .container {{ max-width: 600px; margin: 0 auto; background: #f8f9fa; border-radius: 10px; padding: 30px; }}
-            .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }}
-            .content {{ background: white; padding: 25px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }}
-            .footer {{ margin-top: 20px; text-align: center; color: #666; font-size: 14px; }}
-            .btn {{ display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin-top: 15px; }}
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            body {{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+                background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 100%);
+                padding: 40px 20px;
+                line-height: 1.6;
+            }}
+            .container {{
+                max-width: 650px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            }}
+            .hero {{
+                background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+                padding: 60px 40px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }}
+            .hero::before {{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 100px;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 L50,30 L100,15 L150,40 L200,20 L250,45 L300,25 L350,50 L400,30 L450,55 L500,35 L550,60 L600,40 L650,65 L700,45 L750,70 L800,50 L850,75 L900,55 L950,80 L1000,60 L1050,85 L1100,65 L1150,90 L1200,70 L1200,120 L0,120 Z" fill="white" opacity="0.3"/></svg>') no-repeat bottom;
+                background-size: cover;
+                animation: wave 15s ease-in-out infinite;
+            }}
+            @keyframes wave {{
+                0%, 100% {{ transform: translateX(0); }}
+                50% {{ transform: translateX(-50px); }}
+            }}
+            .hero-content {{
+                position: relative;
+                z-index: 1;
+            }}
+            .logo {{
+                font-size: 48px;
+                margin-bottom: 20px;
+                display: block;
+                animation: float 3s ease-in-out infinite;
+            }}
+            @keyframes float {{
+                0%, 100% {{ transform: translateY(0); }}
+                50% {{ transform: translateY(-15px); }}
+            }}
+            .hero h1 {{
+                color: #ffffff;
+                font-size: 36px;
+                font-weight: 800;
+                margin-bottom: 15px;
+                text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                letter-spacing: -0.5px;
+            }}
+            .hero .subtitle {{
+                color: rgba(255,255,255,0.95);
+                font-size: 18px;
+                font-weight: 500;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }}
+            .content {{
+                padding: 50px 40px;
+                background: #ffffff;
+            }}
+            .greeting {{
+                font-size: 24px;
+                color: #0f172a;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }}
+            .greeting .name {{
+                background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }}
+            .message {{
+                color: #475569;
+                font-size: 16px;
+                line-height: 1.8;
+                margin-bottom: 35px;
+            }}
+            .benefits {{
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                border-radius: 20px;
+                padding: 35px;
+                margin: 30px 0;
+                border: 2px solid #e2e8f0;
+            }}
+            .benefits h3 {{
+                color: #0f172a;
+                font-size: 20px;
+                font-weight: 700;
+                margin-bottom: 25px;
+                text-align: center;
+            }}
+            .benefit-item {{
+                display: flex;
+                align-items: center;
+                padding: 15px 0;
+                border-bottom: 1px solid #e2e8f0;
+            }}
+            .benefit-item:last-child {{
+                border-bottom: none;
+            }}
+            .benefit-icon {{
+                font-size: 28px;
+                margin-right: 20px;
+                min-width: 40px;
+                text-align: center;
+            }}
+            .benefit-text {{
+                color: #334155;
+                font-size: 15px;
+                font-weight: 500;
+                flex: 1;
+            }}
+            .cta-button {{
+                display: inline-block;
+                background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+                color: #ffffff;
+                padding: 18px 45px;
+                text-decoration: none;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 16px;
+                text-align: center;
+                margin: 30px auto;
+                display: block;
+                max-width: 280px;
+                box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+                transition: all 0.3s ease;
+            }}
+            .divider {{
+                height: 2px;
+                background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
+                margin: 40px 0;
+            }}
+            .footer {{
+                padding: 40px;
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                text-align: center;
+                border-top: 2px solid #e2e8f0;
+            }}
+            .footer-brand {{
+                color: #0f172a;
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }}
+            .footer-text {{
+                color: #64748b;
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 8px;
+            }}
+            .social-links {{
+                margin-top: 25px;
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+            }}
+            .social-icon {{
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                background: #ffffff;
+                border-radius: 50%;
+                border: 2px solid #e2e8f0;
+                text-align: center;
+                line-height: 36px;
+                font-size: 18px;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }}
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <h1>✨ Добро пожаловать в KazWonder!</h1>
-            </div>
-            <div class="content">
-                <h2>Здравствуйте, {name}!</h2>
-                <p>Спасибо за подписку на эксклюзивные подборки туров по Казахстану.</p>
-                <p>Вы будете получать:</p>
-                <ul>
-                    <li>Лучшие маршруты по Казахстану</li>
-                    <li>Эксклюзивные предложения</li>
-                    <li>Советы от местных экспертов</li>
-                    <li>Персональные рекомендации</li>
-                </ul>
-                <div style="text-align: center;">
-                    <a href="{settings.FRONTEND_URL}" class="btn">Посмотреть туры</a>
+            <div class="hero">
+                <div class="hero-content">
+                    <span class="logo">⛰️</span>
+                    <h1>Добро пожаловать!</h1>
+                    <p class="subtitle">Вы подписались на эксклюзивные туры по Казахстану</p>
                 </div>
             </div>
+            
+            <div class="content">
+                <p class="greeting">Здравствуйте, <span class="name">{name}</span>!</p>
+                
+                <p class="message">
+                    Благодарим за подписку на <strong>KazWonder</strong> — премиальный маркетплейс 
+                    авторских туров по Казахстану. Теперь вы будете первыми узнавать о лучших 
+                    маршрутах и эксклюзивных предложениях.
+                </p>
+                
+                <div class="benefits">
+                    <h3>🎁 Что вас ожидает:</h3>
+                    
+                    <div class="benefit-item">
+                        <span class="benefit-icon">🗺️</span>
+                        <span class="benefit-text">Авторские маршруты от местных экспертов</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <span class="benefit-icon">⭐</span>
+                        <span class="benefit-text">Эксклюзивные предложения для подписчиков</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <span class="benefit-icon">🎯</span>
+                        <span class="benefit-text">Персональные рекомендации туров</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <span class="benefit-icon">💎</span>
+                        <span class="benefit-text">Доступ к закрытым направлениям</span>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <span class="benefit-icon">🏔️</span>
+                        <span class="benefit-text">Советы по организации путешествий</span>
+                    </div>
+                </div>
+                
+                <a href="{settings.FRONTEND_URL}" class="cta-button">
+                    Посмотреть туры →
+                </a>
+                
+                <div class="divider"></div>
+                
+                <p class="message" style="text-align: center; font-size: 15px; color: #64748b;">
+                    Присоединяйтесь к сообществу путешественников, которые открывают 
+                    для себя неизведанные уголки величественной природы Казахстана
+                </p>
+            </div>
+            
             <div class="footer">
-                <p>С уважением, команда KazWonder</p>
-                <p>Если вы не подписывались, просто проигнорируйте это письмо.</p>
+                <p class="footer-brand">KazWonder Expeditions</p>
+                <p class="footer-text">Премиальные туры по Казахстану с 2008 года</p>
+                <p class="footer-text" style="font-size: 13px; margin-top: 15px; color: #94a3b8;">
+                    Если вы не подписывались на рассылку, просто проигнорируйте это письмо
+                </p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-icon">📘</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">▶️</a>
+                </div>
             </div>
         </div>
     </body>
@@ -171,32 +534,230 @@ def build_html_for_user(name: str) -> str:
 
 
 def build_html_verification(name: str, verify_url: str) -> str:
+    """Email для подтверждения регистрации - современный дизайн"""
     return f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 20px; }}
-            .container {{ max-width: 600px; margin: 0 auto; background: #f8f9fa; border-radius: 10px; padding: 30px; }}
-            .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }}
-            .content {{ background: white; padding: 25px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }}
-            .btn {{ display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin-top: 15px; }}
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            body {{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+                background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 100%);
+                padding: 40px 20px;
+                line-height: 1.6;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            }}
+            .header {{
+                background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+                padding: 50px 40px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }}
+            .header::before {{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+                animation: glow 8s ease-in-out infinite;
+            }}
+            @keyframes glow {{
+                0%, 100% {{ opacity: 0.5; }}
+                50% {{ opacity: 1; }}
+            }}
+            .header-content {{
+                position: relative;
+                z-index: 1;
+            }}
+            .shield-icon {{
+                font-size: 64px;
+                display: block;
+                margin-bottom: 20px;
+                animation: pulse 2s ease-in-out infinite;
+            }}
+            @keyframes pulse {{
+                0%, 100% {{ transform: scale(1); }}
+                50% {{ transform: scale(1.1); }}
+            }}
+            .header h1 {{
+                color: #ffffff;
+                font-size: 32px;
+                font-weight: 800;
+                margin-bottom: 10px;
+                text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+            }}
+            .header p {{
+                color: rgba(255,255,255,0.9);
+                font-size: 16px;
+            }}
+            .content {{
+                padding: 50px 40px;
+            }}
+            .greeting {{
+                color: #0f172a;
+                font-size: 22px;
+                font-weight: 700;
+                margin-bottom: 25px;
+            }}
+            .message {{
+                color: #475569;
+                font-size: 16px;
+                line-height: 1.8;
+                margin-bottom: 20px;
+            }}
+            .notice-box {{
+                background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+                border-left: 4px solid #3b82f6;
+                border-radius: 12px;
+                padding: 25px;
+                margin: 30px 0;
+            }}
+            .notice-box p {{
+                color: #1e293b;
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0;
+            }}
+            .verify-button {{
+                display: inline-block;
+                background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+                color: #ffffff;
+                padding: 20px 50px;
+                text-decoration: none;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 17px;
+                text-align: center;
+                margin: 35px auto;
+                display: block;
+                max-width: 320px;
+                box-shadow: 0 15px 40px rgba(30, 41, 59, 0.4);
+                transition: all 0.3s ease;
+            }}
+            .verify-button:hover {{
+                transform: translateY(-2px);
+                box-shadow: 0 20px 50px rgba(30, 41, 59, 0.5);
+            }}
+            .alt-link-box {{
+                background: #f8fafc;
+                border-radius: 12px;
+                padding: 25px;
+                margin-top: 30px;
+                border: 2px solid #e2e8f0;
+            }}
+            .alt-link-box p {{
+                color: #64748b;
+                font-size: 14px;
+                margin-bottom: 12px;
+            }}
+            .alt-link-box .link {{
+                color: #3b82f6;
+                word-break: break-all;
+                font-size: 13px;
+                text-decoration: none;
+                font-weight: 500;
+            }}
+            .timer {{
+                background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 30px;
+                text-align: center;
+                border: 2px solid #fbbf24;
+            }}
+            .timer p {{
+                color: #92400e;
+                font-size: 14px;
+                font-weight: 600;
+                margin: 0;
+            }}
+            .footer {{
+                padding: 40px;
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                border-top: 2px solid #e2e8f0;
+            }}
+            .footer-text {{
+                color: #64748b;
+                font-size: 14px;
+                line-height: 1.8;
+                margin-bottom: 12px;
+                text-align: center;
+            }}
+            .footer-brand {{
+                color: #0f172a;
+                font-size: 16px;
+                font-weight: 700;
+                text-align: center;
+                margin-top: 20px;
+            }}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h1>Подтверждение регистрации</h1>
+                <div class="header-content">
+                    <span class="shield-icon">🛡️</span>
+                    <h1>Подтверждение регистрации</h1>
+                    <p>Финальный шаг для активации аккаунта</p>
+                </div>
             </div>
+            
             <div class="content">
-                <h2>Здравствуйте, {name or "друг"}!</h2>
-                <p>Вы зарегистрировались на платформе KazWonder.</p>
-                <p>Чтобы подтвердить вашу почту, нажмите на кнопку ниже:</p>
-                <p style="text-align: center;">
-                    <a href="{verify_url}" class="btn">Подтвердить email</a>
+                <p class="greeting">Здравствуйте{', ' + name if name else ''}!</p>
+                
+                <p class="message">
+                    Благодарим вас за регистрацию на платформе <strong>KazWonder</strong>. 
+                    Мы рады приветствовать вас в сообществе любителей путешествий по Казахстану!
                 </p>
-                <p>Если вы не создавали аккаунт, просто проигнорируйте это письмо.</p>
+                
+                <div class="notice-box">
+                    <p>⚡ Для завершения регистрации подтвердите ваш email-адрес</p>
+                </div>
+                
+                <p class="message">
+                    Нажмите на кнопку ниже, чтобы активировать ваш аккаунт и получить 
+                    полный доступ ко всем функциям платформы:
+                </p>
+                
+                <a href="{verify_url}" class="verify-button">
+                    ✓ Подтвердить email
+                </a>
+                
+                <div class="timer">
+                    <p>⏰ Ссылка действительна в течение 24 часов</p>
+                </div>
+                
+                <div class="alt-link-box">
+                    <p><strong>Если кнопка не работает</strong>, скопируйте и вставьте эту ссылку в браузер:</p>
+                    <p><a href="{verify_url}" class="link">{verify_url}</a></p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p class="footer-text">
+                    <strong>Если вы не регистрировались на KazWonder</strong>, просто проигнорируйте это письмо.
+                </p>
+                <p class="footer-text">
+                    Ваш email-адрес не будет использован без вашего подтверждения.
+                </p>
+                <p class="footer-text" style="font-size: 13px; color: #94a3b8; margin-top: 20px;">
+                    Это автоматическое письмо, пожалуйста, не отвечайте на него.
+                </p>
+                <p class="footer-brand">KazWonder Team</p>
             </div>
         </div>
     </body>
@@ -211,50 +772,192 @@ def build_html_support(
     request_type: str | None,
     message: str,
 ) -> str:
+    """Email для обращения в поддержку - чистый минимализм"""
     return f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 20px; }}
-            .container {{ max-width: 600px; margin: 0 auto; background: #f8f9fa; border-radius: 10px; padding: 30px; }}
-            .header {{ background: linear-gradient(135deg, #2c3e50 0%, #4b6a88 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }}
-            .content {{ background: white; padding: 25px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }}
-            .field {{ margin-bottom: 12px; }}
-            .label {{ font-weight: 600; color: #555; }}
-            .value {{ color: #222; }} .footer {{ margin-top: 20px; text-align: center; color: #666; font-size: 13px; }} </style>
+            * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+            body {{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+                background: linear-gradient(135deg, #0a0e1a 0%, #1a2332 100%);
+                padding: 40px 20px;
+                line-height: 1.6;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 24px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }}
+            .header {{
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                padding: 40px 30px;
+                text-align: center;
+                position: relative;
+            }}
+            .header::before {{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 70%);
+            }}
+            .header-content {{
+                position: relative;
+                z-index: 1;
+            }}
+            .header .emoji {{
+                font-size: 48px;
+                display: block;
+                margin-bottom: 15px;
+            }}
+            .header h1 {{
+                color: #ffffff;
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }}
+            .header .timestamp {{
+                color: rgba(255,255,255,0.9);
+                font-size: 14px;
+                font-weight: 500;
+            }}
+            .content {{
+                padding: 40px 30px;
+            }}
+            .info-grid {{
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                border-radius: 16px;
+                padding: 30px;
+                margin-bottom: 25px;
+                border: 2px solid #e2e8f0;
+            }}
+            .info-item {{
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e2e8f0;
+            }}
+            .info-item:last-child {{
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }}
+            .info-label {{
+                color: #64748b;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 8px;
+                display: block;
+            }}
+            .info-value {{
+                color: #0f172a;
+                font-size: 16px;
+                font-weight: 600;
+            }}
+            .message-box {{
+                background: #ffffff;
+                border: 2px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 25px;
+                margin-top: 20px;
+            }}
+            .message-box .label {{
+                color: #64748b;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 12px;
+                display: block;
+            }}
+            .message-box .text {{
+                color: #1e293b;
+                font-size: 15px;
+                line-height: 1.8;
+                white-space: pre-wrap;
+            }}
+            .priority-badge {{
+                display: inline-block;
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                color: white;
+                padding: 8px 20px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-top: 20px;
+            }}
+            .footer {{
+                padding: 25px 30px;
+                background: #f8fafc;
+                border-top: 2px solid #e2e8f0;
+                text-align: center;
+            }}
+            .footer p {{
+                color: #64748b;
+                font-size: 13px;
+                margin-bottom: 5px;
+            }}
+        </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h2>📩 Новое обращение в поддержку KazWonder</h2>
-                <p>{datetime.now().strftime("%d.%m.%Y %H:%M")}</p>
+                <div class="header-content">
+                    <span class="emoji">📩</span>
+                    <h1>Новое обращение в поддержку</h1>
+                    <p class="timestamp">{datetime.now().strftime("%d.%m.%Y в %H:%M")}</p>
+                </div>
             </div>
+            
             <div class="content">
-                <div class="field">
-                    <span class="label">Имя:</span>
-                    <div class="value">{name}</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Контактное лицо</span>
+                        <div class="info-value">{name}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Email для ответа</span>
+                        <div class="info-value">{email}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Телефон</span>
+                        <div class="info-value">{phone if phone else 'Не указан'}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Тип обращения</span>
+                        <div class="info-value">{request_type if request_type else 'Общий вопрос'}</div>
+                    </div>
                 </div>
-                <div class="field">
-                    <span class="label">Email:</span>
-                    <div class="value">{email}</div>
+                
+                <div class="message-box">
+                    <span class="label">Сообщение от клиента</span>
+                    <div class="text">{message}</div>
                 </div>
-                <div class="field">
-                    <span class="label">Телефон:</span>
-                    <div class="value">{phone or "не указан"}</div>
-                </div>
-                <div class="field">
-                    <span class="label">Тип запроса:</span>
-                    <div class="value">{request_type or "не указан"}</div>
-                </div>
-                <div class="field">
-                    <span class="label">Сообщение:</span>
-                    <div class="value">{message}</div>
+                
+                <div style="text-align: center;">
+                    <span class="priority-badge">⚡ Требует ответа</span>
                 </div>
             </div>
+            
             <div class="footer">
-                Это письмо отправлено автоматически KazWonder API
+                <p><strong>KazWonder Support System</strong></p>
+                <p style="color: #94a3b8; margin-top: 8px;">Автоматическое уведомление</p>
             </div>
         </div>
     </body>

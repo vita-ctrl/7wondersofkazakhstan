@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BookingWidget(props) {
@@ -9,39 +11,25 @@ export default function BookingWidget(props) {
   const dates = props.dates;
 
   const [dateId, setDateId] = useState(null);
-
   const [cost, setCost] = useState(props.cost);
-
   const [maxSeats, setMaxSeats] = useState(props.maxSeats);
   const [participants, setParticipants] = useState(1);
+
+  useEffect(() => {
+    setCost(props.cost);
+  }, [props.cost]);
 
   const pluralRules = new Intl.PluralRules("ru");
 
   const pluralize = (n, [one, few, many]) => {
     const rule = pluralRules.select(n);
-
-    switch (rule) {
-      case "one":
-        return `${n} ${one}`;
-      case "few":
-        return `${n} ${few}`;
-      default:
-        return `${n} ${many}`;
-    }
-  };
-
-  const handleDecrease = () => {
-    if (participants > 1) {
-      setParticipants(participants - 1);
-    }
-  };
-
-  const handleIncrease = () => {
-    setParticipants(participants + 1);
+    if (rule === "one") return `${n} ${one}`;
+    if (rule === "few") return `${n} ${few}`;
+    return `${n} ${many}`;
   };
 
   return (
-    <div className="bg-cream mb-8 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg w-[388px] text-[#001A34] dark:text-gray-100 p-5 transition">
+    <div className="font-['Inter'] bg-cream mb-8 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg w-[388px] text-[#001A34] dark:text-gray-100 p-5 transition">
       {/* Цена */}
       <div className="mb-4">
         <span className="text-[22px] font-extrabold text-gray-900 dark:text-gray-100">
@@ -61,26 +49,12 @@ export default function BookingWidget(props) {
       <div className="relative mb-4">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full flex justify-between items-center border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-vanilla shadow-xs dark:bg-gray-700/40 text-[14px] text-gray-700 dark:text-gray-300 hover:border-lime-green dark:hover:border-blue-400 transition"
+          className="w-full flex justify-between items-center border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-vanilla shadow-xs dark:bg-gray-700/40 text-[14px] text-gray-700 dark:text-gray-300 transition"
         >
           {selectedDate}
-
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`w-4 h-4 text-gray-500 transition-transform ${
-              isOpen ? "rotate-180" : ""
-            }`}
-            fill="none"
-            viewBox="0 0 16 16"
-            stroke="currentColor"
-          >
-            <path
-              d="M6 12L10 8L6 4"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <span className={`transition-transform ${isOpen ? "rotate-180" : ""}`}>
+            <FontAwesomeIcon icon={faChevronDown} />
+          </span>
         </button>
 
         {isOpen && (
@@ -89,36 +63,29 @@ export default function BookingWidget(props) {
               <div
                 key={d.id}
                 onClick={() => {
-                  if (d.active) {
-                    setSelectedDate(d.range);
-                    setDateId(d.id);
-                    setMaxSeats(d.seats);
-                    setParticipants(1);
-                    setIsOpen(false);
-                    setCost(d.price);
-                  }
+                  if (!d.active) return;
+                  setSelectedDate(d.range);
+                  setDateId(d.id);
+                  setMaxSeats(d.seats);
+                  setParticipants(1);
+                  setIsOpen(false);
+                  setCost(d.price);
                 }}
-                className={`flex items-center justify-between px-4 py-2 text-[14px] ${
+                className={`flex justify-between px-4 py-2 text-[14px] ${
                   d.active
-                    ? "cursor-pointer hover:bg-cream dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    : "cursor-default text-gray-400"
+                    ? "cursor-pointer hover:bg-cream dark:hover:bg-gray-700"
+                    : "text-gray-400"
                 }`}
               >
                 <span>{d.range}</span>
-
                 {d.active ? (
-                  <span className="flex items-center gap-2 text-[13px]">
-                    <span className="text-lime-green dark:text-blue-400 font-medium">
-                      {props.currency}{" "}
-                      {new Intl.NumberFormat("ru-RU").format(d.price)}
-                    </span>
-                    <span className="text-gray-400">•</span>
-                    <span className="text-lime-green dark:text-blue-400 font-medium">
-                      {pluralize(d.seats, ["место", "места", "мест"])}
-                    </span>
+                  <span className="text-[13px] font-medium">
+                    {props.currency}{" "}
+                    {new Intl.NumberFormat("ru-RU").format(d.price)} •{" "}
+                    {pluralize(d.seats, ["место", "места", "мест"])}
                   </span>
                 ) : (
-                  <span className="text-gray-400 text-[13px]">мест нет</span>
+                  <span className="text-[13px]">мест нет</span>
                 )}
               </div>
             ))}
@@ -126,52 +93,48 @@ export default function BookingWidget(props) {
         )}
       </div>
 
-      {/* Кол-во участников */}
-      <div className="flex items-center justify-between bg-vanilla shadow-xs dark:bg-gray-700/40 border border-gray-200 dark:border-gray-600 rounded-lg p-3 mb-3">
-        <span className="text-[13px] text-gray-700 dark:text-gray-300">
-          Участников
-        </span>
-        <div className="flex items-center gap-2">
+      {/* Участники */}
+      <div className="flex justify-between items-center bg-vanilla dark:bg-gray-700/40 border border-gray-200 dark:border-gray-600 rounded-lg p-3 mb-3">
+        <span className="text-[13px]">Участников</span>
+        <div className="flex gap-2 items-center">
           <button
-            onClick={handleDecrease}
-            disabled={participants <= 1}
-            className="px-2 py-1 cursor-pointer shadow-xl bg-[#f7f7f7] dark:bg-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            onClick={() => participants > 1 && setParticipants(participants - 1)}
+            className="px-2 py-1 bg-gray-100 dark:bg-gray-600 rounded-md"
           >
             –
           </button>
-          <span className="px-2 text-sm font-semibold">{participants}</span>
+          <span className="text-sm font-semibold">{participants}</span>
           <button
-            onClick={handleIncrease}
-            disabled={participants == maxSeats}
-            className="px-2 py-1 cursor-pointer shadow-xl bg-[#f7f7f7] dark:bg-gray-600 rounded-md hover:bg-gray-200 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            onClick={() =>
+              participants < maxSeats && setParticipants(participants + 1)
+            }
+            className="px-2 py-1 bg-gray-100 dark:bg-gray-600 rounded-md"
           >
             +
           </button>
         </div>
       </div>
 
-      {/* Кнопка перехода */}
+      {/* Кнопка */}
       <button
         disabled={!dateId}
         onClick={() =>
           navigate(`/booking/${props.tourId}`, {
-            state: { dateId: dateId, participants: participants },
+            state: { dateId, participants },
           })
         }
-        className="w-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed bg-sage-green dark:bg-blue-400 not-disabled:hover:bg-cream not-disabled:hover:text-sage-green not-disabled:dark:hover:bg-gray-800 not-disabled:dark:hover:text-blue-400 border-2 border-sage-green dark:border-blue-400 dark:hover:border-blue-400 text-white font-semibold py-2.5 rounded-lg transition"
+        className="w-full bg-sage-green dark:bg-blue-400 text-white font-semibold py-2.5 rounded-lg disabled:opacity-50 transition"
       >
         Перейти к оплате
       </button>
 
       {/* Предоплата */}
-      <div className="mt-4 text-center text-[13px] text-gray-700 dark:text-gray-300">
-        <p className="font-medium mb-1">
-          Предоплата —{" "}
-          {new Intl.NumberFormat("ru-RU").format(
-            props.prepayment * participants
-          )}{" "}
-          {props.currency}
-        </p>
+      <div className="mt-4 text-center text-[13px]">
+        Предоплата —{" "}
+        {new Intl.NumberFormat("ru-RU").format(
+          props.prepayment * participants
+        )}{" "}
+        {props.currency}
       </div>
     </div>
   );

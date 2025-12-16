@@ -1,5 +1,5 @@
 import { useState, useCallback, memo, useEffect, useRef } from "react";
-import { replace, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -9,9 +9,13 @@ import {
   faEyeSlash,
   faCheckCircle,
   faExclamationCircle,
-  faArrowLeft,
   faCheck,
   faSpinner,
+  faPlane,
+  faMapMarkedAlt,
+  faCompass,
+  faMountain,
+  faUmbrellaBeach,
 } from "@fortawesome/free-solid-svg-icons";
 
 // --------------------------------------------------------
@@ -30,7 +34,6 @@ function passwordStrength(password) {
 
   return Math.min(score, 100);
 }
-// --------------------------------------------------------
 
 // Мемоизированный InputField
 const InputField = memo(
@@ -46,8 +49,10 @@ const InputField = memo(
     onToggle,
     showPasswordIcon,
   }) => (
-    <div className="relative mt-6 h-16">
-      <div className="relative">
+    <div className="relative mb-5">
+      <div className="relative group">
+        <div className="absolute inset-0 bg-linear-to-r from-[#424E2B]/20 to-[#5A6841]/20 dark:from-blue-400/20 dark:to-blue-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
         <input
           type={type}
           name={name}
@@ -58,49 +63,41 @@ const InputField = memo(
           autoCorrect="off"
           spellCheck={false}
           className={`
-        h-12
-        appearance-none
-        autofill:bg-transparent
-        peer w-full bg-transparent border-b-2 
-        pt-6 pb-2 px-2 outline-none transition-all
-        ${
-          error
-            ? "border-red-500 text-red-500"
-            : "border-olive-dark dark:border-blue-400 text-olive-dark dark:text-white"
-        }
-      `}
-          placeholder=" "
+            relative w-full pl-16 ${showToggle ? 'pr-14' : 'pr-4'} py-4
+            bg-white dark:bg-gray-900
+            border-2 rounded-xl
+            transition-all duration-300
+            text-gray-900 dark:text-white
+            font-medium
+            ${error
+              ? "border-red-400 focus:border-red-500 focus:shadow-lg focus:shadow-red-500/20"
+              : "border-gray-200 dark:border-gray-700 focus:border-[#424E2B] dark:focus:border-blue-400 focus:shadow-lg focus:shadow-[#424E2B]/10 dark:focus:shadow-blue-400/20"
+            }
+            placeholder:text-gray-400 dark:placeholder:text-gray-500
+          `}
+          placeholder={placeholder}
         />
 
-        <label
+        <div
           className={`
-        absolute left-2 text-sm transition-all duration-200 pointer-events-none
-        text-gray-500 dark:text-gray-300
-        peer-placeholder-shown:top-6 
-        peer-placeholder-shown:text-sm
-        peer-not-placeholder-shown:top-2 
-        peer-not-placeholder-shown:text-xs
-        peer-focus:top-2 
-        peer-focus:text-xs
-        ${error ? "text-red-500" : ""}
-      `}
+          absolute left-4 top-1/2 -translate-y-1/2
+          w-10 h-10 rounded-xl
+          flex items-center justify-center
+          transition-all duration-300
+          ${error
+              ? "bg-red-50 dark:bg-red-900/20 text-red-500"
+              : "bg-linear-to-br from-[#424E2B] to-[#5A6841] dark:from-blue-500 dark:to-blue-600 text-white shadow-lg"
+            }
+        `}
         >
-          {placeholder}
-        </label>
-
-        <FontAwesomeIcon
-          icon={icon}
-          className={`
-        absolute right-2 top-6 transition-colors
-        ${error ? "text-red-500" : "text-olive-dark dark:text-blue-400"}
-      `}
-        />
+          <FontAwesomeIcon icon={icon} className="text-sm" />
+        </div>
 
         {showToggle && (
           <button
             type="button"
             onClick={onToggle}
-            className="absolute right-10 top-6 text-gray-500 hover:text-olive-dark dark:hover:text-blue-400 transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#424E2B] dark:hover:text-blue-400 transition-all p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             <FontAwesomeIcon icon={showPasswordIcon} />
           </button>
@@ -108,10 +105,10 @@ const InputField = memo(
       </div>
 
       {error && (
-        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
-          <FontAwesomeIcon icon={faExclamationCircle} size="xs" />
-          {error}
-        </p>
+        <div className="mt-2 flex items-center gap-2 text-red-500 text-sm font-medium animate-shake px-2">
+          <FontAwesomeIcon icon={faExclamationCircle} className="shrink-0" />
+          <span>{error}</span>
+        </div>
       )}
     </div>
   )
@@ -119,16 +116,14 @@ const InputField = memo(
 
 InputField.displayName = "InputField";
 
-// --------------------------------------------------------
 // PasswordStrengthIndicator компонент
-// --------------------------------------------------------
 const PasswordStrengthIndicator = memo(({ password }) => {
   const strength = passwordStrength(password);
 
   const getColor = () => {
-    if (strength < 40) return "bg-red-500";
-    if (strength < 70) return "bg-yellow-500";
-    return "bg-green-500";
+    if (strength < 40) return "from-red-500 to-red-600";
+    if (strength < 70) return "from-yellow-500 to-yellow-600";
+    return "from-green-500 to-green-600";
   };
 
   const getText = () => {
@@ -138,28 +133,29 @@ const PasswordStrengthIndicator = memo(({ password }) => {
   };
 
   return (
-    <div className="mt-2">
-      <div className="flex justify-between text-xs mb-1">
-        <span className="text-gray-600 dark:text-gray-400">
-          Сложность пароля:
+    <div className="mt-3 space-y-2">
+      <div className="flex justify-between text-xs">
+        <span className="text-gray-600 dark:text-gray-400 font-semibold">
+          Сложность пароля
         </span>
         <span
-          className={`font-medium ${
-            strength < 40
-              ? "text-red-500"
-              : strength < 70
+          className={`font-bold ${strength < 40
+            ? "text-red-500"
+            : strength < 70
               ? "text-yellow-500"
               : "text-green-500"
-          }`}
+            }`}
         >
           {getText()}
         </span>
       </div>
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+      <div className="relative w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2.5 overflow-hidden">
         <div
-          className={`h-2 rounded-full transition-all duration-300 ${getColor()}`}
+          className={`h-full rounded-full transition-all duration-500 bg-linear-to-r ${getColor()} relative`}
           style={{ width: `${strength}%` }}
-        ></div>
+        >
+          <div className="absolute inset-0 bg-white/30 animate-shimmer-slow"></div>
+        </div>
       </div>
     </div>
   );
@@ -172,13 +168,13 @@ export default function Login() {
   const navigate = useNavigate();
 
   const isRegisterPath = location.pathname === "/register";
-  const [active, setActive] = useState(isRegisterPath);
+  const [isFlipped, setIsFlipped] = useState(isRegisterPath);
 
   useEffect(() => {
     if (location.pathname === "/register") {
-      setActive(true);
+      setIsFlipped(true);
     } else if (location.pathname === "/login") {
-      setActive(false);
+      setIsFlipped(false);
     }
   }, [location.pathname]);
 
@@ -198,8 +194,37 @@ export default function Login() {
   const [isVerifyingToken, setIsVerifyingToken] = useState(false);
   const requested = useRef(false);
   const [successMessage, setSuccessMessage] = useState("");
+  
+  // Refs для измерения высоты форм
+  const loginFormRef = useRef(null);
+  const registerFormRef = useRef(null);
+  const [containerHeight, setContainerHeight] = useState("auto");
 
   const redirectUrl = location.state?.redirectUrl;
+  const dateId = location.state?.dateId || null;
+  const participants = location.state?.participants || 1;
+
+  // Эффект для плавного изменения высоты контейнера
+  useEffect(() => {
+    const updateHeight = () => {
+      if (isFlipped && registerFormRef.current) {
+        setContainerHeight(`${registerFormRef.current.offsetHeight}px`);
+      } else if (!isFlipped && loginFormRef.current) {
+        setContainerHeight(`${loginFormRef.current.offsetHeight}px`);
+      }
+    };
+
+    // Небольшая задержка для корректного измерения после рендера
+    const timer = setTimeout(updateHeight, 50);
+    
+    // Обновляем при изменении размера окна
+    window.addEventListener('resize', updateHeight);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [isFlipped, formData.password, successMessage]);
 
   // --------------------------------------------------------
   // ОБРАБОТКА ТОКЕНА ПОДТВЕРЖДЕНИЯ
@@ -214,41 +239,13 @@ export default function Login() {
       setIsVerifyingToken(true);
       handleTokenVerification(verifyToken);
     } else {
-      // Проверяем, если пользователь уже авторизован
       const existingToken = localStorage.getItem("token");
       if (existingToken && !redirectUrl) {
         navigate("/");
       }
     }
     return () => (requested.current = true);
-  }, [navigate]);
-
-  const handleTokenVerification = async (token) => {
-    try {
-      const response = await fetch(`/api/verify_token?token=${token}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Токен недействителен");
-      }
-
-      setSuccessMessage("Аккаунт успешно подтвержден!");
-    } catch (error) {
-      setErrors({
-        general:
-          error.message ||
-          "Неверный или уже использованный токен подтверждения.",
-      });
-    } finally {
-      setIsVerifyingToken(false);
-      window.history.replaceState({}, "", `${window.location.pathname}`);
-    }
-  };
+  }, [navigate, redirectUrl]);
 
   const getUserData = async (token) => {
     try {
@@ -268,9 +265,67 @@ export default function Login() {
     return null;
   };
 
-  // --------------------------------------------------------
-  // ВАЛИДАЦИЯ ФОРМЫ РЕГИСТРАЦИИ
-  // --------------------------------------------------------
+  const handleTokenVerification = async (token) => {
+    try {
+      const response = await fetch(`/api/verify_token?token=${token}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Токен недействителен");
+      }
+
+      const data = await response.json();
+
+      // Если сервер возвращает access_token, автоматически логиним пользователя
+      if (data.access_token) {
+        localStorage.setItem("token", data.access_token);
+
+        // Получаем данные пользователя
+        const userData = await getUserData(data.access_token);
+        if (userData) {
+          localStorage.setItem("user", JSON.stringify(userData));
+        }
+
+        window.dispatchEvent(new Event("authChange"));
+
+        setSuccessMessage("✅ Аккаунт успешно подтвержден! Перенаправление на главную...");
+        
+        // Перенаправляем на главную страницу через 1.5 секунды
+        setTimeout(() => {
+          if (redirectUrl) {
+            navigate(redirectUrl, {
+              replace: true,
+              state: { dateId: dateId, participants: participants },
+            });
+          } else {
+            navigate("/", { replace: true });
+          }
+        }, 1500);
+      } else {
+        // Если токен не возвращается, показываем сообщение и предлагаем войти
+        setSuccessMessage("✅ Аккаунт успешно подтвержден! Теперь войдите в систему.");
+        setTimeout(() => {
+          setIsFlipped(false);
+          navigate("/login");
+        }, 2000);
+      }
+    } catch (error) {
+      setErrors({
+        general:
+          error.message ||
+          "Неверный или уже использованный токен подтверждения.",
+      });
+    } finally {
+      setIsVerifyingToken(false);
+      window.history.replaceState({}, "", `${window.location.pathname}`);
+    }
+  };
+
   const validateForm = useCallback(() => {
     const newErrors = {};
 
@@ -300,9 +355,6 @@ export default function Login() {
     return newErrors;
   }, [formData]);
 
-  // --------------------------------------------------------
-  // ОБРАБОТЧИКИ ИЗМЕНЕНИЯ ПОЛЕЙ
-  // --------------------------------------------------------
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -321,12 +373,6 @@ export default function Login() {
     [errors]
   );
 
-  const dateId = location.state?.dateId || null;
-  const participants = location.state?.participants || 1;
-
-  // --------------------------------------------------------
-  // ВХОД
-  // --------------------------------------------------------
   const handleLoginSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -378,12 +424,10 @@ export default function Login() {
         if (data.access_token) {
           localStorage.setItem("token", data.access_token);
 
-          // Получаем данные пользователя
           const userData = await getUserData(data.access_token);
           if (userData) {
             localStorage.setItem("user", JSON.stringify(userData));
           } else {
-            // Если не получили полные данные, сохраняем email
             localStorage.setItem(
               "user",
               JSON.stringify({
@@ -392,7 +436,6 @@ export default function Login() {
             );
           }
 
-          // Отправляем событие об изменении авторизации
           window.dispatchEvent(new Event("authChange"));
 
           setSuccessMessage("✅ Вход выполнен успешно!");
@@ -405,7 +448,6 @@ export default function Login() {
             else navigate("/", { replace: true });
           }, 1000);
         }
-        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setErrors({
           loginEmail: "Ошибка соединения",
@@ -415,12 +457,9 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, navigate]
+    [formData, navigate, redirectUrl, dateId, participants]
   );
 
-  // --------------------------------------------------------
-  // РЕГИСТРАЦИЯ
-  // --------------------------------------------------------
   const handleRegisterSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -469,12 +508,10 @@ export default function Login() {
           return;
         }
 
-        // После успешной регистрации
         setSuccessMessage(
           `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`
         );
 
-        // Очистка формы
         setFormData((prev) => ({
           ...prev,
           username: "",
@@ -484,12 +521,11 @@ export default function Login() {
         }));
         setErrors({});
 
-        // Автоматически переключаем на форму входа через 3 секунды
         setTimeout(() => {
-          setActive(false);
+          setIsFlipped(false);
+          navigate("/login");
           setSuccessMessage("");
         }, 5000);
-        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setErrors((prev) => ({
           ...prev,
@@ -499,39 +535,70 @@ export default function Login() {
         setIsLoading(false);
       }
     },
-    [formData, validateForm]
+    [formData, validateForm, navigate]
   );
 
-  // --------------------------------------------------------
-  // ЕСЛИ ИДЕТ ВЕРИФИКАЦИЯ ТОКЕНА
-  // --------------------------------------------------------
+  const handleFlip = useCallback(() => {
+    if (isFlipped) {
+      navigate("/login", { replace: true, state: location.state });
+    } else {
+      navigate("/register", { replace: true, state: location.state });
+    }
+  }, [isFlipped, navigate, location.state]);
+
   if (isVerifyingToken) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-olive-dark dark:border-blue-400 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-olive-dark dark:text-white mb-2">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-[#FFF8EF] via-[#F9F4EC] to-[#F3E9D9] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-[#424E2B]/10 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#5A6841]/10 dark:bg-blue-400/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        <div className="text-center relative z-10">
+          <div className="relative inline-block mb-6">
+            <div className="w-24 h-24 border-4 border-[#424E2B]/20 dark:border-blue-400/20 border-t-[#424E2B] dark:border-t-blue-400 rounded-full animate-spin"></div>
+            <FontAwesomeIcon
+              icon={faPlane}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#424E2B] dark:text-blue-400 text-3xl"
+            />
+          </div>
+          <h2 className="text-4xl font-bold text-[#424E2B] dark:text-white mb-3 font-['Playfair_Display']">
             Подтверждение email
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">Проверяем токен...</p>
+          <p className="text-gray-600 dark:text-gray-300 font-['Inter']">Проверяем токен...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800 transition-colors duration-300 relative overflow-hidden">
-      {/* Уведомления */}
+    <div className="min-h-screen pt-28 pb-32 flex justify-center items-start bg-linear-to-br from-[#FFF8EF] via-[#F9F4EC] to-[#F3E9D9] dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 px-4 relative overflow-hidden font-['Inter']">
+      {/* Animated background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-[5%] w-96 h-96 bg-[#424E2B]/5 dark:bg-blue-500/5 rounded-full blur-3xl animate-float-1"></div>
+        <div className="absolute top-40 right-[10%] w-72 h-72 bg-[#5A6841]/5 dark:bg-blue-400/5 rounded-full blur-3xl animate-float-2"></div>
+        <div className="absolute bottom-20 left-[15%] w-80 h-80 bg-[#424E2B]/5 dark:bg-blue-600/5 rounded-full blur-3xl animate-float-3"></div>
+
+        {/* Декоративные элементы */}
+        <FontAwesomeIcon icon={faPlane} className="absolute top-[15%] left-[8%] text-[#424E2B]/5 dark:text-blue-400/5 text-5xl rotate-45 animate-float-1" />
+        <FontAwesomeIcon icon={faMountain} className="absolute top-[25%] right-[12%] text-[#5A6841]/5 dark:text-blue-500/5 text-6xl animate-float-2" />
+        <FontAwesomeIcon icon={faCompass} className="absolute bottom-[20%] left-[10%] text-[#424E2B]/5 dark:text-blue-400/5 text-5xl animate-float-3" />
+        <FontAwesomeIcon icon={faUmbrellaBeach} className="absolute bottom-[30%] right-[8%] text-[#5A6841]/5 dark:text-blue-500/5 text-4xl animate-float-1" style={{ animationDelay: '2s' }} />
+      </div>
+
+      {/* Notifications */}
       {successMessage && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
-          <div className="bg-green-500 text-white p-4 rounded-lg shadow-lg flex items-center justify-between animate-slideDown">
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faCheck} />
-              <span>{successMessage}</span>
+        <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4 animate-slideDown">
+          <div className="bg-linear-to-r from-emerald-500 via-green-500 to-teal-500 text-white p-5 rounded-2xl shadow-2xl flex items-center justify-between backdrop-blur-xl border border-white/20">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <FontAwesomeIcon icon={faCheck} className="text-xl" />
+              </div>
+              <span className="font-semibold">{successMessage}</span>
             </div>
             <button
               onClick={() => setSuccessMessage("")}
-              className="text-white hover:text-gray-200 text-xl"
+              className="text-white/80 hover:text-white text-3xl leading-none transition-colors"
             >
               ×
             </button>
@@ -540,180 +607,163 @@ export default function Login() {
       )}
 
       {errors.general && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
-          <div className="bg-red-500 text-white p-4 rounded-lg shadow-lg animate-slideDown">
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faExclamationCircle} />
-              <span>{errors.general}</span>
+        <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg px-4 animate-slideDown">
+          <div className="bg-linear-to-r from-red-500 via-rose-500 to-pink-500 text-white p-5 rounded-2xl shadow-2xl backdrop-blur-xl border border-white/20">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <FontAwesomeIcon icon={faExclamationCircle} className="text-xl" />
+              </div>
+              <span className="font-semibold">{errors.general}</span>
             </div>
           </div>
         </div>
       )}
 
+      {/* Main Slide Container with dynamic height */}
       <div className="relative z-10 w-full max-w-4xl">
         <div
-          className={`relative overflow-visible rounded-2xl shadow-2xl transition-all duration-500 
-  bg-cream/90 dark:bg-gray-800/90 backdrop-blur-sm
-  border border-white/20 dark:border-gray-700/20
-  ${active ? "form-active" : ""}`}
+          className="relative transition-all duration-700 ease-in-out overflow-hidden"
+          style={{ height: containerHeight }}
         >
-          <div className="absolute top-6 left-6 z-20">
-            <button
-              onClick={() => {
-                const newPath = active ? "/login" : "/register";
-                navigate(newPath, { replace: true, state: location.state });
-              }}
-              className="flex items-center gap-2 text-olive-dark dark:text-gray-300 hover:text-[#2a351c] dark:hover:text-white transition-colors"
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-              <span className="hidden sm:inline">
-                {active ? "Назад к входу" : "Перейти к регистрации"}
-              </span>
-            </button>
-          </div>
 
+          {/* Login Form */}
           <div
-            className={`shape2 absolute inset-0 transition-all duration-1000 ${
-              active ? "opacity-100" : "opacity-0"
-            }`}
-          />
-
-          <div className="relative flex">
-            {/* Левый блок — Вход */}
-            <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
-                active ? "opacity-0 -translate-x-full" : "opacity-100"
+            ref={loginFormRef}
+            className={`transition-all duration-700 ease-out ${isFlipped ? 'absolute inset-0 -translate-x-full opacity-0 pointer-events-none' : 'relative translate-x-0 opacity-100'
               }`}
-            >
-              <div className="max-w-md mx-auto mt-15">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-olive-dark dark:text-white mb-3">
-                    Добро пожаловать
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Войдите в свой аккаунт
-                  </p>
-                </div>
-
-                <form onSubmit={handleLoginSubmit} className="space-y-6">
-                  <InputField
-                    icon={faEnvelope}
-                    type="email"
-                    name="loginEmail"
-                    placeholder="Email"
-                    value={formData.loginEmail}
-                    onChange={handleChange}
-                    error={errors.loginEmail}
-                  />
-
-                  <InputField
-                    icon={faLock}
-                    type={showLoginPassword ? "text" : "password"}
-                    name="loginPassword"
-                    placeholder="Пароль"
-                    value={formData.loginPassword}
-                    onChange={handleChange}
-                    error={errors.loginPassword}
-                    showToggle={true}
-                    onToggle={() => setShowLoginPassword(!showLoginPassword)}
-                    showPasswordIcon={showLoginPassword ? faEyeSlash : faEye}
-                  />
-
-                  <div className="flex items-center justify-end text-sm">
-                    {/* <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        className="rounded border-gray-300 text-olive-dark focus:ring-olive-dark"
-                      />
-                      <span className="text-gray-600 dark:text-gray-300">
-                        Запомнить меня
-                      </span>
-                    </label> */}
-                    <button
-                      type="button"
-                      className="text-olive-dark dark:text-blue-400 hover:underline"
-                    >
-                      Забыли пароль?
-                    </button>
+          >
+            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-3xl border border-white/20 dark:border-gray-800/20 overflow-hidden">
+              <div className="p-12 md:p-16">
+                <div className="max-w-md mx-auto">
+                  <div className="mb-8 text-center">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-[#424E2B] via-[#5A6841] to-[#424E2B] dark:from-blue-500 dark:via-blue-600 dark:to-blue-500 rounded-3xl mb-6 shadow-xl animate-float-1">
+                      <FontAwesomeIcon icon={faPlane} className="text-white text-3xl" />
+                    </div>
+                    <h2 className="text-5xl font-bold text-[#424E2B] dark:text-white mb-3 font-['Playfair_Display']">
+                      Добро пожаловать
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                      Войдите в свой аккаунт
+                    </p>
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className={`w-full py-3 px-4 rounded-lg font-semibold transition-opacity shadow-lg ${
-                      isLoading
-                        ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
-                        : "bg-linear-to-r from-olive-dark to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                    } text-white`}
-                  >
-                    {isLoading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <FontAwesomeIcon
-                          icon={faSpinner}
-                          className="animate-spin"
-                        />
-                        Вход...
-                      </span>
-                    ) : (
-                      "Войти"
-                    )}
-                  </button>
+                  <form onSubmit={handleLoginSubmit} className="space-y-5">
+                    <InputField
+                      icon={faEnvelope}
+                      type="email"
+                      name="loginEmail"
+                      placeholder="Email"
+                      value={formData.loginEmail}
+                      onChange={handleChange}
+                      error={errors.loginEmail}
+                    />
 
-                  <p className="text-center text-gray-600 dark:text-gray-300">
-                    Нет аккаунта?{" "}
+                    <InputField
+                      icon={faLock}
+                      type={showLoginPassword ? "text" : "password"}
+                      name="loginPassword"
+                      placeholder="Пароль"
+                      value={formData.loginPassword}
+                      onChange={handleChange}
+                      error={errors.loginPassword}
+                      showToggle={true}
+                      onToggle={() => setShowLoginPassword(!showLoginPassword)}
+                      showPasswordIcon={showLoginPassword ? faEyeSlash : faEye}
+                    />
+
+                    <div className="flex items-center justify-end">
+                      <button
+                        type="button"
+                        className="text-sm text-[#424E2B] dark:text-blue-400 hover:underline font-semibold transition-colors"
+                      >
+                        Забыли пароль?
+                      </button>
+                    </div>
+
                     <button
-                      type="button"
-                      onClick={() =>
-                        navigate("/register", {
-                          replace: true,
-                          state: location.state,
-                        })
-                      }
-                      className="font-semibold text-olive-dark dark:text-blue-400 hover:underline"
+                      type="submit"
+                      disabled={isLoading}
+                      className={`
+                          relative overflow-hidden w-full py-4 rounded-xl font-bold text-lg
+                          transition-all duration-300
+                          ${isLoading
+                          ? "bg-gray-400 dark:bg-gray-700 cursor-not-allowed"
+                          : "bg-linear-to-r from-[#424E2B] via-[#5A6841] to-[#424E2B] dark:from-blue-500 dark:via-blue-600 dark:to-blue-500 hover:shadow-2xl hover:shadow-[#424E2B]/30 dark:hover:shadow-blue-500/30 hover:scale-[1.02] active:scale-[0.98]"
+                        }
+                          text-white group
+                        `}
+                    >
+                      <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                      <span className="relative flex items-center justify-center gap-3">
+                        {isLoading ? (
+                          <>
+                            <FontAwesomeIcon icon={faSpinner} className="animate-spin text-xl" />
+                            Вход...
+                          </>
+                        ) : (
+                          <>
+                            Войти
+                            <FontAwesomeIcon icon={faPlane} className="group-hover:translate-x-2 transition-transform" />
+                          </>
+                        )}
+                      </span>
+                    </button>
+                  </form>
+
+                  <div className="mt-6 text-center">
+                    <p className="text-gray-600 dark:text-gray-400 mb-3">
+                      Нет аккаунта?
+                    </p>
+                    <button
+                      onClick={handleFlip}
+                      className="text-[#424E2B] dark:text-blue-400 font-bold hover:underline text-lg transition-colors"
                     >
                       Зарегистрироваться
                     </button>
-                  </p>
-                </form>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Правый блок — Регистрация */}
-            <div
-              className={`w-1/2 p-8 sm:p-12 transition-all duration-700 ${
-                active ? "opacity-100" : "opacity-0 translate-x-full"
+          {/* Register Form */}
+          <div
+            ref={registerFormRef}
+            className={`transition-all duration-700 ease-out ${isFlipped ? 'relative translate-x-0 opacity-100' : 'absolute inset-0 translate-x-full opacity-0 pointer-events-none'
               }`}
-            >
-              <div className="max-w-md mx-auto">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-olive-dark dark:text-white mb-3">
-                    Создать аккаунт
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Присоединяйтесь к нашему сообществу
-                  </p>
-                </div>
-
-                {successMessage ? (
-                  <div className="text-center py-8">
-                    <FontAwesomeIcon
-                      icon={faCheckCircle}
-                      className="text-green-500 text-5xl mb-4"
-                    />
-                    <h3 className="text-xl font-semibold text-green-600 dark:text-green-400 mb-2">
-                      Успешно!
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {successMessage}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">
-                      Через несколько секунд вы будете перенаправлены на
-                      страницу входа...
+          >
+            <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-3xl border border-white/20 dark:border-gray-800/20 overflow-hidden">
+              <div className="p-12 md:p-16">
+                <div className="max-w-md mx-auto">
+                  <div className="mb-6 text-center">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-[#5A6841] via-[#424E2B] to-[#5A6841] dark:from-blue-600 dark:via-blue-700 dark:to-blue-600 rounded-3xl mb-6 shadow-xl animate-float-2">
+                      <FontAwesomeIcon icon={faCompass} className="text-white text-3xl" />
+                    </div>
+                    <h2 className="text-5xl font-bold text-[#424E2B] dark:text-white mb-3 font-['Playfair_Display']">
+                      Создать аккаунт
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400 text-lg">
+                      Начните своё путешествие
                     </p>
                   </div>
-                ) : (
-                  <form onSubmit={handleRegisterSubmit}>
-                    <div className="space-y-4">
+
+                  {successMessage && isFlipped ? (
+                    <div className="text-center py-8 animate-scaleIn">
+                      <div className="inline-flex items-center justify-center w-24 h-24 bg-linear-to-br from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 rounded-full mb-6">
+                        <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-5xl" />
+                      </div>
+                      <h3 className="text-3xl font-bold text-green-600 dark:text-green-400 mb-4 font-['Playfair_Display']">
+                        Успешно!
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
+                        {successMessage}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Перенаправление...
+                      </p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleRegisterSubmit} className="space-y-4">
                       <InputField
                         icon={faUser}
                         type="text"
@@ -747,11 +797,8 @@ export default function Login() {
                           onToggle={() => setShowPassword(!showPassword)}
                           showPasswordIcon={showPassword ? faEyeSlash : faEye}
                         />
-
                         {formData.password && (
-                          <PasswordStrengthIndicator
-                            password={formData.password}
-                          />
+                          <PasswordStrengthIndicator password={formData.password} />
                         )}
                       </div>
 
@@ -764,127 +811,235 @@ export default function Login() {
                         onChange={handleChange}
                         error={errors.confirmPassword}
                         showToggle={true}
-                        onToggle={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                        showPasswordIcon={
-                          showConfirmPassword ? faEyeSlash : faEye
-                        }
+                        onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                        showPasswordIcon={showConfirmPassword ? faEyeSlash : faEye}
                       />
 
-                      <div className="flex items-start mt-4">
+                      <label className="flex items-center gap-3 cursor-pointer group">
                         <input
                           type="checkbox"
-                          id="terms"
                           required
-                          className="mt-1 rounded border-gray-300 text-olive-dark focus:ring-olive-dark"
+                          className="
+      w-5 h-5
+      rounded-md
+      border-2 border-gray-300 dark:border-gray-600
+      text-[#424E2B] dark:text-blue-400
+      focus:ring-2 focus:ring-[#424E2B]/20 dark:focus:ring-blue-400/20
+      cursor-pointer
+      transition-all
+    "
                         />
-                        <label
-                          htmlFor="terms"
-                          className="ml-2 text-sm text-gray-600 dark:text-gray-300"
-                        >
+
+                        <span className="text-sm leading-snug text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
                           Я соглашаюсь с{" "}
-                          <button
-                            type="button"
-                            className="text-olive-dark dark:text-blue-400 hover:underline"
-                          >
-                            условиями использования
+                          <button type="button" className="text-[#424E2B] dark:text-blue-400 hover:underline font-semibold">
+                            условиями
                           </button>{" "}
                           и{" "}
-                          <button
-                            type="button"
-                            className="text-olive-dark dark:text-blue-400 hover:underline"
-                          >
-                            политикой конфиденциальности
+                          <button type="button" className="text-[#424E2B] dark:text-blue-400 hover:underline font-semibold">
+                            политикой
                           </button>
-                        </label>
-                      </div>
+                        </span>
+                      </label>
+
 
                       <button
                         type="submit"
                         disabled={isLoading}
-                        className={`w-full py-3 px-4 mt-6 rounded-lg font-semibold transition-all shadow-lg ${
-                          isLoading
-                            ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
-                            : "bg-linear-to-r from-olive-dark to-[#5A6B3C] dark:from-blue-600 dark:to-blue-500 hover:opacity-90"
-                        } text-white`}
-                      >
-                        {isLoading ? (
-                          <span className="flex items-center justify-center gap-2">
-                            <FontAwesomeIcon
-                              icon={faSpinner}
-                              className="animate-spin"
-                            />
-                            Регистрация...
-                          </span>
-                        ) : (
-                          "Зарегистрироваться"
-                        )}
-                      </button>
-
-                      <p className="text-center text-sm text-gray-600 dark:text-gray-300 mt-6">
-                        Уже есть аккаунт?{" "}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            navigate("/login", {
-                              replace: true,
-                              state: location.state,
-                            })
+                        className={`
+                            relative overflow-hidden w-full py-4 rounded-xl font-bold text-lg
+                            transition-all duration-300
+                            ${isLoading
+                            ? "bg-gray-400 dark:bg-gray-700 cursor-not-allowed"
+                            : "bg-linear-to-r from-[#5A6841] via-[#424E2B] to-[#5A6841] dark:from-blue-600 dark:via-blue-700 dark:to-blue-600 hover:shadow-2xl hover:shadow-[#5A6841]/30 dark:hover:shadow-blue-600/30 hover:scale-[1.02] active:scale-[0.98]"
                           }
-                          className="font-semibold text-olive-dark dark:text-blue-400 hover:underline"
-                        >
-                          Войти
-                        </button>
-                      </p>
-                    </div>
-                  </form>
-                )}
+                            text-white group
+                          `}
+                      >
+                        <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                        <span className="relative flex items-center justify-center gap-3">
+                          {isLoading ? (
+                            <>
+                              <FontAwesomeIcon icon={faSpinner} className="animate-spin text-xl" />
+                              Регистрация...
+                            </>
+                          ) : (
+                            <>
+                              Зарегистрироваться
+                              <FontAwesomeIcon icon={faCompass} className="group-hover:rotate-180 transition-transform duration-500" />
+                            </>
+                          )}
+                        </span>
+                      </button>
+                    </form>
+                  )}
+
+                  <div className="mt-6 text-center">
+                    <p className="text-gray-600 dark:text-gray-400 mb-3">
+                      Уже есть аккаунт?
+                    </p>
+                    <button
+                      onClick={handleFlip}
+                      className="text-[#424E2B] dark:text-blue-400 font-bold hover:underline text-lg transition-colors"
+                    >
+                      Войти
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <style>
-        {`
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-      -webkit-text-fill-color: #424E2B !important;
-      box-shadow: inset 0 0 0px 1000px transparent !important;
-      transition: background-color 9999s ease-in-out 0s;
-    }
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
-    .dark input:-webkit-autofill,
-    .dark input:-webkit-autofill:hover,
-    .dark input:-webkit-autofill:focus,
-    .dark input:-webkit-autofill:active {
-      -webkit-text-fill-color: white !important;
-    }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          -webkit-text-fill-color: #424E2B !important;
+          box-shadow: inset 0 0 0px 1000px transparent !important;
+          transition: background-color 9999s ease-in-out 0s;
+        }
 
-    .shape1 {
-      background: linear-gradient(135deg, #424E2B20 0%, #E5D9C620 100%);
-      clip-path: polygon(0 0, 100% 0, 100% 30%, 0 70%);
-    }
+        .dark input:-webkit-autofill,
+        .dark input:-webkit-autofill:hover,
+        .dark input:-webkit-autofill:focus,
+        .dark input:-webkit-autofill:active {
+          -webkit-text-fill-color: white !important;
+        }
 
-    @keyframes slideDown {
-      from {
-        transform: translate(-50%, -100%);
-        opacity: 0;
-      }
-      to {
-        transform: translate(-50%, 0);
-        opacity: 1;
-      }
-    }
-    
-    .animate-slideDown {
-      animation: slideDown 0.3s ease-out;
-    }
-  `}
-      </style>
+        @keyframes slideDown {
+          from {
+            transform: translate(-50%, -100%);
+            opacity: 0;
+          }
+          to {
+            transform: translate(-50%, 0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes float-1 {
+          0%, 100% {
+            transform: translate(0, 0);
+          }
+          33% {
+            transform: translate(30px, -30px);
+          }
+          66% {
+            transform: translate(-20px, 20px);
+          }
+        }
+
+        @keyframes float-2 {
+          0%, 100% {
+            transform: translate(0, 0);
+          }
+          33% {
+            transform: translate(-25px, 25px);
+          }
+          66% {
+            transform: translate(25px, -20px);
+          }
+        }
+
+        @keyframes float-3 {
+          0%, 100% {
+            transform: translate(0, 0);
+          }
+          33% {
+            transform: translate(20px, 30px);
+          }
+          66% {
+            transform: translate(-30px, -25px);
+          }
+        }
+
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes shimmer-slow {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(200%);
+          }
+        }
+
+        @keyframes pulse-slow {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.05);
+          }
+        }
+
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-float-1 {
+          animation: float-1 20s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+          animation: float-2 25s ease-in-out infinite;
+        }
+
+        .animate-float-3 {
+          animation: float-3 30s ease-in-out infinite;
+        }
+
+        .animate-shake {
+          animation: shake 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-scaleIn {
+          animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-shimmer-slow {
+          animation: shimmer-slow 3s infinite;
+        }
+
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }

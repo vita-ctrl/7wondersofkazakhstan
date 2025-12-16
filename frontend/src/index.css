@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -16,8 +16,9 @@
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #e5d9c6;
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: "Inter", sans-serif;
+  background-color: #fff;
 
   color-scheme: light dark;
 
@@ -34,8 +35,8 @@ html {
 .dark:root,
 :root.dark,
 .dark :root {
-  background-color: #0f172a; /* тёмно-синий как в Tailwind bg-slate-900 */
-  color: #f1f5f9; /* светло-серый текст */
+  background-color: #000; /* тёмно-синий как в Tailwind bg-slate-900 */
+  color: #fff; /* светло-серый текст */
   transition: background-color 0.3s, color 0.3s;
 }
 
