@@ -671,14 +671,6 @@ export default function Login() {
                       showPasswordIcon={showLoginPassword ? faEyeSlash : faEye}
                     />
 
-                    <div className="flex items-center justify-end">
-                      <button
-                        type="button"
-                        className="text-sm text-[#424E2B] dark:text-blue-400 hover:underline font-semibold transition-colors"
-                      >
-                        Забыли пароль?
-                      </button>
-                    </div>
 
                     <button
                       type="submit"

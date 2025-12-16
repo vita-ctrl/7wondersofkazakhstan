@@ -25,6 +25,8 @@ async def update_my_profile(
         current_user.first_name = data.first_name  # pyright: ignore[reportAttributeAccessIssue]
     if data.last_name is not None:
         current_user.last_name = data.last_name  # pyright: ignore[reportAttributeAccessIssue]
+    if data.phone is not None:
+        current_user.phone = data.phone  # pyright: ignore[reportAttributeAccessIssue]
 
     db.add(current_user)
     db.commit()

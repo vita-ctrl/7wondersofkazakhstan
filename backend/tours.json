@@ -5,8 +5,8 @@
       "https://www.russian.space/kosmodromy/kosmodrom-baykonur/scale_1200-24.jpeg",
       "https://www.trv-science.ru/uploads/256-0018.jpg",
       "https://the-steppe.com/wp-content/uploads/2018/11/3e4ede7defe1538ada11a425f8ac20ae.jpg",
-      "https://www.advantour.com/img/kazakhstan/baikonur/baikonur-cosmodrome1.jpg",
-      "https://pkzsk.info/wp-content/uploads/2018/04/0_b5330_b1309cf0_orig.jpg"
+      "https://habrastorage.org/getpro/habr/upload_files/d83/041/aac/d83041aac224cd5549549202ab8bd1e1.jpeg",
+      "https://museumgagarin.ru/upload/medialibrary/869/6i08b0dcn98j2mtjjelulq3yozjjazcf.jpg"
     ],
     "title": "Байконур — сердце космоса",
     "rating": 5,
@@ -1229,7 +1229,7 @@
     "organizer": {
       "name": "Константин",
       "rating": 5.0,
-      "photo": "/img/organizer_konstantin.jpg"
+      "photo": "https://www.personalguide.ru/storage/logo/guide/20a08891075baabf7b182dcc8f29912c.jpg"
     },
     "recommendedCards": [
       {
@@ -2305,7 +2305,7 @@
     "organizer": {
       "name": "Сергей",
       "rating": 5.0,
-      "photo": "/img/organizer_sergey.jpg"
+      "photo": "https://cdnn21.img.ria.ru/images/07e6/0b/02/1828763402_0:0:2730:2048_1920x0_80_0_0_5aaec4131aeed6598c2255c767249136.jpg"
     },
     "recommendedCards": [
       {

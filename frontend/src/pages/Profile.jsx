@@ -8,9 +8,9 @@ import {
   faPhone,
   faSave,
   faArrowLeft,
-  faCamera,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { InputMask } from "@react-input/mask";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -69,37 +69,6 @@ const Profile = () => {
     }
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Проверяем тип файла
-      if (!file.type.startsWith("image/")) {
-        setErrors({ ...errors, avatar: "Пожалуйста, выберите изображение" });
-        return;
-      }
-
-      // Проверяем размер файла (макс 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        setErrors({
-          ...errors,
-          avatar: "Размер файла не должен превышать 5MB",
-        });
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setAvatarPreview(base64String);
-        setFormData((prev) => ({
-          ...prev,
-          avatar: base64String,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const validateForm = () => {
     const newErrors = {};
 
@@ -142,6 +111,7 @@ const Profile = () => {
         email: formData.email,
         phone: formData.phone || "",
       };
+
 
       // Добавляем аватар только если он был изменен
       if (formData.avatar && formData.avatar !== currentUser?.avatar) {
@@ -218,7 +188,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen pt-20 bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen py-20 bg-linear-to-br from-beige to-[#F5F0E8] dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4">
         <button
           onClick={() => navigate(-1)}
@@ -260,16 +230,6 @@ const Profile = () => {
                     </div>
                   )}
                 </div>
-
-                <label className="absolute bottom-2 right-2 bg-olive-dark text-white p-3 rounded-full cursor-pointer hover:bg-[#2E371D] transition-colors shadow-lg">
-                  <FontAwesomeIcon icon={faCamera} />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleAvatarChange}
-                    className="hidden"
-                  />
-                </label>
               </div>
 
               <div className="mt-4 text-center">
@@ -354,15 +314,16 @@ const Profile = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email *
+                    Email
                   </label>
                   <div className="relative">
                     <input
                       type="email"
                       name="email"
+                      disabled={true}
                       value={formData.email}
                       onChange={handleChange}
-                      className={`
+                      className={` disabled:opacity-50
                         w-full px-4 py-3 pl-12
                         bg-white/50 dark:bg-gray-700/50
                         border ${
@@ -393,7 +354,9 @@ const Profile = () => {
                     Телефон
                   </label>
                   <div className="relative">
-                    <input
+                    <InputMask
+                      mask="+7 (7__) ___-__-__"
+                      replacement={{ _: /\d/ }}
                       type="tel"
                       name="phone"
                       value={formData.phone}

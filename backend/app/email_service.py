@@ -15,6 +15,7 @@ from app.executors import executor
 from app.logger import logger
 from app.database import session
 from app.models import EmailToken
+from app.schemas.order import AdditionalTravelers, PrimaryTraveler
 
 settings = get_settings()
 
@@ -519,13 +520,6 @@ def build_html_for_user(name: str) -> str:
                 <p class="footer-text" style="font-size: 13px; margin-top: 15px; color: #94a3b8;">
                     Если вы не подписывались на рассылку, просто проигнорируйте это письмо
                 </p>
-                
-                <div class="social-links">
-                    <a href="#" class="social-icon">📘</a>
-                    <a href="#" class="social-icon">📷</a>
-                    <a href="#" class="social-icon">🐦</a>
-                    <a href="#" class="social-icon">▶️</a>
-                </div>
             </div>
         </div>
     </body>
@@ -963,3 +957,191 @@ def build_html_support(
     </body>
     </html>
     """
+
+
+def generate_order_email_html(
+    order_id: int,
+    tour_title: str,
+    tour_image_url: str,
+    date_range: str,
+    days: int,
+    participants_count: int,
+    total_amount: int,
+    prepayment_amount: int,
+    currency: str,
+    primary_traveler: PrimaryTraveler,
+    additional_travelers: AdditionalTravelers | None = None,
+) -> str:
+    """Генерирует HTML письмо-чек для заказа тура"""
+    
+    order_number = f"TRV-{order_id:08d}"
+    current_date = datetime.now().strftime("%d.%m.%Y %H:%M")
+    
+    # Форматирование цены
+    def format_price(amount: int) -> str:
+        formatted = f"{amount:,}".replace(",", " ")
+        return f"{currency} {formatted}"
+    
+    # Склонение слов
+    def pluralize(n: int, forms: tuple[str, str, str]) -> str:
+        if n % 10 == 1 and n % 100 != 11:
+            return f"{n} {forms[0]}"
+        elif 2 <= n % 10 <= 4 and (n % 100 < 10 or n % 100 >= 20):
+            return f"{n} {forms[1]}"
+        return f"{n} {forms[2]}"
+    
+    # Генерация списка путешественников
+    def generate_travelers_html() -> str:
+        travelers_html = f"""
+        <div style="background: #f8f9fa; border-radius: 8px; padding: 16px; margin-bottom: 8px;">
+            <div style="font-weight: 600; color: #2d3748; margin-bottom: 4px;">
+                👤 {primary_traveler.firstName if primary_traveler.firstName else ''} {primary_traveler.lastName if primary_traveler.lastName else ''}
+            </div>
+            <div style="font-size: 13px; color: #718096;">
+                Основной путешественник • {primary_traveler.email if primary_traveler.email else ''}
+            </div>
+        </div>
+        """
+        
+        if additional_travelers:
+            for i, traveler in enumerate(additional_travelers.root, start=2):
+                name = f"{traveler.firstName if primary_traveler.firstName else ''} {traveler.lastName if primary_traveler.lastName else ''}".strip()
+                if name:
+                    travelers_html += f"""
+                    <div style="background: #f8f9fa; border-radius: 8px; padding: 16px; margin-bottom: 8px;">
+                        <div style="font-weight: 600; color: #2d3748;">
+                            👤 {name}
+                        </div>
+                        <div style="font-size: 13px; color: #718096;">
+                            {i}-й путешественник
+                        </div>
+                    </div>
+                    """
+        
+        return travelers_html
+
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Подтверждение заказа {order_number}</title>
+    </head>
+    <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            
+            <!-- Хедер -->
+            <div style="background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); border-radius: 16px 16px 0 0; padding: 32px; text-align: center;">
+                <div style="width: 64px; height: 64px; background: white; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 32px;">✓</span>
+                </div>
+                <h1 style="color: white; margin: 0 0 8px; font-size: 24px; font-weight: 700;">
+                    Оплата прошла успешно!
+                </h1>
+                <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 16px;">
+                    Ваше бронирование подтверждено
+                </p>
+            </div>
+            
+            <!-- Основной контент -->
+            <div style="background: white; padding: 32px; border-radius: 0 0 16px 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                
+                <!-- Номер заказа -->
+                <div style="background: #fefce8; border: 2px dashed #eab308; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 13px; color: #854d0e; margin-bottom: 4px;">Номер заказа</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #713f12; font-family: monospace;">{order_number}</div>
+                </div>
+                
+                <!-- Информация о туре -->
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 16px; color: #6b7280; margin: 0 0 16px; font-weight: 600;">
+                        🎯 ДЕТАЛИ ТУРА
+                    </h2>
+                    
+                    <div style="display: flex; gap: 16px; background: #f9fafb; border-radius: 12px; padding: 16px;">
+                        <img src="{tour_image_url}" alt="{tour_title}" style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px;">
+                        <div>
+                            <h3 style="margin: 0 0 8px; font-size: 18px; color: #1f2937;">{tour_title}</h3>
+                            <div style="font-size: 14px; color: #6b7280; margin-bottom: 4px;">
+                                📅 {date_range}
+                            </div>
+                            <div style="font-size: 14px; color: #6b7280;">
+                                ⏱ {pluralize(days, ('день', 'дня', 'дней'))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Путешественники -->
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 16px; color: #6b7280; margin: 0 0 16px; font-weight: 600;">
+                        👥 ПУТЕШЕСТВЕННИКИ ({participants_count})
+                    </h2>
+                    {generate_travelers_html()}
+                </div>
+                
+                <!-- Оплата -->
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 16px; color: #6b7280; margin: 0 0 16px; font-weight: 600;">
+                        💳 ДЕТАЛИ ОПЛАТЫ
+                    </h2>
+                    
+                    <div style="background: #f9fafb; border-radius: 12px; padding: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
+                            <span style="color: #6b7280;">Стоимость тура</span>
+                            <span style="color: #1f2937; font-weight: 600;">{format_price(total_amount)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
+                            <span style="color: #6b7280;">Участники</span>
+                            <span style="color: #1f2937;">{pluralize(participants_count, ('человек', 'человека', 'человек'))}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #1f2937; font-weight: 700; font-size: 18px;">Оплачено</span>
+                            <span style="color: #16a34a; font-weight: 700; font-size: 18px;">{format_price(prepayment_amount)}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Остаток к оплате -->
+                {f'''
+                <div style="background: #fef3c7; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 14px; color: #92400e; margin-bottom: 2px;">Остаток к оплате</div>
+                            <div style="font-size: 12px; color: #a16207;">Оплачивается при встрече с гидом</div>
+                        </div>
+                        <div style="font-size: 20px; font-weight: 700; color: #92400e;">{format_price(total_amount - prepayment_amount)}</div>
+                    </div>
+                </div>
+                ''' if total_amount > prepayment_amount else ''}
+                
+                <!-- Контактная информация -->
+                <div style="background: #eff6ff; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                    <h3 style="margin: 0 0 12px; font-size: 14px; color: #1e40af;">📞 Нужна помощь?</h3>
+                    <p style="margin: 0; font-size: 14px; color: #3b82f6;">
+                        Свяжитесь с нами: <a href="mailto:support@travel.kz" style="color: #1d4ed8;">support@travel.kz</a>
+                    </p>
+                </div>
+                
+                <!-- Кнопка -->
+                <div style="text-align: center;">
+                    <a href="https://travel.kz/profile/bookings" style="display: inline-block; background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 16px;">
+                        Мои бронирования
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Футер -->
+            <div style="text-align: center; padding: 24px; color: #9ca3af; font-size: 12px;">
+                <p style="margin: 0 0 8px;">Это автоматическое письмо, пожалуйста, не отвечайте на него.</p>
+                <p style="margin: 0;">© {datetime.now().year} Travel.kz. Все права защищены.</p>
+                <p style="margin: 8px 0 0; color: #d1d5db;">{current_date}</p>
+            </div>
+            
+        </div>
+    </body>
+    </html>
+    """
+    
+    return html

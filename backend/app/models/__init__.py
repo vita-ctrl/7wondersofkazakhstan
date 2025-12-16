@@ -7,3 +7,4 @@ from .support import SupportMessage
 from .tour import Tour
 from .booking import Booking, BookingDate
 from .review import Review
+from .order import Order

@@ -411,7 +411,7 @@ def export_tour(db: Session, tour_id: str):
 if __name__ == "__main__":
     # print(format_date_range(date(2026, 1, 22), date(2026, 1, 24)))
     
-    DATABASE_URL = "sqlite:///./example.db"
+    DATABASE_URL = "sqlite:///./db.db"
 
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
     db = sessionmaker(bind=engine, autoflush=False, autocommit=False)()
