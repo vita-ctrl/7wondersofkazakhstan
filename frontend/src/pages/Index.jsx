@@ -5,7 +5,6 @@ import {
   faUsers,
   faStar,
   faArrowRight,
-  faQuoteLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Carousel from "../components/TourCarousel";
@@ -518,10 +517,6 @@ export default function Index() {
 
               {/* Цитата */}
               <div className="relative pl-6 py-4 border-l-4 border-gradient-to-b from-amber-500 to-amber-700 bg-linear-to-br from-amber-50/50 to-transparent dark:from-amber-900/10 rounded-r-xl">
-                <FontAwesomeIcon
-                  icon={faQuoteLeft}
-                  className="absolute -top-2 -left-3 text-amber-500 text-xl opacity-20"
-                />
                 <p className="italic text-gray-700 dark:text-gray-300 text-[15px] leading-relaxed font-light">
                   Мы создаём путешествия, которые меняют восприятие и оставляют
                   след в сердце каждого путешественника.

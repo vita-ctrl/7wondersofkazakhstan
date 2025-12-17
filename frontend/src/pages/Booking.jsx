@@ -67,7 +67,7 @@ const SuccessModal = ({
   amount,
   currency,
   email,
-  orderNumber
+  orderNumber,
 }) => {
   const navigate = useNavigate();
 
@@ -87,15 +87,12 @@ const SuccessModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Оверлей */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fadeIn"
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fadeIn" />
 
       {/* Модальное окно */}
       <div className="relative w-full max-w-lg bg-white dark:bg-gray-900 rounded-2xl shadow-2xl animate-slideUp overflow-hidden">
         {/* Верхняя полоса */}
         <div className="h-1.5 bg-linear-to-r from-lime-green via-sage-green to-forest-dark dark:from-blue-400 dark:via-blue-500 dark:to-blue-600" />
-
 
         {/* Контент */}
         <div className="p-8">
@@ -261,7 +258,12 @@ const FormInput = ({
   );
 };
 
-const GenderSelector = ({ value, onChange, compact = false }) => {
+const GenderSelector = ({
+  value,
+  onChange,
+  compact = false,
+  uniqueId = "main",
+}) => {
   const options = [
     { value: "male", label: "Мужской" },
     { value: "female", label: "Женский" },
@@ -292,7 +294,7 @@ const GenderSelector = ({ value, onChange, compact = false }) => {
         >
           <input
             type="radio"
-            name={`gender-${compact ? "compact" : "main"}`}
+            name={`gender-${uniqueId}`}
             checked={value === opt.value}
             onChange={() => onChange(opt.value)}
             className={`appearance-none ${size.radio} rounded-full border-2 border-gray-400 bg-forest-dark/10 relative cursor-pointer
@@ -563,7 +565,7 @@ function BookingDetail({
   // Попап и загрузка
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [orderNumber, setOrderNumber] = useState('');
+  const [orderNumber, setOrderNumber] = useState("");
   const [submitError, setSubmitError] = useState("");
 
   // Проверка авторизации
@@ -739,10 +741,9 @@ function BookingDetail({
       gender: gender,
     };
 
-
     // Дополнительные путешественники (только заполненные)
     const additionalTravelers = travelers
-      .filter((t) => (t.firstName || t.lastName) && isValidDate(t.dob))
+      .filter((t) => t.firstName || t.lastName)
       .map((t) => ({
         firstName: t.firstName,
         lastName: t.lastName,
@@ -781,8 +782,8 @@ function BookingDetail({
       }
 
       const order = await response.json();
-      
-      setOrderNumber(`TRV-${order.order_id}`);
+
+      setOrderNumber(`TRV-${String(order.order_id).padStart(8, "0")}`);
       setShowSuccessModal(true);
     } catch (error) {
       setSubmitError(error.message);
@@ -979,7 +980,11 @@ function BookingDetail({
                 }}
               />
 
-              <GenderSelector value={gender} onChange={setGender} />
+              <GenderSelector
+                uniqueId="primary"
+                value={gender}
+                onChange={setGender}
+              />
 
               {/* Дополнительные путешественники */}
               {travelers.map((traveler, index) => {
@@ -1063,6 +1068,7 @@ function BookingDetail({
                           value={traveler.gender}
                           onChange={(g) => updateTraveler(index, "gender", g)}
                           compact
+                          uniqueId={`traveler-${index}`}
                         />
                       </div>
                     </div>

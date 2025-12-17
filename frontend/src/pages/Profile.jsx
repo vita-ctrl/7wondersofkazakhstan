@@ -28,6 +28,8 @@ const Profile = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     // Проверяем авторизацию
     const token = getToken();
     if (!token) {
@@ -282,7 +284,7 @@ const Profile = () => {
                         focus:ring-2 focus:ring-olive-dark dark:focus:ring-blue-500
                         focus:border-transparent
                         outline-none
-                        transition-all
+                        transition-all text-gray-700 dark:text-gray-300
                       `}
                       placeholder="Введите ваше имя"
                     />
@@ -307,7 +309,7 @@ const Profile = () => {
                     name="last_name"
                     value={formData.last_name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-olive-dark dark:focus:ring-blue-500 focus:border-transparent outline-none"
+                    className="text-gray-700 dark:text-gray-300 w-full px-4 py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-olive-dark dark:focus:ring-blue-500 focus:border-transparent outline-none"
                     placeholder="Введите вашу фамилию"
                   />
                 </div>
@@ -335,7 +337,7 @@ const Profile = () => {
                         focus:ring-2 focus:ring-olive-dark dark:focus:ring-blue-500
                         focus:border-transparent
                         outline-none
-                        transition-all
+                        transition-all text-gray-700 dark:text-gray-300
                       `}
                       placeholder="Введите ваш email"
                     />
@@ -372,7 +374,7 @@ const Profile = () => {
                         rounded-xl
                         focus:ring-2 focus:ring-olive-dark dark:focus:ring-blue-500
                         focus:border-transparent
-                        outline-none
+                        outline-none text-gray-700 dark:text-gray-300
                       `}
                       placeholder="+7 (999) 999-99-99"
                     />

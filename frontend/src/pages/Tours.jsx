@@ -12,6 +12,7 @@ import {
   faShieldAlt,
   faHeadset,
   faTimes,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 import BookingWidget from "../components/BookingWidget";
 import { useParams } from "react-router-dom";
@@ -430,7 +431,7 @@ function ToursDetail(props) {
                             <summary className="cursor-pointer p-5 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors font-['Montserrat'] font-semibold text-slate-900 dark:text-white flex justify-between items-center">
                               <span className="text-sm">{item.question}</span>
                               <span className="text-gray-400 text-xs group-open:rotate-180 transition-transform ml-4">
-                                ▼
+                                <FontAwesomeIcon icon={faChevronDown} />
                               </span>
                             </summary>
                             <div className="px-5 pb-5 pt-2 font-['Montserrat'] text-sm text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-gray-800/30">

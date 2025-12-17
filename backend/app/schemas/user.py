@@ -6,6 +6,7 @@ class UserProfile(BaseModel):
     email: EmailStr
     first_name: str | None = None
     last_name: str | None = None
+    phone: str | None = None
     card_brand: str | None = None
     card_last4: str | None = None
     card_holder_name: str | None = None

@@ -1,3 +1,5 @@
+import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -449,7 +451,7 @@ export function Recommended({ recommendedCards = [] }) {
   }
 
   return (
-    <div className="font-['DM_Sans'] mt-20 mb-16 relative">
+    <div className="font-['Inter'] mt-20 mb-16 relative">
       <div className="flex flex-col items-center gap-12">
 
         {/* HEADER - на уровне карточек */}
@@ -501,7 +503,7 @@ export function Recommended({ recommendedCards = [] }) {
 
                   <div className="recommended-cta">
                     Подробнее
-                    <span className="ml-2">→</span>
+                    <FontAwesomeIcon className="ml-2" icon={faArrowRightLong} />
                   </div>
                 </div>
 

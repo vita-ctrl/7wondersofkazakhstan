@@ -73,23 +73,23 @@ async def my_orders(
         # Парсим additional_travelers из JSON-строки в list
         additional_travelers = order.additional_travelers
         if isinstance(additional_travelers, str):
-            if additional_travelers and additional_travelers != '[]':
+            if additional_travelers and additional_travelers != '[]': # pyright: ignore[reportGeneralTypeIssues]
                 additional_travelers = json.loads(additional_travelers)
             else:
                 additional_travelers = None  # или [] если хотите пустой список
         
         order_schemas.append(
             OrderSchema(
-                id=order.id,
-                user_id=order.user_id,
-                tour_id=order.tour_id,
-                booking_date_id=order.booking_date_id,
-                participants_count=order.participants_count,
-                total_amount=order.total_amount,
-                currency=order.currency,
-                prepayment_amount=order.prepayment_amount,
-                primary_traveler=primary_traveler,
-                additional_travelers=additional_travelers
+                id=order.id, # pyright: ignore[reportArgumentType]
+                user_id=order.user_id, # pyright: ignore[reportArgumentType]
+                tour_id=order.tour_id, # pyright: ignore[reportArgumentType]
+                booking_date_id=order.booking_date_id, # pyright: ignore[reportArgumentType]
+                participants_count=order.participants_count, # pyright: ignore[reportArgumentType]
+                total_amount=order.total_amount, # pyright: ignore[reportArgumentType]
+                currency=order.currency, # pyright: ignore[reportArgumentType]
+                prepayment_amount=order.prepayment_amount, # pyright: ignore[reportArgumentType]
+                primary_traveler=primary_traveler, # pyright: ignore[reportArgumentType]
+                additional_travelers=additional_travelers # pyright: ignore[reportArgumentType]
             )
         )
     

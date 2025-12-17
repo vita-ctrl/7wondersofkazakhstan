@@ -15,7 +15,8 @@ import {
   faHome,
   faPhone,
   faRoute,
-  faUserEdit
+  faUserEdit,
+  faTicket
 } from "@fortawesome/free-solid-svg-icons";
 import { HashLink } from "react-router-hash-link";
 
@@ -86,6 +87,12 @@ export function Header() {
     setDropdownOpen(false);
     setMobileMenuOpen(false);
     navigate('/profile');
+  }, [navigate]);
+
+  const handleOrdersClick = useCallback(() => {
+    setDropdownOpen(false);
+    setMobileMenuOpen(false);
+    navigate('/orders');
   }, [navigate]);
 
   // Закрываем dropdown при клике вне его
@@ -160,9 +167,9 @@ export function Header() {
                 className="group relative text-gray-700 dark:text-gray-300 hover:text-[#424E2B] dark:hover:text-blue-400 font-semibold transition-all duration-300 text-lg"
               >
                 <span className="relative inline-flex items-center gap-2">
-                  <FontAwesomeIcon 
-                    icon={faHome} 
-                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:scale-110 transform duration-300" 
+                  <FontAwesomeIcon
+                    icon={faHome}
+                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:scale-110 transform duration-300"
                   />
                   Главная
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-[#424E2B] to-[#5A6841] dark:from-blue-400 dark:to-blue-500 group-hover:w-full transition-all duration-300 rounded-full"></span>
@@ -175,9 +182,9 @@ export function Header() {
                 className="group relative text-gray-700 dark:text-gray-300 hover:text-[#424E2B] dark:hover:text-blue-400 font-semibold transition-all duration-300 text-lg"
               >
                 <span className="relative inline-flex items-center gap-2">
-                  <FontAwesomeIcon 
-                    icon={faPhone} 
-                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:rotate-12 transform duration-300" 
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:rotate-12 transform duration-300"
                   />
                   Контакты
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-[#424E2B] to-[#5A6841] dark:from-blue-400 dark:to-blue-500 group-hover:w-full transition-all duration-300 rounded-full"></span>
@@ -191,9 +198,9 @@ export function Header() {
                 className="group relative text-gray-700 dark:text-gray-300 hover:text-[#424E2B] dark:hover:text-blue-400 font-semibold transition-all duration-300 text-lg"
               >
                 <span className="relative inline-flex items-center gap-2">
-                  <FontAwesomeIcon 
-                    icon={faRoute} 
-                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:translate-x-1 transform duration-300" 
+                  <FontAwesomeIcon
+                    icon={faRoute}
+                    className="text-[#424E2B]/70 dark:text-blue-400/70 group-hover:text-[#424E2B] dark:group-hover:text-blue-400 transition-colors group-hover:translate-x-1 transform duration-300"
                   />
                   Туры
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-linear-to-r from-[#424E2B] to-[#5A6841] dark:from-blue-400 dark:to-blue-500 group-hover:w-full transition-all duration-300 rounded-full"></span>
@@ -294,7 +301,34 @@ export function Header() {
                             onClick={handleProfileClick}
                             className="
                               w-full
-                              flex items-center justify-center gap-2
+                              flex items-center justify-start gap-2
+                              bg-linear-to-r from-gray-100 to-gray-50
+                              dark:from-gray-700 dark:to-gray-600
+                              hover:from-[#424E2B]/10 hover:to-[#5A6841]/10
+                              dark:hover:from-blue-500/20 dark:hover:to-blue-600/20
+                              text-gray-700 dark:text-gray-200
+                              font-semibold
+                              py-3 px-4
+                              rounded-xl
+                              border border-gray-200 dark:border-gray-600
+                              hover:border-[#424E2B]/30 dark:hover:border-blue-500/30
+                              transition-all duration-300
+                              group
+                              shadow-sm hover:shadow-md mb-2
+                            "
+                          >
+                            <FontAwesomeIcon
+                              icon={faUserEdit}
+                              className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300"
+                            />
+                            <span>Редактировать профиль</span>
+                          </button>
+
+                          <button
+                            onClick={handleOrdersClick}
+                            className="
+                              w-full
+                              flex items-center justify-start gap-2
                               bg-linear-to-r from-gray-100 to-gray-50
                               dark:from-gray-700 dark:to-gray-600
                               hover:from-[#424E2B]/10 hover:to-[#5A6841]/10
@@ -310,11 +344,11 @@ export function Header() {
                               shadow-sm hover:shadow-md
                             "
                           >
-                            <FontAwesomeIcon 
-                              icon={faUserEdit} 
-                              className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300" 
+                            <FontAwesomeIcon
+                              icon={faTicket}
+                              className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300"
                             />
-                            <span>Редактировать профиль</span>
+                            <span>Мои бронирования</span>
                           </button>
 
                           <div className="h-px bg-linear-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent my-3" />
@@ -515,14 +549,41 @@ export function Header() {
                       hover:border-[#424E2B]/30 dark:hover:border-blue-500/30
                       transition-all duration-300
                       group
-                      shadow-sm hover:shadow-md
+                      shadow-sm hover:shadow-md mb-2
                     "
                   >
-                    <FontAwesomeIcon 
-                      icon={faUserEdit} 
-                      className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300" 
+                    <FontAwesomeIcon
+                      icon={faUserEdit}
+                      className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300"
                     />
                     <span>Редактировать профиль</span>
+                  </button>
+
+                  <button
+                    onClick={handleOrdersClick}
+                    className="
+                              w-full
+                              flex items-center justify-center gap-2
+                              bg-linear-to-r from-gray-100 to-gray-50
+                              dark:from-gray-700 dark:to-gray-600
+                              hover:from-[#424E2B]/10 hover:to-[#5A6841]/10
+                              dark:hover:from-blue-500/20 dark:hover:to-blue-600/20
+                              text-gray-700 dark:text-gray-200
+                              font-semibold
+                              py-3 px-4
+                              rounded-xl
+                              border border-gray-200 dark:border-gray-600
+                              hover:border-[#424E2B]/30 dark:hover:border-blue-500/30
+                              transition-all duration-300
+                              group
+                              shadow-sm hover:shadow-md
+                            "
+                  >
+                    <FontAwesomeIcon
+                      icon={faTicket}
+                      className="text-[#424E2B] dark:text-blue-400 group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <span>Мои бронирования</span>
                   </button>
 
                   <button

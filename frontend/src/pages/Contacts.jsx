@@ -13,7 +13,6 @@ export default function TumodoContacts() {
     agreeToPrivacy: false,
   });
   const [status, setStatus] = useState(null);
-  const [focusedField, setFocusedField] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
   const [scrollY, setScrollY] = useState(0);
   const formRef = useRef(null);
@@ -896,7 +895,6 @@ select.input-glow {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField("name")}
                       onBlur={handleBlur}
                       required
                       placeholder="Введите ваше имя"
@@ -906,9 +904,6 @@ select.input-glow {
                           : "border-gray-200 dark:border-gray-700"
                       }`}
                     />
-                    {focusedField === "name" && !validationErrors.name && (
-                      <div className="focus-line" />
-                    )}
                   </div>
                   {validationErrors.name && (
                     <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
@@ -929,7 +924,6 @@ select.input-glow {
                       type="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField("email")}
                       onBlur={handleBlur}
                       required
                       placeholder="your@email.com"
@@ -939,9 +933,6 @@ select.input-glow {
                           : "border-gray-200 dark:border-gray-700"
                       }`}
                     />
-                    {focusedField === "email" && !validationErrors.email && (
-                      <div className="focus-line" />
-                    )}
                   </div>
                   {validationErrors.email && (
                     <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
@@ -964,7 +955,6 @@ select.input-glow {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField("phone")}
                       onBlur={handleBlur}
                       mask="+7 (7__) ___-__-__"
                       replacement={{ _: /\d/ }}
@@ -975,9 +965,6 @@ select.input-glow {
                           : "border-gray-200 dark:border-gray-700"
                       }`}
                     />
-                    {focusedField === "phone" && !validationErrors.phone && (
-                      <div className="focus-line" />
-                    )}
                   </div>
                   {validationErrors.phone && (
                     <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
@@ -997,7 +984,6 @@ select.input-glow {
                       name="requestType"
                       value={formData.requestType}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField("requestType")}
                       onBlur={handleBlur}
                       required
                       className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 text-gray-900 dark:text-white transition-all duration-300 input-glow"
@@ -1009,9 +995,6 @@ select.input-glow {
                         </option>
                       ))}
                     </select>
-                    {focusedField === "requestType" && (
-                      <div className="focus-line" />
-                    )}
                   </div>
                 </div>
 
@@ -1025,7 +1008,6 @@ select.input-glow {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      onFocus={() => setFocusedField("message")}
                       onBlur={handleBlur}
                       required
                       rows={5}
@@ -1036,10 +1018,6 @@ select.input-glow {
                           : "border-gray-200 dark:border-gray-700"
                       }`}
                     />
-                    {focusedField === "message" &&
-                      !validationErrors.message && (
-                        <div className="focus-line" />
-                      )}
                   </div>
                   {validationErrors.message && (
                     <p className="mt-2 text-sm text-red-500 flex items-center gap-1">

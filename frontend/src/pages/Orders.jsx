@@ -19,6 +19,7 @@ import {
   faBox,
 } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from "../components/LoadingPage";
+import { HashLink } from "react-router-hash-link";
 
 // === УТИЛИТЫ ===
 const pluralRules = new Intl.PluralRules("ru");
@@ -153,7 +154,7 @@ const OrderCard = ({ order, tourData }) => {
                 Заказ №
               </p>
               <p className="font-mono font-bold text-xl text-olive-dark dark:text-gray-100">
-                TRV-{id}
+                TRV-{String(id).padStart(8, '0')}
               </p>
             </div>
           </div>
@@ -378,17 +379,17 @@ export default function Orders() {
 
   return (
     <div className="min-h-screen pt-20 pb-10 px-5 bg-linear-to-br from-vanilla via-cream to-vanilla dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1500px] mx-auto">
         {/* Заголовок страницы */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-olive-dark dark:text-gray-100 mb-2 flex items-center gap-3">
+          <h1 className="text-4xl font-bold text-olive-dark dark:text-gray-100 mb-2 flex items-center justify-center gap-3">
             <FontAwesomeIcon
               icon={faTicket}
               className="text-lime-green dark:text-blue-400"
             />
             Мои бронирования
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400 text-center">
             Здесь вы можете посмотреть все свои заказы и детали бронирований
           </p>
         </div>
@@ -424,12 +425,13 @@ export default function Orders() {
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               Начните планировать своё путешествие прямо сейчас
             </p>
-            <button
-              onClick={() => navigate("/tours")}
+            <HashLink
+            smooth
+            to={"/#tours"}
               className="px-6 py-3 rounded-xl font-semibold text-white bg-linear-to-r from-lime-green to-sage-green dark:from-blue-400 dark:to-blue-600 hover:shadow-lg transition-all duration-200"
             >
               Посмотреть туры
-            </button>
+            </HashLink>
           </div>
         ) : (
           <div className="space-y-6 max-w-3xl mx-auto">

@@ -494,7 +494,7 @@ flex items-center justify-center gap-3"
 
       {/* УЛУЧШЕННОЕ МОДАЛЬНОЕ ОКНО */}
       {isModalOpen && (
-        <div className="fixed font-['Inter'] inset-0 z-9999 flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 animate-fade-in">
           {/* Оверлей */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-md"
@@ -504,7 +504,7 @@ flex items-center justify-center gap-3"
           {/* Модальное окно */}
           <div className="relative bg-white dark:bg-[#1a2435] rounded-3xl p-10 max-w-lg w-full 
                         shadow-2xl border border-gray-200 dark:border-gray-700
-                        animate-scale-in font-['DM_Sans']">
+                        animate-scale-in font-['Inter']">
 
             {/* Декоративный фон */}
             <div className={`absolute top-0 left-0 right-0 h-2 rounded-t-3xl ${modalData.isError
