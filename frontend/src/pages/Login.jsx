@@ -293,7 +293,7 @@ export default function Login() {
 
         window.dispatchEvent(new Event("authChange"));
 
-        setSuccessMessage("✅ Аккаунт успешно подтвержден! Перенаправление на главную...");
+        setSuccessMessage("Аккаунт успешно подтвержден! Перенаправление на главную...");
         
         // Перенаправляем на главную страницу через 1.5 секунды
         setTimeout(() => {
@@ -308,7 +308,7 @@ export default function Login() {
         }, 1500);
       } else {
         // Если токен не возвращается, показываем сообщение и предлагаем войти
-        setSuccessMessage("✅ Аккаунт успешно подтвержден! Теперь войдите в систему.");
+        setSuccessMessage("Аккаунт успешно подтвержден! Теперь войдите в систему.");
         setTimeout(() => {
           setIsFlipped(false);
           navigate("/login");
@@ -438,7 +438,7 @@ export default function Login() {
 
           window.dispatchEvent(new Event("authChange"));
 
-          setSuccessMessage("✅ Вход выполнен успешно!");
+          setSuccessMessage("Вход выполнен успешно!");
           setTimeout(() => {
             if (redirectUrl)
               navigate(redirectUrl, {
@@ -509,7 +509,7 @@ export default function Login() {
         }
 
         setSuccessMessage(
-          `✅ Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`
+          `Регистрация успешна! Проверьте почту ${formData.email} для подтверждения.`
         );
 
         setFormData((prev) => ({

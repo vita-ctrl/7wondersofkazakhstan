@@ -1004,7 +1004,6 @@ def generate_order_email_html(
     # Расчет остатка
     remaining_amount = total_amount - prepayment_amount
     
-    print(tour_image_url)
 
     html = f"""
     <!DOCTYPE html>
