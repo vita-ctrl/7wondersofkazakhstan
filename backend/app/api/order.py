@@ -1,13 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
-from app.schemas import OrderResponse, OrderCreate
+from app.schemas import OrderResponse, OrderCreate, Orders
+from app.schemas.order import OrderSchema
 from app.models import User, Order, BookingDate
 from app.database import get_db
 from app.security import get_current_user
 from app.email_service import generate_order_email_html, send_email_async
 from app.utils import format_date_range
+
+import json
 
 router = APIRouter()
 
@@ -33,6 +36,7 @@ def create_order(db: Session, order_data: OrderCreate, current_user: User) -> Or
         booking_date_id=booking_date.id,
         participants_count=order_data.participants_count,
         total_amount=booking_date.price * order_data.participants_count,
+        currency=booking_date.booking.currency,
         prepayment_amount=booking_date.booking.prepayment * order_data.participants_count,
         primary_traveler=order_data.primary_traveler.model_dump_json(),
         additional_travelers=order_data.additional_travelers.model_dump_json() if order_data.additional_travelers else None,
@@ -45,6 +49,51 @@ def create_order(db: Session, order_data: OrderCreate, current_user: User) -> Or
     db.refresh(order)
     
     return order
+
+@router.get("/orders", response_model=Orders)
+async def my_orders(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    orders = db.query(Order).filter(
+        Order.user_id == current_user.id
+    ).options(
+        joinedload(Order.user),
+        joinedload(Order.tour),
+        joinedload(Order.booking_date)
+    ).order_by(Order.created_at.desc()).all()
+    
+    order_schemas = []
+    for order in orders:
+        # Парсим primary_traveler из JSON-строки в dict
+        primary_traveler = order.primary_traveler
+        if isinstance(primary_traveler, str):
+            primary_traveler = json.loads(primary_traveler)
+        
+        # Парсим additional_travelers из JSON-строки в list
+        additional_travelers = order.additional_travelers
+        if isinstance(additional_travelers, str):
+            if additional_travelers and additional_travelers != '[]':
+                additional_travelers = json.loads(additional_travelers)
+            else:
+                additional_travelers = None  # или [] если хотите пустой список
+        
+        order_schemas.append(
+            OrderSchema(
+                id=order.id,
+                user_id=order.user_id,
+                tour_id=order.tour_id,
+                booking_date_id=order.booking_date_id,
+                participants_count=order.participants_count,
+                total_amount=order.total_amount,
+                currency=order.currency,
+                prepayment_amount=order.prepayment_amount,
+                primary_traveler=primary_traveler,
+                additional_travelers=additional_travelers
+            )
+        )
+    
+    return Orders(root=order_schemas)
 
 
 @router.post("/orders", response_model=OrderResponse)

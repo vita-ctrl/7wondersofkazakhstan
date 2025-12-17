@@ -213,7 +213,7 @@ export function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden bg-linear-to-br from-white via-[#FAF8F5] to-[#F2EFEA] dark:from-[#0A0E1A] dark:via-[#0E1624] dark:to-[#121826] font-['DM_Sans'] text-gray-900 dark:text-gray-100">
+      <footer className="relative font-['Inter'] overflow-hidden bg-linear-to-br from-white via-[#FAF8F5] to-[#F2EFEA] dark:from-[#0A0E1A] dark:via-[#0E1624] dark:to-[#121826] text-gray-900 dark:text-gray-100">
 
         {/* Декоративные элементы фона */}
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]">
@@ -494,7 +494,7 @@ flex items-center justify-center gap-3"
 
       {/* УЛУЧШЕННОЕ МОДАЛЬНОЕ ОКНО */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed font-['Inter'] inset-0 z-9999 flex items-center justify-center p-4 animate-fade-in">
           {/* Оверлей */}
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-md"

@@ -1123,19 +1123,12 @@ def generate_order_email_html(
                         Свяжитесь с нами: <a href="mailto:support@travel.kz" style="color: #1d4ed8;">support@travel.kz</a>
                     </p>
                 </div>
-                
-                <!-- Кнопка -->
-                <div style="text-align: center;">
-                    <a href="https://travel.kz/profile/bookings" style="display: inline-block; background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%); color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 16px;">
-                        Мои бронирования
-                    </a>
-                </div>
             </div>
             
             <!-- Футер -->
             <div style="text-align: center; padding: 24px; color: #9ca3af; font-size: 12px;">
                 <p style="margin: 0 0 8px;">Это автоматическое письмо, пожалуйста, не отвечайте на него.</p>
-                <p style="margin: 0;">© {datetime.now().year} Travel.kz. Все права защищены.</p>
+                <p style="margin: 0;">© {datetime.now().year} KazWonder. Все права защищены.</p>
                 <p style="margin: 8px 0 0; color: #d1d5db;">{current_date}</p>
             </div>
             

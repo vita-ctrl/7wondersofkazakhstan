@@ -201,7 +201,7 @@ const SuccessModal = ({
           {/* Кнопки */}
           <div className="flex gap-3">
             <button
-              onClick={() => navigate("/profile/bookings")}
+              onClick={() => navigate("/orders")}
               className="flex-1 py-3.5 px-4 rounded-xl font-semibold text-olive-dark dark:text-gray-100 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200"
             >
               Мои бронирования

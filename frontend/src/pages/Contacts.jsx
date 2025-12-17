@@ -567,7 +567,7 @@ select.input-glow {
         break;
 
       case "phone":
-        if (!value.trim() || value.includes("_") || value.length !== 18) {
+        if (value.length > 0 && value.length != 18) {
           errors.phone = "Введите корректный номер телефона";
         }
         break;
@@ -684,7 +684,7 @@ select.input-glow {
   }, [formData, validationErrors]);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#FFF8EF] via-[#F9F4EC] to-[#F3E9D9] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white font-['DM_Sans'] relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-[#FFF8EF] via-[#F9F4EC] to-[#F3E9D9] dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-white font-['Inter'] relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="decorative-circle decorative-circle-1" />
       <div className="decorative-circle decorative-circle-2" />
@@ -1066,9 +1066,9 @@ select.input-glow {
                   </div>
                   <span className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors">
                     Я соглашаюсь с{" "}
-                    <a href="/privacy" className="privacy-link">
+                    <span className="privacy-link">
                       политикой конфиденциальности
-                    </a>{" "}
+                    </span>{" "}
                     и обработкой персональных данных
                   </span>
                 </label>

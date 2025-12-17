@@ -18,6 +18,7 @@ class Order(Base):
     # Количество участников и суммы
     participants_count = Column(Integer, nullable=False)
     total_amount = Column(Integer, nullable=False)
+    currency = Column(String, nullable=False)
     prepayment_amount = Column(Integer, nullable=False)
     
     # Данные путешественников (JSON)

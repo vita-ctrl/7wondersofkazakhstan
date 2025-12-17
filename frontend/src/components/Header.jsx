@@ -129,7 +129,7 @@ export function Header() {
     <>
       <nav
         className={`
-    font-['DM_Sans']
+    font-['Inter']
     bg-[#F5EEDF] dark:bg-gray-900
     bg-opacity-95 dark:bg-opacity-95
     backdrop-blur-xl

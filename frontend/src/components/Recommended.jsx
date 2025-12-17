@@ -472,9 +472,8 @@ export function Recommended({ recommendedCards = [] }) {
               className="recommended-card flex flex-col rounded-2xl p-4 shadow-lg animate-fadeInUp"
               style={getAnimationDelay(index)}
             >
-              <HashLink
-                smooth
-                to={`${card.url}#top`}
+              <Link
+                to={card.url}
                 className="flex flex-col h-full relative z-10"
                 aria-label={`Подробнее о ${card.title}`}
               >
@@ -566,7 +565,7 @@ export function Recommended({ recommendedCards = [] }) {
                     </div>
                   </div>
                 </div>
-              </HashLink>
+              </Link>
             </article>
           ))}
         </div>

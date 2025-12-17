@@ -131,7 +131,7 @@ export function ReviewsInfinite(props) {
           {allReviews.map((r) => (
             <div
               key={r.id}
-              className="bg-vanilla dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-xs opacity-0 animate-fadeInUp"
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 shadow-md opacity-0 animate-fadeInUp"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -190,7 +190,7 @@ function RatingSummary({ totalReviews, average, ratings }) {
   const getWidth = (count) => (count / totalReviews) * 100;
 
   return (
-    <div className="font-['Inter'] bg-vanilla dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm max-w-[360px]">
+    <div className="font-['Inter'] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-lg max-w-[360px]">
       <div className="flex items-center justify-between mb-3">
         <div className="flex text-yellow-400 text-lg">
           {[...Array(5)].map((_, i) => (
@@ -221,7 +221,7 @@ function RatingSummary({ totalReviews, average, ratings }) {
               <span className="text-[12px] w-10 text-gray-700 dark:text-gray-300">
                 {r.stars} <FontAwesomeIcon icon={faStar} />
               </span>
-              <div className="flex-1 bg-gray-50 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+              <div className="flex-1 bg-gray-100 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
                 <div
                   className="bg-yellow-400 h-full rounded-full"
                   style={{ width: `${getWidth(r.count)}%` }}

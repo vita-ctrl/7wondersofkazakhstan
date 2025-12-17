@@ -124,7 +124,7 @@ export default function Index() {
           <div className="max-w-5xl animate-fade-in-up">
             {/* Надпись сверху */}
             <div className="mb-6 animate-fade-in">
-              <span className="inline-block px-6 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-beige text-sm font-light tracking-[0.2em] uppercase">
+              <span className="inline-block font-['Inter'] px-6 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-beige text-sm font-light tracking-[0.2em] uppercase">
                 Откройте для себя
               </span>
             </div>
@@ -139,7 +139,7 @@ export default function Index() {
             </h1>
 
             {/* Подзаголовок */}
-            <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up animation-delay-400">
+            <p className="text-lg md:text-xl font-['Inter'] text-gray-200 max-w-2xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up animation-delay-400">
               Авторские путешествия по величественным горам, древним городам и бескрайним степям
             </p>
 
@@ -147,7 +147,7 @@ export default function Index() {
             <div className="animate-fade-in-up animation-delay-600">
               <a
                 href="#tours"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50"
+                className="group font-['Inter'] inline-flex items-center gap-3 px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50"
               >
                 <span className="tracking-wide">Выбрать тур</span>
                 <FontAwesomeIcon
@@ -172,7 +172,7 @@ export default function Index() {
         </div>
 
         <div className="relative z-10 w-full px-8 sm:px-12 lg:px-16 xl:px-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
+          <div className="grid font-['Inter'] grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -207,7 +207,7 @@ export default function Index() {
       {/* TOURS SECTION - НА ВСЮ ШИРИНУ */}
       <section className="py-20 bg-white dark:bg-[#0E1624]" id="tours">
         {/* Заголовок с отступами */}
-        <div className="px-8 sm:px-12 lg:px-16 xl:px-20">
+        <div className="px-8 font-['Inter'] sm:px-12 lg:px-16 xl:px-20">
           <div className="text-center mb-16 animate-fade-in-up">
             <div className="mb-4">
               <span className="inline-block px-4 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
@@ -241,7 +241,7 @@ export default function Index() {
           <div className="text-center mb-16 animate-fade-in-up">
             {/* Метка секции */}
             <div className="mb-4">
-              <span className="inline-block px-4 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
+              <span className="inline-block font-['Inter'] px-4 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
                 Отзывы
               </span>
             </div>
@@ -249,7 +249,7 @@ export default function Index() {
             <h2 className="text-4xl md:text-5xl font-['Cormorant_Garamond'] font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tight">
               Слова наших путешественников
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
+            <p className="text-lg font-['Inter'] text-gray-600 dark:text-gray-400 max-w-3xl mx-auto font-light leading-relaxed">
               Настоящие эмоции и впечатления людей, которые открыли для себя Казахстан вместе с нами
             </p>
           </div>
@@ -300,7 +300,7 @@ export default function Index() {
           </div>
 
           {/* РЕЙТИНГИ - УЛУЧШЕННЫЙ ДИЗАЙН */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid font-['Inter'] grid-cols-1 lg:grid-cols-2 gap-8">
             {/* GOOGLE REVIEWS */}
             <div className="group relative bg-white dark:bg-[#1a2435] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 hover:border-forest-dark dark:hover:border-blue-400 transition-all duration-300 hover:shadow-2xl animate-fade-in-up">
               {/* Декоративный градиент */}
@@ -387,7 +387,7 @@ export default function Index() {
             </div>
 
             {/* YANDEX REVIEWS */}
-            <div className="group relative bg-white dark:bg-[#1a2435] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 hover:border-forest-dark dark:hover:border-blue-400 transition-all duration-300 hover:shadow-2xl animate-fade-in-up animation-delay-200">
+            <div className="group font-['Inter'] relative bg-white dark:bg-[#1a2435] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 hover:border-forest-dark dark:hover:border-blue-400 transition-all duration-300 hover:shadow-2xl animate-fade-in-up animation-delay-200">
               {/* Декоративный градиент */}
               <div className="absolute inset-0 bg-linear-to-br from-red-500/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -489,7 +489,7 @@ export default function Index() {
             <div className="animate-fade-in-up">
               {/* Метка секции */}
               <div className="mb-6">
-                <span className="inline-block px-4 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
+                <span className="inline-block font-['Inter'] px-4 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
                   О компании
                 </span>
               </div>
@@ -501,7 +501,7 @@ export default function Index() {
                 </span>
               </h2>
 
-              <div className="space-y-5 mb-8">
+              <div className="space-y-5 mb-8 font-['Inter']">
                 <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed font-light">
                   <strong className="font-semibold text-gray-900 dark:text-gray-100">
                     KazWonder
@@ -545,7 +545,7 @@ export default function Index() {
                 {/* Оверлей с информацией */}
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="absolute bottom-0 left-0 right-0 p-8 font-['Inter']">
                   <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6">
                     <p className="text-white text-lg font-semibold mb-1 tracking-wide">
                       KazWonder Expeditions

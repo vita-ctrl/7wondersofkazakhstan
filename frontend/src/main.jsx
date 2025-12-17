@@ -13,6 +13,7 @@ import NotFoundPage from "./components/NotFound.jsx";
 import { getToken } from "./utils/auth"; // Импорт функции проверки токена
 
 import "./index.css";
+import Orders from "./pages/Orders.jsx";
 
 // Защищенный маршрут
 const ProtectedRoute = ({ children }) => {
@@ -36,6 +37,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="tours/:tourId" element={<Tours />} />
 
           <Route path="booking/:tourId" element={<Booking />} />
+
+          <Route path="orders" element={<Orders />} />
 
           <Route path="contacts" element={<Contacts />} />
           <Route path="login" element={<Login />} />

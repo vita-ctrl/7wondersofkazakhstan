@@ -55,6 +55,26 @@ class OrderCreate(BaseModel):
     additional_travelers: AdditionalTravelers | None = None
 
 
+
 # Схема ответа
 class OrderResponse(BaseModel):
     order_id: int
+
+class OrderSchema(BaseModel):
+    id: int
+    user_id: int
+
+    tour_id: str
+    booking_date_id: int
+
+    participants_count: int
+    total_amount: int
+    currency: str
+    prepayment_amount: int
+
+    primary_traveler: PrimaryTraveler
+    additional_travelers: AdditionalTravelers | None
+
+
+class Orders(RootModel[list[OrderSchema]]):
+    pass
