@@ -1,5 +1,5 @@
 from enum import Enum
-from pydantic import BaseModel, EmailStr, RootModel, field_validator
+from pydantic import BaseModel, EmailStr, Field, RootModel, field_validator
 from datetime import date
 
 
@@ -25,6 +25,7 @@ class PrimaryTraveler(BaseModel):
             raise ValueError("PrimaryTraveler must be at least 18 years old")
         return v
 
+
 class AdditionalTraveler(BaseModel):
     firstName: str | None = None
     lastName: str | None = None
@@ -42,23 +43,26 @@ class AdditionalTraveler(BaseModel):
             raise ValueError("AdditionalTraveler must be at least 4 years old")
         return v
 
+
 class AdditionalTravelers(RootModel[list[AdditionalTraveler]]):
     pass
-    
+
 
 # Схема запроса на создание заказа
 class OrderCreate(BaseModel):
     tour_id: str
     booking_date_id: int
-    participants_count: int
+    participants_count: int = Field(
+        ge=1, description="Количество участников должно быть не меньше 1"
+    )
     primary_traveler: PrimaryTraveler
     additional_travelers: AdditionalTravelers | None = None
-
 
 
 # Схема ответа
 class OrderResponse(BaseModel):
     order_id: int
+
 
 class OrderSchema(BaseModel):
     id: int

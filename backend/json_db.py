@@ -11,6 +11,7 @@ from app.models.review import Review
 
 # ---------- helpers ----------
 
+
 def parse_date_range(date_range_str: str) -> tuple[date, date]:
     """
     Парсит строки:
@@ -21,11 +22,19 @@ def parse_date_range(date_range_str: str) -> tuple[date, date]:
     """
 
     months = {
-        "янв": 1, "фев": 2, "мар": 3, "апр": 4,
-        "май": 5, "мая": 5,
-        "июн": 6, "июл": 7,
-        "авг": 8, "сен": 9,
-        "окт": 10, "ноя": 11, "нояб": 11,
+        "янв": 1,
+        "фев": 2,
+        "мар": 3,
+        "апр": 4,
+        "май": 5,
+        "мая": 5,
+        "июн": 6,
+        "июл": 7,
+        "авг": 8,
+        "сен": 9,
+        "окт": 10,
+        "ноя": 11,
+        "нояб": 11,
         "дек": 12,
     }
 
@@ -98,6 +107,7 @@ def parse_date_range(date_range_str: str) -> tuple[date, date]:
 
 # ---------- main logic ----------
 
+
 def load_reviews(db: Session, tour_id: str, reviews_data: list[dict]):
     """
     Загружает отзывы в БД
@@ -119,10 +129,11 @@ def load_reviews(db: Session, tour_id: str, reviews_data: list[dict]):
             name=r["name"],
             date=datetime.strptime(r["date"], "%d.%m.%Y").date(),
             rating=r["rating"],
-            text=r["text"]
+            text=r["text"],
         )
 
         db.add(review)
+
 
 def load_tour_from_json(db: Session, json_path: str):
     with open(json_path, "r", encoding="utf-8") as f:
@@ -144,7 +155,7 @@ def load_tour_from_json(db: Session, json_path: str):
                 organizer=data.get("organizer"),
                 map_popup=data["map"]["popup"],
                 map_lat=data["map"]["lat"],
-                map_long=data["map"]["long"]
+                map_long=data["map"]["long"],
             )
 
             db.add(tour)
@@ -161,7 +172,7 @@ def load_tour_from_json(db: Session, json_path: str):
                 currency=booking_data["currency"],
                 days=booking_data["days"],
                 prepayment=booking_data["prepayment"],
-                max_seats=booking_data["maxSeats"]
+                max_seats=booking_data["maxSeats"],
             )
 
             db.add(booking)
@@ -212,9 +223,18 @@ def format_date_range(start_date: date, end_date: date) -> str:
     """
 
     months = {
-        1: "янв", 2: "фев", 3: "мар", 4: "апр",
-        5: "май", 6: "июн", 7: "июл", 8: "авг",
-        9: "сен", 10: "окт", 11: "ноя", 12: "дек"
+        1: "янв",
+        2: "фев",
+        3: "мар",
+        4: "апр",
+        5: "май",
+        6: "июн",
+        7: "июл",
+        8: "авг",
+        9: "сен",
+        10: "окт",
+        11: "ноя",
+        12: "дек",
     }
 
     # Один день
@@ -222,10 +242,7 @@ def format_date_range(start_date: date, end_date: date) -> str:
         return f"{start_date.day} {months[start_date.month]} {start_date.year}"
 
     # Один месяц и год
-    if (
-        start_date.year == end_date.year
-        and start_date.month == end_date.month
-    ):
+    if start_date.year == end_date.year and start_date.month == end_date.month:
         return (
             f"{start_date.day}–{end_date.day} "
             f"{months[start_date.month]} {start_date.year}"
@@ -251,6 +268,7 @@ def format_review_date(d: date) -> str:
 
 # ---------- reviews ----------
 
+
 def export_reviews(db: Session, tour_id: str, page: int = 1, per_page: int = 3):
     """
     Экспорт отзывов с пагинацией
@@ -269,7 +287,9 @@ def export_reviews(db: Session, tour_id: str, page: int = 1, per_page: int = 3):
     reviews = (
         db.query(Review)
         .filter(Review.tour_id == tour_id)
-        .order_by(desc(Review.date))  # сортировка по дате, можно DESC для последних сверху
+        .order_by(
+            desc(Review.date)
+        )  # сортировка по дате, можно DESC для последних сверху
         .offset(offset)
         .limit(per_page)
         .all()
@@ -281,7 +301,7 @@ def export_reviews(db: Session, tour_id: str, page: int = 1, per_page: int = 3):
             "name": r.name,
             "date": r.date.strftime("%d.%m.%Y"),
             "rating": r.rating,
-            "text": r.text
+            "text": r.text,
         }
         for r in reviews
     ]
@@ -296,21 +316,16 @@ def export_reviews(db: Session, tour_id: str, page: int = 1, per_page: int = 3):
 
 # ---------- tour ----------
 
+
 def get_rating_summary(db: Session, tour_id: str):
     total, avg = (
-        db.query(
-            func.count(Review.id),
-            func.avg(Review.rating)
-        )
+        db.query(func.count(Review.id), func.avg(Review.rating))
         .filter(Review.tour_id == tour_id)
         .one()
     )
 
     stars = (
-        db.query(
-            Review.rating,
-            func.count(Review.id)
-        )
+        db.query(Review.rating, func.count(Review.id))
         .filter(Review.tour_id == tour_id)
         .group_by(Review.rating)
         .all()
@@ -319,9 +334,8 @@ def get_rating_summary(db: Session, tour_id: str):
     return {
         "totalReviews": total,
         "average": round(float(avg or 0), 1),
-        "ratings": [{"stars": rating, "count": count} for rating, count in stars]
+        "ratings": [{"stars": rating, "count": count} for rating, count in stars],
     }
-
 
 
 def export_tour(db: Session, tour_id: str):
@@ -345,10 +359,10 @@ def export_tour(db: Session, tour_id: str):
                     "range": format_date_range(d.start_date, d.end_date),
                     "price": d.price,
                     "seats": d.seats,
-                    "active": d.active
+                    "active": d.active,
                 }
                 for d in booking.dates
-            ]
+            ],
         }
 
         # ---------- reviews ----------
@@ -370,19 +384,15 @@ def export_tour(db: Session, tour_id: str):
             "map": {
                 "popup": tour.map_popup,
                 "lat": tour.map_lat,
-                "long": tour.map_long
+                "long": tour.map_long,
             },
             "reviews": {
                 "url": f"/tours/{tour.id}/reviews.json",
-                "ratingSummary": rating_summary
-            }
+                "ratingSummary": rating_summary,
+            },
         }
 
-        other_tours = (
-            db.query(Tour)
-            .filter(Tour.id != tour.id)
-            .all()
-        )
+        other_tours = db.query(Tour).filter(Tour.id != tour.id).all()
 
         recommended_cards = [
             {
@@ -390,7 +400,7 @@ def export_tour(db: Session, tour_id: str):
                 "title": t.title,
                 "img": t.images[0] if bool(t.images) else "",
                 "price": t.booking.cost if t.booking else 0,
-                "currency": t.booking.currency if t.booking else ""
+                "currency": t.booking.currency if t.booking else "",
             }
             for t in other_tours
         ]
@@ -410,12 +420,12 @@ def export_tour(db: Session, tour_id: str):
 
 if __name__ == "__main__":
     # print(format_date_range(date(2026, 1, 22), date(2026, 1, 24)))
-    
-    DATABASE_URL = "sqlite:///./db.db"
+
+    DATABASE_URL = "sqlite:///./example.db"
 
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
     db = sessionmaker(bind=engine, autoflush=False, autocommit=False)()
-    
+
     Base.metadata.create_all(bind=engine)
 
     load_tour_from_json(db, "tours.json")

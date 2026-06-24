@@ -9,9 +9,12 @@
 [![JWT](https://img.shields.io/badge/JWT-Secure-black?style=for-the-badge&logo=json-web-tokens&logoColor=white)](https://jwt.io/)
 [![Package Manager](https://img.shields.io/badge/uv-Astral-FF6F00?style=for-the-badge&logo=python&logoColor=white)](https://github.com/astral-sh/uv)
 
-**KazWonder (7 Wonders of Kazakhstan)** — современное, высокопроизводительное Full-Stack веб-приложение для бронирования туров и виртуального знакомства с семью уникальными чудесами природы и истории Казахстана. 
+### Раздел для HR и нанимающих менеджеров
+Если вы хотите посмотреть мои работы по тестированию (чек-листы, тест-кейсы и примеры баг-репортов), перейдите по ссылке: [QA Документация](./qa).
 
-Проект разработан с учетом лучших практик проектирования ПО, демонстрирует профессиональное владение архитектурными паттернами, современным инструментарием (Vite, React 19, FastAPI, UV) и упором на безопасность, чистоту кода и отзывчивый интерфейс (UX/UI).
+**KazWonder (7 Wonders of Kazakhstan)** - современное веб-приложение для бронирования туров и виртуального знакомства с семью уникальными чудесами природы и истории Казахстана. 
+
+Проект разработан с использованием Vite, React 19, FastAPI, UV и SQLAlchemy. Разрабатывался с упором на безопасность, чистоту кода и отзывчивый интерфейс.
 
 ![KazWonder Screenshot](images/site.png)
 
@@ -143,7 +146,12 @@ cd 7wondersofkazakhstan
      source .venv/bin/activate  # На Windows: .venv\Scripts\activate
      pip install -r requirements.txt
      ```
-4. Запустите сервер разработки:
+4. Сгенерируйте базу данных SQLite. Запустите скрипт `json_db.py`, который создаст базу данных на основе файла `tours.json`. Без этого шага база данных не будет инициализирована, и бэкенд не сможет отдавать информацию о турах:
+   ```bash
+   python json_db.py
+   ```
+
+5. Запустите сервер разработки:
    ```bash
    python main.py
    ```
